@@ -2,7 +2,7 @@ export default function LocalBusinessSchema() {
   const schema = {
     "@context": "https://schema.org",
     "@type": "BeautySalon",
-    "name": "LARRERE",
+    "name": "LARRÈRE",
     "description": "Centro de belleza y bienestar profesional. Servicios de masajes, tratamientos faciales, manicure, pedicure y depilación láser.",
     "url": process.env.NEXT_PUBLIC_SITE_URL || "https://larrere.cl",
     "telephone": "+56912345678",
@@ -56,7 +56,7 @@ export default function LocalBusinessSchema() {
           "description": "Masaje de cuerpo completo para aliviar tensiones",
           "provider": {
             "@type": "BeautySalon",
-            "name": "LARRERE"
+            "name": "LARRÈRE"
           }
         }
       },
@@ -68,7 +68,7 @@ export default function LocalBusinessSchema() {
           "description": "Limpieza facial con extracción y tratamiento hidratante",
           "provider": {
             "@type": "BeautySalon",
-            "name": "LARRERE"
+            "name": "LARRÈRE"
           }
         }
       },
@@ -80,7 +80,7 @@ export default function LocalBusinessSchema() {
           "description": "Cuidado completo de manos y pies",
           "provider": {
             "@type": "BeautySalon",
-            "name": "LARRERE"
+            "name": "LARRÈRE"
           }
         }
       }

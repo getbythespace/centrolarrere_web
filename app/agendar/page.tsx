@@ -153,28 +153,28 @@ export default function AgendarPage() {
             transition={{ delay: 0.8 }}
             className="mt-8"
           >
-            <Card className="glass-effect border-gold/20">
+            <Card className="border-2 border-red-300/60 bg-gradient-to-br from-red-50/90 to-rose-50/90 shadow-lg">
               <CardContent className="p-6">
-                <h3 className="font-semibold text-brown text-lg mb-4 flex items-center gap-2">
-                  <Calendar className="w-5 h-5 text-gold" />
+                <h3 className="font-semibold text-red-800 text-lg mb-4 flex items-center gap-2">
+                  <span className="text-2xl">⚠️</span>
                   Política de Reservas
                 </h3>
-                <ul className="text-sm text-brown/70 space-y-2">
+                <ul className="text-sm text-red-900/80 space-y-3">
                   <li className="flex items-start gap-2">
-                    <span className="text-gold">•</span>
-                    <span>Tiempo mínimo de aviso: 12 horas</span>
+                    <span className="text-xl">⏰</span>
+                    <span className="font-medium">Tiempo mínimo de aviso: 12 horas</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-gold">•</span>
+                    <span className="text-xl">✅</span>
                     <span>Cancelaciones con ≥12h de anticipación: sin cargo</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-gold">•</span>
-                    <span>Cancelaciones con &lt;12h o no-show: se pierde la hora reservada</span>
+                    <span className="text-xl">❌</span>
+                    <span className="font-medium">Cancelaciones con &lt;12h: se pierde la hora reservada</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-gold">•</span>
-                    <span>Se requiere abono del 50% para confirmar tu cita</span>
+                    <span className="text-xl">💰</span>
+                    <span className="font-medium">Se requiere abono del 50% para confirmar tu cita</span>
                   </li>
                 </ul>
               </CardContent>

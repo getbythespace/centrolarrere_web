@@ -8,7 +8,7 @@ export default function ContactoPage() {
       <nav className="border-b sticky top-0 bg-white/95 backdrop-blur-sm z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <Link href="/" className="text-2xl font-bold">
-            LARRERE
+            LARRÈRE
           </Link>
           <div className="flex items-center gap-6">
             <Link href="/servicios" className="hover:text-primary transition-colors">
@@ -124,7 +124,7 @@ export default function ContactoPage() {
 
       <footer className="border-t bg-slate-50 py-8">
         <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-          © {new Date().getFullYear()} LARRERE. Todos los derechos reservados.
+          © {new Date().getFullYear()} LARRÈRE. Todos los derechos reservados.
         </div>
       </footer>
     </div>

@@ -63,7 +63,7 @@ export default function TerminosPage() {
               <h2 className="text-2xl font-semibold mb-4">6. Contraindicaciones</h2>
               <p>
                 Es tu responsabilidad informarnos sobre cualquier condición médica, alergia o 
-                medicamento que pueda afectar el servicio. LARRERE se reserva el derecho de 
+                medicamento que pueda afectar el servicio. LARRÈRE se reserva el derecho de 
                 negarse a realizar un servicio si existe riesgo para tu salud.
               </p>
             </section>
@@ -71,7 +71,7 @@ export default function TerminosPage() {
             <section>
               <h2 className="text-2xl font-semibold mb-4">7. Modificaciones</h2>
               <p>
-                LARRERE se reserva el derecho de modificar estos términos en cualquier momento. 
+                LARRÈRE se reserva el derecho de modificar estos términos en cualquier momento. 
                 Los cambios entrarán en vigencia inmediatamente después de su publicación.
               </p>
             </section>
@@ -96,7 +96,7 @@ export default function TerminosPage() {
 
       <footer className="border-t bg-slate-50 py-8">
         <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-          © {new Date().getFullYear()} LARRERE. Todos los derechos reservados.
+          © {new Date().getFullYear()} LARRÈRE. Todos los derechos reservados.
         </div>
       </footer>
     </div>

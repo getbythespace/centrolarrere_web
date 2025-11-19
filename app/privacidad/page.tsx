@@ -6,7 +6,7 @@ export default function PrivacidadPage() {
       <nav className="border-b sticky top-0 bg-white/95 backdrop-blur-sm z-50">
         <div className="container mx-auto px-4 h-16 flex items-center">
           <Link href="/" className="text-2xl font-bold">
-            LARRERE
+            LARRÈRE
           </Link>
         </div>
       </nav>
@@ -19,7 +19,7 @@ export default function PrivacidadPage() {
             <section>
               <h2 className="text-2xl font-semibold mb-4">1. Información que recopilamos</h2>
               <p>
-                En LARRERE recopilamos información personal cuando agendas una cita, incluyendo:
+                En LARRÈRE recopilamos información personal cuando agendas una cita, incluyendo:
               </p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>Nombre completo</li>
@@ -91,7 +91,7 @@ export default function PrivacidadPage() {
 
       <footer className="border-t bg-slate-50 py-8">
         <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-          © {new Date().getFullYear()} LARRERE. Todos los derechos reservados.
+          © {new Date().getFullYear()} LARRÈRE. Todos los derechos reservados.
         </div>
       </footer>
     </div>

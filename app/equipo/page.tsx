@@ -8,15 +8,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 
 const teamMembers = [
   {
-    name: 'Evelin Alarcón',
-    role: 'Fundadora y Cosmetóloga Especialista',
+    name: 'Cosmetólogas Especialistas',
+    role: 'Fundadoras y Expertas en Estética',
     description:
-      'Especialista en tratamientos estéticos y de salud de la piel con más de 7 años de experiencia. Comprometida con entregar soluciones reales basadas en la salud antes que la estética.',
+      'Especialistas en tratamientos estéticos y de salud de la piel con más de 7 años de experiencia. Comprometidas con entregar soluciones reales basadas en la salud antes que la estética.',
     icon: '👩‍⚕️',
     color: 'gold',
   },
   {
-    name: 'Belén',
+    name: 'Belén Muñoz',
     role: 'Enfermera Profesional',
     description:
       'Enfermera titulada especializada en procedimientos de salud estética. Encargada de tratamientos invasivos menores y seguimiento post-tratamiento para garantizar resultados seguros.',
@@ -24,7 +24,7 @@ const teamMembers = [
     color: 'sage',
   },
   {
-    name: 'Médico Especialista',
+    name: 'Dr. Jhon Pablo Mero',
     role: 'Atención Médica Miércoles',
     description:
       'Médico cirujano especializado en tratamientos láser avanzados (CO₂ Fraccionado, Láser Vascular). Realiza evaluaciones médicas obligatorias y procedimientos de alta complejidad.',

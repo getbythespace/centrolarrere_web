@@ -62,8 +62,8 @@ export default function HomePage() {
 
             <div className="pt-8 flex items-center justify-center gap-8 text-brown/70">
               <div className="text-center">
-                <div className="text-3xl font-bold text-gold">14+</div>
-                <div className="text-sm">Tratamientos Médicos</div>
+                <div className="text-3xl font-bold text-gold">+1200</div>
+                <div className="text-sm">Pacientes Tratados</div>
               </div>
               <div className="h-12 w-px bg-brown/20" />
               <div className="text-center">

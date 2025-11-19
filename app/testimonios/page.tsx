@@ -29,14 +29,14 @@ const testimonials = [
     avatar: "👱‍♀️",
   },
   {
-    name: "Andrea M.",
-    age: 42,
-    service: "Rejuvenecimiento Facial",
+    name: "Belén R.",
+    age: 23,
+    service: "Tratamiento de Acné",
     rating: 5,
-    comment: "Evelin es súper profesional. Me gustó que fuera honesta con los tiempos, no como otros lugares.",
+    comment: "Tenía acné hace años y nada me funcionaba. Aquí me hicieron un plan con láser y productos específicos. Mi piel cambió harto.",
     date: "Marzo 2024",
-    result: "Piel más firme",
-    avatar: "👩‍🦳",
+    result: "Menos brotes",
+    avatar: "👧",
   },
 ];
 

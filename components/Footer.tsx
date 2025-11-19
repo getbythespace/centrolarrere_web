@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-4 gap-8">
           <div>
-            <h3 className="font-bold text-lg mb-4">LARRERE</h3>
+            <h3 className="font-bold text-lg mb-4">LARRÈRE</h3>
             <p className="text-sm text-muted-foreground">
               Centro de belleza y bienestar profesional
             </p>
@@ -83,7 +83,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-8 pt-8 border-t text-center text-sm text-muted-foreground">
-          © {new Date().getFullYear()} LARRERE. Todos los derechos reservados.
+          © {new Date().getFullYear()} LARRÈRE. Todos los derechos reservados.
         </div>
       </div>
     </footer>

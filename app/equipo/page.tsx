@@ -74,7 +74,7 @@ export default function EquipoPage() {
             transition={{ delay: 0.2, duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h1 className="text-5xl md:text-6xl font-bold text-brown mb-6">
+            <h1 className="text-4xl md:text-6xl font-bold text-brown mb-6">
               Nuestro{' '}
               <span className="bg-gradient-gold bg-clip-text text-transparent">Equipo</span>
             </h1>

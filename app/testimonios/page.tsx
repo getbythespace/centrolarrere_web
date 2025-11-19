@@ -80,7 +80,7 @@ export default function TestimoniosPage() {
               Testimonios Reales
             </div>
 
-            <h1 className="text-5xl md:text-7xl font-bold text-brown leading-tight">
+            <h1 className="text-4xl md:text-7xl font-bold text-brown leading-tight">
               Testimonios de{" "}
               <span className="text-gradient-animated">nuestras clientas</span>
             </h1>

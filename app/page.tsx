@@ -24,7 +24,7 @@ export default function HomePage() {
               Enfoque Médico Profesional
             </div>
             
-            <h1 className="text-6xl md:text-8xl font-bold tracking-tight leading-tight gpu-accelerated">
+            <h1 className="text-4xl md:text-8xl font-bold tracking-tight leading-tight gpu-accelerated">
               <span className="text-brown">Salud Primero,</span>
               <br />
               <span className="text-gradient-animated">
@@ -60,7 +60,7 @@ export default function HomePage() {
               </Link>
             </div>
 
-            <div className="pt-8 flex items-center justify-center gap-8 text-brown/70">
+            <div className="pt-8 flex flex-wrap items-center justify-center gap-6 md:gap-8 text-brown/70">
               <div className="text-center">
                 <div className="text-3xl font-bold text-gold">+1200</div>
                 <div className="text-sm">Pacientes Tratados</div>

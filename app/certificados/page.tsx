@@ -84,7 +84,7 @@ export default function CertificadosPage() {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-ivory via-sand-light to-sage-light py-20 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-ivory via-sand-light to-sage-light py-12 md:py-20 overflow-hidden">
         <div className="absolute inset-0 opacity-30">
           <div className="absolute top-20 right-10 w-96 h-96 bg-gold/20 rounded-full blur-3xl animate-float" />
           <div className="absolute bottom-20 left-10 w-72 h-72 bg-sage/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '1.5s' }} />

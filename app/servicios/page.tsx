@@ -171,8 +171,8 @@ export default function ServiciosPage() {
       <motion.section
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        className="relative pt-32 pb-20 px-6 overflow-hidden"
+        transition={{ duration: 1 }}
+        className="relative pt-24 md:pt-32 pb-12 md:pb-20 px-6 overflow-hidden"
       >
         {/* Decorative background */}
         <div className="absolute inset-0 opacity-30">
@@ -187,13 +187,13 @@ export default function ServiciosPage() {
             transition={{ delay: 0.2, duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h1 className="text-5xl md:text-6xl font-bold text-brown mb-6">
+            <h1 className="text-4xl md:text-6xl font-bold text-brown mb-6">
               Nuestros{' '}
               <span className="bg-gradient-gold bg-clip-text text-transparent">
                 Tratamientos
               </span>
             </h1>
-            <p className="text-xl text-brown-light max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base md:text-xl text-brown-light max-w-3xl mx-auto leading-relaxed">
               Salud primero, estética como consecuencia. Cada tratamiento inicia con una evaluación
               médica para garantizar resultados seguros y efectivos.
             </p>
@@ -236,7 +236,7 @@ export default function ServiciosPage() {
               <button
                 key={cat}
                 onClick={() => setCategoriaActiva(cat)}
-                className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
+                className={`w-full sm:w-auto px-6 py-3 rounded-full font-medium transition-all duration-300 ${
                   categoriaActiva === cat
                     ? 'bg-gradient-gold text-brown shadow-lg scale-105'
                     : 'bg-white/60 text-brown/70 hover:bg-white/80 hover:scale-105'
@@ -250,7 +250,7 @@ export default function ServiciosPage() {
       </motion.section>
 
       {/* Grid de Servicios */}
-      <section className="pb-24 px-6">
+      <section className="pb-12 md:pb-24 px-6">
         <motion.div
           variants={container}
           initial="hidden"
@@ -277,7 +277,7 @@ export default function ServiciosPage() {
                       )}
                     </div>
                   </div>
-                  <CardTitle className="text-2xl text-brown group-hover:text-gold transition-colors">
+                  <CardTitle className="text-xl md:text-2xl text-brown group-hover:text-gold transition-colors">
                     {servicio.nombre}
                   </CardTitle>
                   {servicio.subtitulo && (
@@ -317,22 +317,22 @@ export default function ServiciosPage() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className="pb-24 px-6"
+        className="pb-12 md:pb-24 px-6"
       >
         <div className="max-w-4xl mx-auto text-center">
           <Card className="glass-effect border-gold/30 shadow-2xl overflow-hidden">
-            <div className="bg-gradient-gold p-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-brown mb-4">
+            <div className="bg-gradient-gold p-6 md:p-12">
+              <h2 className="text-2xl md:text-4xl font-bold text-brown mb-4">
                 ¿Listo para comenzar tu tratamiento?
               </h2>
-              <p className="text-brown/80 text-lg mb-8 max-w-2xl mx-auto">
+              <p className="text-brown/80 text-base md:text-lg mb-6 md:mb-8 max-w-2xl mx-auto">
                 Agenda tu evaluación médica y descubre cuál es el mejor tratamiento para ti
               </p>
               <motion.a
                 href="/agendar"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center gap-2 bg-brown text-ivory px-8 py-4 rounded-full font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-brown text-ivory px-6 md:px-8 py-4 rounded-full font-semibold text-base md:text-lg shadow-xl hover:shadow-2xl transition-all duration-300"
               >
                 <Stethoscope className="w-5 h-5" />
                 Agendar Evaluación Médica

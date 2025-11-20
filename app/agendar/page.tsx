@@ -22,7 +22,7 @@ export default function AgendarPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="pt-32 pb-12 px-6"
+        className="pt-24 md:pt-32 pb-8 md:pb-12 px-6">
       >
         <div className="max-w-6xl mx-auto text-center">
           <motion.div
@@ -35,13 +35,13 @@ export default function AgendarPage() {
             <span className="font-semibold text-brown">Agenda Online 24/7</span>
           </motion.div>
 
-          <h1 className="text-5xl md:text-6xl font-bold text-brown mb-6">
+          <h1 className="text-3xl md:text-6xl font-bold text-brown mb-6">
             Agenda tu{' '}
             <span className="bg-gradient-gold bg-clip-text text-transparent">
               Evaluación Médica
             </span>
           </h1>
-          <p className="text-xl text-brown/70 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-base md:text-xl text-brown/70 max-w-3xl mx-auto leading-relaxed">
             Selecciona el día y horario que mejor te acomode. Todos los tratamientos comienzan con
             una evaluación médica obligatoria.
           </p>
@@ -112,7 +112,7 @@ export default function AgendarPage() {
       </section>
 
       {/* Google Calendar Embed */}
-      <section className="pb-16 px-6">
+      <section className="pb-12 md:pb-16 px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}

@@ -61,7 +61,7 @@ export default function TestimoniosPage() {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-ivory via-sand-light to-sage-light py-20 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-ivory via-sand-light to-sage-light py-12 md:py-20 overflow-hidden">
         {/* Decorative Elements */}
         <div className="absolute inset-0 opacity-30">
           <div className="absolute top-20 right-10 w-96 h-96 bg-gold/20 rounded-full blur-3xl animate-float" />
@@ -85,7 +85,7 @@ export default function TestimoniosPage() {
               <span className="text-gradient-animated">nuestras clientas</span>
             </h1>
 
-            <p className="text-xl text-brown/80 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-base md:text-xl text-brown/80 max-w-2xl mx-auto leading-relaxed">
               Lo que dicen quienes ya probaron nuestros tratamientos.
             </p>
 

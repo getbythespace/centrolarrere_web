@@ -59,7 +59,7 @@ export default function EquipoPage() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
-        className="relative pt-32 pb-20 px-6 overflow-hidden"
+        className="relative pt-24 md:pt-32 pb-12 md:pb-20 px-6 overflow-hidden">
       >
         {/* Decorative background */}
         <div className="absolute inset-0 opacity-30">
@@ -78,7 +78,7 @@ export default function EquipoPage() {
               Nuestro{' '}
               <span className="bg-gradient-gold bg-clip-text text-transparent">Equipo</span>
             </h1>
-            <p className="text-xl text-brown-light max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base md:text-xl text-brown-light max-w-3xl mx-auto leading-relaxed">
               Profesionales certificados comprometidos con tu salud y bienestar. Cada tratamiento es
               realizado por especialistas con años de experiencia.
             </p>
@@ -87,7 +87,7 @@ export default function EquipoPage() {
       </motion.section>
 
       {/* Team Members */}
-      <section className="pb-24 px-6">
+      <section className="pb-12 md:pb-24 px-6">
         <motion.div
           variants={container}
           initial="hidden"

@@ -22,7 +22,7 @@ export default function AgendarPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="pt-24 md:pt-32 pb-8 md:pb-12 px-6">
+        className="pt-24 md:pt-32 pb-8 md:pb-12 px-6"
       >
         <div className="max-w-6xl mx-auto text-center">
           <motion.div

@@ -59,7 +59,7 @@ export default function EquipoPage() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
-        className="relative pt-24 md:pt-32 pb-12 md:pb-20 px-6 overflow-hidden">
+        className="relative pt-24 md:pt-32 pb-12 md:pb-20 px-6 overflow-hidden"
       >
         {/* Decorative background */}
         <div className="absolute inset-0 opacity-30">

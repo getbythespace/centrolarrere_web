@@ -41,12 +41,15 @@ export default function Navigation() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
+  // Todos los heroes son oscuros ahora, así que el nav va oscuro también: con
+  // la barra clara encima quedaba un corte horizontal que partía el primer
+  // pantallazo en dos.
   return (
-    <header className="sticky top-0 z-50 border-b border-line-soft bg-porcelain/90 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-porcelain/12 bg-drape-deep/95 backdrop-blur-md">
       <nav className="shell flex h-16 items-center justify-between" aria-label="Principal">
         <Link
           href="/"
-          className="font-display text-[1.375rem] font-semibold tracking-tight text-drape-deep"
+          className="font-display text-[1.4375rem] font-semibold tracking-tight text-porcelain"
         >
           LARRÈRE
         </Link>
@@ -61,8 +64,8 @@ export default function Navigation() {
                 aria-current={active ? "page" : undefined}
                 className={`rounded-md px-3 py-2 text-[0.9375rem] transition-colors ${
                   active
-                    ? "font-semibold text-drape-deep"
-                    : "text-slate-soft hover:bg-drape-wash hover:text-drape-deep"
+                    ? "font-semibold text-porcelain"
+                    : "text-porcelain/80 hover:bg-porcelain/10 hover:text-porcelain"
                 }`}
               >
                 {l.label}
@@ -77,7 +80,7 @@ export default function Navigation() {
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="-mr-2 flex h-11 w-11 items-center justify-center rounded-md text-drape-deep transition-colors hover:bg-drape-wash md:hidden"
+          className="-mr-2 flex h-11 w-11 items-center justify-center rounded-md text-porcelain transition-colors hover:bg-porcelain/10 md:hidden"
           aria-expanded={open}
           aria-controls="menu-movil"
           aria-label={open ? "Cerrar menú" : "Abrir menú"}
@@ -88,7 +91,7 @@ export default function Navigation() {
 
       {/* El panel se desmonta al cerrar: nada enfocable queda escondido. */}
       {open && (
-        <div id="menu-movil" className="border-t border-line-soft bg-porcelain md:hidden">
+        <div id="menu-movil" className="border-t border-porcelain/12 bg-drape-deep md:hidden">
           <div className="shell flex flex-col gap-1 py-4">
             {LINKS.map((l) => (
               <Link
@@ -97,8 +100,8 @@ export default function Navigation() {
                 aria-current={pathname === l.href ? "page" : undefined}
                 className={`rounded-md px-3 py-3 text-base transition-colors ${
                   pathname === l.href
-                    ? "bg-drape-wash font-semibold text-drape-deep"
-                    : "text-slate hover:bg-drape-wash"
+                    ? "bg-porcelain/10 font-semibold text-porcelain"
+                    : "text-porcelain/85 hover:bg-porcelain/10"
                 }`}
               >
                 {l.label}
@@ -106,7 +109,7 @@ export default function Navigation() {
             ))}
             <Link
               href="/agendar"
-              className="rounded-md px-3 py-3 text-base text-slate transition-colors hover:bg-drape-wash"
+              className="rounded-md px-3 py-3 text-base text-porcelain/85 transition-colors hover:bg-porcelain/10"
             >
               Agendar online
             </Link>

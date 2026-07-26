@@ -139,6 +139,90 @@
 }
 
 @layer components {
+  /* ======================================================================
+     ATMÓSFERA
+     ----------------------------------------------------------------------
+     La razón por la que el diseño se sentía plano no era la paleta: era que
+     todo pasaba sobre porcelana lisa, sin profundidad ni textura. Estas tres
+     capas dan el peso, y ninguna cuesta un solo KB de JavaScript.
+     ====================================================================== */
+
+  /* --- Grano ------------------------------------------------------------ */
+  /* feTurbulence en un data URI: ~300 bytes, cero requests. Es lo que separa
+     una superficie "de plantilla" de una que parece impresa. Va con
+     `pointer-events: none` para no interferir con nada. */
+  .grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Sobre fondo oscuro el grano necesita más presencia. */
+  .surface-dark .grain::before,
+  .grain.on-dark::before {
+    opacity: 0.55;
+    mix-blend-mode: soft-light;
+  }
+
+  /* --- Superficie oscura ------------------------------------------------ */
+  /* Verde quirúrgico profundo con un bloom de luz descentrado, como un foco de
+     estudio sobre la piel. El degradado va con `at 72% 8%` a propósito: la luz
+     centrada se lee como plantilla, la descentrada se lee como fotografía. */
+  /* La opacidad del bloom está topada en 0.18 por contraste, no por gusto: a
+     0.32 el punto más claro del degradado quedaba en #166067 y el texto a 75%
+     de opacidad caía a 3.97:1, bajo AA. A 0.18 el pico es #10555C y hasta el
+     texto al 75% da 5.14:1. */
+  .surface-dark {
+    position: relative;
+    isolation: isolate;
+    background-color: var(--drape-deep);
+    background-image:
+      radial-gradient(60rem 40rem at 72% 8%, rgba(46, 148, 156, 0.18), transparent 62%),
+      radial-gradient(38rem 30rem at 12% 92%, rgba(200, 97, 94, 0.1), transparent 66%),
+      linear-gradient(178deg, #0a474e 0%, var(--drape-deep) 46%, #052f34 100%);
+    color: var(--porcelain);
+  }
+
+  .surface-dark > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* --- Superficie clara ------------------------------------------------- */
+  /* Porcelana con una insinuación de luz arriba, para que no sea un plano
+     muerto de color. */
+  .surface-light {
+    position: relative;
+    isolation: isolate;
+    background-color: var(--porcelain);
+    background-image:
+      radial-gradient(52rem 30rem at 78% -6%, rgba(14, 92, 99, 0.07), transparent 60%),
+      radial-gradient(34rem 24rem at 6% 108%, rgba(14, 92, 99, 0.05), transparent 62%);
+  }
+
+  .surface-light > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* --- Regla de sección ------------------------------------------------- */
+  /* Hairline que se desvanece: cierra secciones sin el corte duro de un
+     border-top. */
+  .rule-fade {
+    height: 1px;
+    border: 0;
+    background: linear-gradient(90deg, transparent, var(--line), transparent);
+  }
+
+  .surface-dark .rule-fade {
+    background: linear-gradient(90deg, transparent, rgba(242, 245, 246, 0.22), transparent);
+  }
+
   /* --- Contenedor ------------------------------------------------------- */
   .shell {
     width: 100%;
@@ -166,20 +250,86 @@
   }
 
   /* --- Etiqueta de sección ---------------------------------------------- */
+  /* Ahora lleva una barra corta antes del texto: da un punto de anclaje
+     visual y estructura la columna. */
   .eyebrow {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--drape);
   }
 
+  .eyebrow::before {
+    content: "";
+    width: 1.75rem;
+    height: 2px;
+    flex-shrink: 0;
+    background: var(--pulse);
+  }
+
+  /* Sobre oscuro el eyebrow sube a #a8d8dd (5.47:1) — es texto chico, así que
+     necesita 4.5 y no le sirve el 3.25:1 de un tono más saturado. La regla
+     también se aclara: el pulse original daba 2.15:1 e desaparecía. */
+  .surface-dark .eyebrow {
+    color: #a8d8dd;
+  }
+
+  .surface-dark .eyebrow::before {
+    background: #e08b88;
+  }
+
   /* --- Tarjeta ---------------------------------------------------------- */
+  /* Antes era un rectángulo con borde tenue y todas iguales. Ahora tiene una
+     regla de acento arriba que se ilumina al hover, y el borde se define. */
   .card-flat {
+    position: relative;
+    overflow: hidden;
     background: var(--porcelain-lift);
     border: 1px solid var(--line-soft);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-card);
+  }
+
+  .card-flat::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--drape), var(--pulse) 68%, transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .card-flat.lift:hover {
+      border-color: var(--line);
+    }
+    .card-flat.lift:hover::after {
+      opacity: 1;
+    }
+  }
+
+  /* Variante sobre fondo oscuro. */
+  .card-dark {
+    position: relative;
+    overflow: hidden;
+    background: rgba(242, 245, 246, 0.055);
+    border: 1px solid rgba(242, 245, 246, 0.14);
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(2px);
+  }
+
+  /* --- Cifra de dato ---------------------------------------------------- */
+  .figure-stat {
+    font-family: var(--font-display), Georgia, serif;
+    font-weight: 300;
+    font-variant-numeric: tabular-nums;
   }
 
   /* --- Marca de contenido pendiente ------------------------------------- */

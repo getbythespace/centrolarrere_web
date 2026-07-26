@@ -27,18 +27,20 @@ export default function ContactoPage() {
       <Navigation />
 
       <main id="contenido">
-        <section className="section-tight bg-porcelain">
+        <section className="surface-dark grain pb-12 pt-12 md:pb-16 md:pt-16">
           <div className="shell">
-            <div className="max-w-prose page-enter">
+            <div className="page-enter max-w-[46ch]">
               <p className="eyebrow">Contacto</p>
-              <h1 className="mt-4 text-display-lg text-drape-deep">
-                Escríbenos y coordinamos
+              <h1 className="mt-6 text-display-lg">
+                <span className="font-light text-porcelain/75">Escríbenos</span>
+                <br />
+                y coordinamos
               </h1>
-              <p className="mt-5 text-lead text-slate-soft">
+              <p className="mt-6 text-lead text-porcelain/85">
                 Lo más rápido es WhatsApp. Cuéntanos qué te preocupa y te
                 orientamos antes de agendar.
               </p>
-              <div className="mt-8">
+              <div className="mt-9">
                 <WhatsAppCTA context={{ kind: "general" }} size="lg" />
               </div>
             </div>
@@ -47,7 +49,7 @@ export default function ContactoPage() {
 
         <StickyCTASentinel />
 
-        <section className="section border-t border-line-soft">
+        <section className="surface-light section">
           <div className="shell">
             <h2 className="sr-only">Datos de contacto</h2>
 

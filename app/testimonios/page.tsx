@@ -31,14 +31,16 @@ export default function TestimoniosPage() {
       <Navigation />
 
       <main id="contenido">
-        <section className="section-tight bg-porcelain">
+        <section className="surface-dark grain pb-12 pt-12 md:pb-16 md:pt-16">
           <div className="shell">
-            <div className="max-w-prose page-enter">
+            <div className="page-enter max-w-[46ch]">
               <p className="eyebrow">Opiniones</p>
-              <h1 className="mt-4 text-display-lg text-drape-deep">
-                Lo que dicen las pacientes
+              <h1 className="mt-6 text-display-lg">
+                <span className="font-light text-porcelain/75">Lo que dicen</span>
+                <br />
+                las pacientes
               </h1>
-              <p className="mt-5 text-lead text-slate-soft">
+              <p className="mt-6 text-lead text-porcelain/85">
                 Preferimos reseñas que puedas verificar por tu cuenta antes que
                 testimonios escritos por nosotros.
               </p>
@@ -48,7 +50,7 @@ export default function TestimoniosPage() {
 
         <StickyCTASentinel />
 
-        <section className="section border-t border-line-soft">
+        <section className="surface-light section">
           <div className="shell">
             <div className="placeholder-flag mx-auto max-w-prose p-6">
               <h2 className="text-[1.0625rem] font-semibold">

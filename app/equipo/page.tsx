@@ -66,14 +66,16 @@ export default function EquipoPage() {
       <Navigation />
 
       <main id="contenido">
-        <section className="section-tight bg-porcelain">
+        <section className="surface-dark grain pb-12 pt-12 md:pb-16 md:pt-16">
           <div className="shell">
-            <div className="max-w-prose page-enter">
+            <div className="page-enter max-w-[48ch]">
               <p className="eyebrow">Equipo</p>
-              <h1 className="mt-4 text-display-lg text-drape-deep">
-                Quién realiza cada tratamiento
+              <h1 className="mt-6 text-display-lg">
+                <span className="font-light text-porcelain/75">Quién realiza</span>
+                <br />
+                cada tratamiento
               </h1>
-              <p className="mt-5 text-lead text-slate-soft">
+              <p className="mt-6 text-lead text-porcelain/85">
                 La diferencia entre una clínica y un centro estético informal
                 está acá: quién te atiende y con qué respaldo.
               </p>
@@ -83,7 +85,7 @@ export default function EquipoPage() {
 
         <StickyCTASentinel />
 
-        <section className="section border-y border-line-soft bg-porcelain-lift">
+        <section className="surface-light section">
           <div className="shell">
             <h2 className="sr-only">Integrantes del equipo</h2>
             <ul className="grid gap-6 md:grid-cols-3">
@@ -120,12 +122,12 @@ export default function EquipoPage() {
         </section>
 
         {/* Ancla de destino para el redirect desde /certificados. */}
-        <section className="section" id="credenciales">
+        <section className="surface-light section border-t border-line-soft" id="credenciales">
           <div className="shell">
             <div className="max-w-prose">
               <p className="eyebrow">Credenciales y estándares</p>
-              <h2 className="mt-3 text-display-md text-drape-deep">
-                Con qué respaldo trabajamos
+              <h2 className="mt-5 text-display-md text-drape-deep">
+                <span className="font-light">Con qué respaldo</span> trabajamos
               </h2>
             </div>
 
@@ -158,14 +160,16 @@ export default function EquipoPage() {
           </div>
         </section>
 
-        <section className="section-tight bg-drape-deep text-porcelain">
+        <section className="surface-dark grain section-tight">
           <div className="shell-narrow text-center">
-            <h2 className="text-display-sm">Conversemos tu caso</h2>
-            <p className="tnum mx-auto mt-3 max-w-prose text-[1.0625rem] leading-relaxed text-porcelain/80">
+            <h2 className="text-display-md">
+              <span className="font-light text-porcelain/75">Conversemos</span> tu caso
+            </h2>
+            <p className="tnum mx-auto mt-5 max-w-prose text-[1.0625rem] leading-relaxed text-porcelain/85">
               Evaluación médica {clinic.evaluation.priceDisplay} ·{" "}
               {clinic.evaluation.note}
             </p>
-            <div className="mt-7 flex justify-center">
+            <div className="mt-8 flex justify-center">
               <WhatsAppCTA context={{ kind: "evaluation" }} size="lg" />
             </div>
           </div>

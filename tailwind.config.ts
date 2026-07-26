@@ -85,12 +85,25 @@ const config: Config = {
 
       // Escala fluida. El mínimo es lo que ve el tráfico de Instagram, así
       // que se eligió primero el mobile y después el techo de desktop.
+      //
+      // La escala anterior era correcta y anodina: el hero topaba en 5.25rem y
+      // los saltos entre niveles eran chicos, así que nada dominaba. Ahora el
+      // display arranca más alto en mobile y llega a 7.5rem, con el interlineado
+      // por debajo de 1 en el nivel mayor — a ese tamaño el texto se compone
+      // como bloque, no como párrafo.
       fontSize: {
-        "display-xl": ["clamp(2.5rem, 9.5vw, 5.25rem)", { lineHeight: "1.02", letterSpacing: "-0.028em" }],
-        "display-lg": ["clamp(2.125rem, 7vw, 3.75rem)", { lineHeight: "1.05", letterSpacing: "-0.024em" }],
-        "display-md": ["clamp(1.75rem, 5vw, 2.75rem)", { lineHeight: "1.1", letterSpacing: "-0.018em" }],
-        "display-sm": ["clamp(1.375rem, 3.4vw, 1.875rem)", { lineHeight: "1.18", letterSpacing: "-0.014em" }],
-        lead: ["clamp(1.0625rem, 2.1vw, 1.3125rem)", { lineHeight: "1.55" }],
+        // Topado en 6rem: a 7.5rem la línea "se trata con" se rompía y dejaba
+        // "con" solo en un renglón.
+        "display-xl": ["clamp(2.875rem, 9vw, 6rem)", { lineHeight: "0.95", letterSpacing: "-0.038em" }],
+        "display-lg": ["clamp(2.375rem, 8vw, 4.75rem)", { lineHeight: "0.98", letterSpacing: "-0.032em" }],
+        "display-md": ["clamp(1.875rem, 5.4vw, 3.25rem)", { lineHeight: "1.04", letterSpacing: "-0.024em" }],
+        "display-sm": ["clamp(1.4375rem, 3.6vw, 2rem)", { lineHeight: "1.14", letterSpacing: "-0.016em" }],
+        lead: ["clamp(1.125rem, 2.3vw, 1.4375rem)", { lineHeight: "1.5", letterSpacing: "-0.011em" }],
+        // Cifra grande de dato, para un bloque suelto (precio destacado).
+        figure: ["clamp(2rem, 5vw, 3rem)", { lineHeight: "1", letterSpacing: "-0.03em" }],
+        // Cifra dentro de una tira de 3 columnas. Más contenida a propósito:
+        // con `figure` un "$40.000" se partía en dos líneas.
+        stat: ["clamp(1.375rem, 2.6vw, 1.875rem)", { lineHeight: "1.05", letterSpacing: "-0.022em" }],
       },
 
       borderRadius: {

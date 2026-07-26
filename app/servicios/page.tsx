@@ -20,14 +20,18 @@ export default function ServiciosPage() {
       <Navigation />
 
       <main id="contenido">
-        <section className="section-tight bg-porcelain">
+        <section className="surface-dark grain pb-12 pt-12 md:pb-16 md:pt-16">
           <div className="shell">
-            <div className="max-w-prose page-enter">
+            <div className="page-enter max-w-[52ch]">
               <p className="eyebrow">Tratamientos</p>
-              <h1 className="mt-4 text-display-lg text-drape-deep">
-                {treatments.length} tratamientos, un mismo punto de partida
+              <h1 className="mt-6 text-display-lg">
+                <span className="font-light text-porcelain/75">
+                  {treatments.length} tratamientos,
+                </span>
+                <br />
+                un mismo punto de partida
               </h1>
-              <p className="mt-5 text-lead text-slate-soft">
+              <p className="mt-6 text-lead text-porcelain/85">
                 Todos parten de una evaluación médica. No aplicamos un
                 tratamiento sin saber primero qué tiene tu piel.
               </p>
@@ -35,20 +39,22 @@ export default function ServiciosPage() {
 
             {/* La evaluación es la puerta de entrada: va destacada, no como una
                 tarjeta más del catálogo. */}
-            <div className="card-flat mt-10 flex flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between">
+            <div className="card-dark mt-11 flex flex-col gap-6 p-6 sm:flex-row sm:items-center sm:justify-between md:p-7">
               <div>
-                <h2 className="text-[1.0625rem] font-semibold text-drape-deep">
+                <h2 className="text-[1.125rem] font-semibold text-porcelain">
                   Evaluación médica
                 </h2>
-                <p className="mt-1.5 max-w-prose text-[0.9375rem] leading-relaxed text-slate-soft">
+                <p className="mt-2 max-w-prose text-[0.9375rem] leading-relaxed text-porcelain/85">
                   Primera consulta con el médico. Define qué corresponde según
                   tu tipo de piel, tu condición y tus antecedentes.
                 </p>
-                <p className="mt-3 text-sm text-slate-soft">
-                  <span className="tnum text-xl font-semibold text-slate">
+                <p className="mt-4 flex items-baseline gap-2">
+                  <span className="figure-stat text-figure text-porcelain">
                     {clinic.evaluation.priceDisplay}
                   </span>
-                  <span className="ml-2">{clinic.evaluation.note}</span>
+                  <span className="text-[0.875rem] text-porcelain/75">
+                    {clinic.evaluation.note}
+                  </span>
                 </p>
               </div>
               <WhatsAppCTA

@@ -43,9 +43,18 @@ interface Props {
   data: BeforeAfterCase;
   /** Proporción del marco. Retrato para rostro, que es el caso normal. */
   ratio?: string;
+  /** Invierte el color del pie para fondos oscuros. */
+  onDark?: boolean;
 }
 
-export default function BeforeAfter({ data, ratio = "4 / 5" }: Props) {
+export default function BeforeAfter({ data, ratio = "4 / 5", onDark = false }: Props) {
+  // Colores del pie según el fondo. Medidos: porcelain sobre drape-deep da
+  // 10.61:1, y porcelain/70 sigue sobre 6:1.
+  // Sobre oscuro las opacidades no bajan de 75%: medido contra el punto más
+  // claro del degradado, 75% da 5.14:1 y 60% caía a 3.12:1.
+  const cap = onDark
+    ? { title: "text-porcelain", body: "text-porcelain/85", hint: "text-porcelain/75" }
+    : { title: "text-slate", body: "text-slate-soft", hint: "text-slate-soft" };
   const [pos, setPos] = useState(50);
   const reported = useRef(false);
   const labelId = useId();
@@ -143,18 +152,24 @@ export default function BeforeAfter({ data, ratio = "4 / 5" }: Props) {
       </div>
 
       <figcaption className="mt-3">
-        <p id={labelId} className="text-[0.9375rem] font-semibold text-slate">
+        <p id={labelId} className={`text-[0.9375rem] font-semibold ${cap.title}`}>
           {data.label}
         </p>
-        <p className="mt-0.5 text-sm text-slate-soft">{data.treatment}</p>
-        {data.note && <p className="mt-1.5 text-[0.8125rem] text-slate-soft">{data.note}</p>}
+        <p className={`mt-0.5 text-sm ${cap.body}`}>{data.treatment}</p>
+        {data.note && <p className={`mt-1.5 text-[0.8125rem] ${cap.body}`}>{data.note}</p>}
         {!hasImages && (
-          <p className="placeholder-flag mt-2 px-2.5 py-1.5 text-[0.75rem] font-medium">
+          <p
+            className={
+              onDark
+                ? "mt-2 rounded-md border border-dashed border-pulse/70 bg-pulse/10 px-2.5 py-1.5 text-[0.75rem] font-medium text-[#f0b8b6]"
+                : "placeholder-flag mt-2 px-2.5 py-1.5 text-[0.75rem] font-medium"
+            }
+          >
             [REEMPLAZAR con fotos reales del caso — requiere consentimiento
             firmado del paciente]
           </p>
         )}
-        <p className="mt-2 text-[0.75rem] text-slate-soft">
+        <p className={`mt-2 text-[0.75rem] ${cap.hint}`}>
           Arrastra, o usa las flechas del teclado, para comparar. Los resultados
           varían según cada persona.
         </p>

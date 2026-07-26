@@ -27,33 +27,35 @@ export default function AgendarPage() {
       <Navigation />
 
       <main id="contenido">
-        <section className="section-tight bg-porcelain">
+        <section className="surface-dark grain pb-12 pt-12 md:pb-16 md:pt-16">
           <div className="shell">
-            <div className="max-w-prose page-enter">
+            <div className="page-enter max-w-[46ch]">
               <p className="eyebrow">Agendar</p>
-              <h1 className="mt-4 text-display-lg text-drape-deep">
-                Reserva tu evaluación médica
+              <h1 className="mt-6 text-display-lg">
+                <span className="font-light text-porcelain/75">Reserva tu</span>
+                <br />
+                evaluación médica
               </h1>
-              <p className="mt-5 text-lead text-slate-soft">
+              <p className="mt-6 text-lead text-porcelain/85">
                 Elige día y hora en el calendario, o escríbenos por WhatsApp y lo
                 coordinamos contigo.
               </p>
             </div>
 
-            <div className="card-flat mt-8 flex flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between">
+            <div className="card-dark mt-11 flex flex-col gap-6 p-6 sm:flex-row sm:items-center sm:justify-between md:p-7">
               <div>
-                <p className="text-[0.9375rem] text-slate-soft">
+                <p className="text-[0.875rem] uppercase tracking-wider text-porcelain/75">
                   Evaluación médica
                 </p>
-                <p className="mt-1">
-                  <span className="tnum text-2xl font-semibold text-slate">
+                <p className="mt-2 flex items-baseline gap-2">
+                  <span className="figure-stat text-figure text-porcelain">
                     {clinic.evaluation.priceDisplay}
                   </span>
-                  <span className="ml-2 text-[0.875rem] text-slate-soft">
+                  <span className="text-[0.875rem] text-porcelain/75">
                     {clinic.evaluation.note}
                   </span>
                 </p>
-                <p className="mt-2 text-[0.875rem] text-slate-soft">
+                <p className="mt-3 text-[0.875rem] text-porcelain/85">
                   {clinic.hours.display} · {clinic.hours.medical}
                 </p>
               </div>
@@ -64,7 +66,7 @@ export default function AgendarPage() {
 
         <StickyCTASentinel />
 
-        <section className="section-tight border-t border-line-soft">
+        <section className="surface-light section-tight">
           <div className="shell">
             <h2 className="text-display-sm text-drape-deep">Calendario</h2>
             <div className="mt-6">
@@ -104,10 +106,14 @@ export default function AgendarPage() {
           </div>
         </section>
 
-        <section className="section-tight bg-drape-deep text-porcelain">
+        <section className="surface-dark grain section-tight">
           <div className="shell-narrow text-center">
-            <h2 className="text-display-sm">¿Prefieres coordinar por mensaje?</h2>
-            <p className="mx-auto mt-3 max-w-prose text-[1.0625rem] leading-relaxed text-porcelain/80">
+            <h2 className="text-display-md">
+              <span className="font-light text-porcelain/75">¿Prefieres coordinar</span>
+              <br />
+              por mensaje?
+            </h2>
+            <p className="mx-auto mt-5 max-w-prose text-[1.0625rem] leading-relaxed text-porcelain/85">
               Escríbenos y te damos las horas disponibles.
             </p>
             <div className="mt-7 flex flex-col items-center gap-4">

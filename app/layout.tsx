@@ -19,15 +19,16 @@ import { clinic } from "@/lib/clinic";
  *
  * Sobre los ejes: la primera versión pedía SOFT, WONK y opsz. Se veía algo
  * mejor y costaba 118 KB — el archivo se llevaba solo el presupuesto de LCP y
- * bajó Performance de 96 a 87. Con el eje de peso nada más, la diferencia
- * visual a tamaño de titular es casi imperceptible y el archivo cae a una
- * fracción. El presupuesto no era negociable, así que gana el peso.
+ * bajó Performance de 96 a 87. Se quedan fuera.
+ *
+ * Sí se conserva el eje de peso completo (variable, un archivo): la jerarquía
+ * del display depende de poder contrastar un 300 fino contra un 700 macizo, y
+ * con un solo peso todo terminaba resolviéndose por tamaño.
  */
 const display = Fraunces({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-display",
-  weight: ["600"],
 });
 
 const body = Inter({

@@ -10,36 +10,40 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Paleta LARRÈRE. Ratios medidos contra --porcelain (#F2F5F6).
-        slate: {
-          DEFAULT: "#17202A", // 15.02:1 AAA
-          soft: "#3D4A56", //  8.05:1 AAA
+        // Superficies. Papel y yeso cálido, no crema amarilla.
+        paper: "#F2EEE7",
+        sand: {
+          DEFAULT: "#E7DFD2",
+          deep: "#D8CCBA",
         },
-        porcelain: {
-          DEFAULT: "#F2F5F6",
-          lift: "#FAFBFB",
+        // Tinta. Ratios medidos sobre --paper.
+        espresso: "#241B15", // 14.61:1 AAA
+        umber: "#3A2C22", // 11.62:1 AAA
+        ink: "#5C4A3D", //  7.26:1 AAA — secundario
+        // Señal. Ciruela apagada: lo único que no sale de la piel, y
+        // deliberadamente no terracota.
+        plum: {
+          DEFAULT: "#7A4A5C", // 6.13:1 AA
+          deep: "#5E3547", // 8.75:1 AAA
         },
-        drape: {
-          DEFAULT: "#0E5C63", //  7.02:1 AAA
-          deep: "#083F45", // 10.61:1 AAA
-          wash: "#E6EEEF",
+        // Escala de fototipos Fitzpatrick I–VI. Es el sistema de color del
+        // sitio, usado como dato. Los tonos 1–4 llevan texto espresso encima;
+        // los 5–6, texto papel.
+        tone: {
+          1: "#F7E7DC",
+          2: "#F0D5C2",
+          3: "#E3BC9F",
+          4: "#C99873",
+          5: "#A2714E",
+          6: "#6B4630",
         },
-        // 3.60:1 — válido para ≥24px bold y elementos no textuales.
-        // Para texto de tamaño normal usar `pulse-deep`.
-        pulse: {
-          DEFAULT: "#C8615E",
-          deep: "#A6413F", //  5.56:1 AA
-          wash: "#F7ECEC",
+        rule: {
+          DEFAULT: "#8A7860", // ~3.2:1 — perceptible, la grilla es diseño
+          soft: "#C9BCA9", // decorativo
         },
-        line: {
-          DEFAULT: "#A8BEC1",
-          soft: "#D4DFE0",
-        },
-        // Verde de marca de WhatsApp. Texto blanco encima falla (1.98:1):
-        // usar `wa-ink` (8.29:1).
         wa: {
           DEFAULT: "#25D366",
-          ink: "#17202A",
+          ink: "#241B15", // 8.52:1 sobre el verde
         },
 
         // Shadcn
@@ -80,48 +84,41 @@ const config: Config = {
 
       fontFamily: {
         sans: ["var(--font-body)", "system-ui", "sans-serif"],
-        display: ["var(--font-display)", "Georgia", "serif"],
+        display: ["var(--font-display)", "Helvetica Neue", "sans-serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
 
-      // Escala fluida. El mínimo es lo que ve el tráfico de Instagram, así
-      // que se eligió primero el mobile y después el techo de desktop.
-      //
-      // La escala anterior era correcta y anodina: el hero topaba en 5.25rem y
-      // los saltos entre niveles eran chicos, así que nada dominaba. Ahora el
-      // display arranca más alto en mobile y llega a 7.5rem, con el interlineado
-      // por debajo de 1 en el nivel mayor — a ese tamaño el texto se compone
-      // como bloque, no como párrafo.
+      // Salto de escala deliberadamente extremo: la mono de etiqueta vive en
+      // 11–12px y el display llega a 8rem. Lo que mata a un diseño beige es
+      // que todo quede en el rango medio.
       fontSize: {
-        // Topado en 6rem: a 7.5rem la línea "se trata con" se rompía y dejaba
-        // "con" solo en un renglón.
-        "display-xl": ["clamp(2.875rem, 9vw, 6rem)", { lineHeight: "0.95", letterSpacing: "-0.038em" }],
-        "display-lg": ["clamp(2.375rem, 8vw, 4.75rem)", { lineHeight: "0.98", letterSpacing: "-0.032em" }],
-        "display-md": ["clamp(1.875rem, 5.4vw, 3.25rem)", { lineHeight: "1.04", letterSpacing: "-0.024em" }],
-        "display-sm": ["clamp(1.4375rem, 3.6vw, 2rem)", { lineHeight: "1.14", letterSpacing: "-0.016em" }],
-        lead: ["clamp(1.125rem, 2.3vw, 1.4375rem)", { lineHeight: "1.5", letterSpacing: "-0.011em" }],
-        // Cifra grande de dato, para un bloque suelto (precio destacado).
-        figure: ["clamp(2rem, 5vw, 3rem)", { lineHeight: "1", letterSpacing: "-0.03em" }],
-        // Cifra dentro de una tira de 3 columnas. Más contenida a propósito:
-        // con `figure` un "$40.000" se partía en dos líneas.
-        stat: ["clamp(1.375rem, 2.6vw, 1.875rem)", { lineHeight: "1.05", letterSpacing: "-0.022em" }],
+        "display-2xl": ["clamp(3.25rem, 13vw, 8rem)", { lineHeight: "0.88", letterSpacing: "-0.045em" }],
+        "display-xl": ["clamp(2.625rem, 8.5vw, 5.5rem)", { lineHeight: "0.9", letterSpacing: "-0.038em" }],
+        "display-lg": ["clamp(2.125rem, 6vw, 3.75rem)", { lineHeight: "0.95", letterSpacing: "-0.03em" }],
+        "display-md": ["clamp(1.625rem, 4vw, 2.5rem)", { lineHeight: "1.02", letterSpacing: "-0.022em" }],
+        "display-sm": ["clamp(1.25rem, 2.6vw, 1.625rem)", { lineHeight: "1.12", letterSpacing: "-0.014em" }],
+        lead: ["clamp(1.0625rem, 1.9vw, 1.3125rem)", { lineHeight: "1.5" }],
+        // Etiquetas de ficha.
+        label: ["0.6875rem", { lineHeight: "1.4", letterSpacing: "0.14em" }],
+        "label-lg": ["0.75rem", { lineHeight: "1.4", letterSpacing: "0.12em" }],
       },
 
+      // Radio cero en todo el sistema. Es la decisión que más separa este
+      // diseño del beige de plantilla.
       borderRadius: {
-        lg: "var(--radius-lg)",
-        md: "var(--radius)",
-        sm: "calc(var(--radius) - 3px)",
-      },
-
-      boxShadow: {
-        card: "var(--shadow-card)",
-        lift: "var(--shadow-lift)",
+        none: "0",
+        sm: "0",
+        DEFAULT: "0",
+        md: "0",
+        lg: "0",
+        xl: "0",
+        full: "9999px", // sólo para el punto de estado y avatares
       },
 
       maxWidth: {
-        prose: "62ch",
+        prose: "58ch",
       },
 
-      // Sólo transiciones finitas y disparadas por interacción.
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

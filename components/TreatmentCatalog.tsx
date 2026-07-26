@@ -29,12 +29,12 @@ export default function TreatmentCatalog() {
           Catálogo de tratamientos
         </h2>
 
-        {/* Filtros. Es un grupo de botones que cambian una lista, así que van
-            como tablist para que el lector de pantalla anuncie el estado. */}
+        {/* Filtros como banda contigua de pestañas, no como píldoras flotando:
+            comparten filete igual que las celdas de una tabla. */}
         <div
           role="tablist"
           aria-label="Filtrar por categoría"
-          className="-mx-1 flex flex-wrap gap-2 overflow-x-auto pb-1"
+          className="flex flex-wrap border-l border-t border-rule"
         >
           {categories.map((cat) => {
             const selected = active === cat;
@@ -45,10 +45,10 @@ export default function TreatmentCatalog() {
                 type="button"
                 aria-selected={selected}
                 onClick={() => setActive(cat)}
-                className={`min-h-[40px] whitespace-nowrap rounded-md border px-4 py-2 text-[0.875rem] font-medium transition-colors ${
+                className={`mono min-h-[44px] flex-1 whitespace-nowrap border-b border-r border-rule px-4 py-2.5 text-label uppercase transition-colors ${
                   selected
-                    ? "border-drape bg-drape text-porcelain"
-                    : "border-line bg-porcelain-lift text-slate-soft hover:border-drape hover:text-drape-deep"
+                    ? "bg-espresso text-paper"
+                    : "bg-paper text-ink hover:bg-sand hover:text-espresso"
                 }`}
               >
                 {cat}
@@ -57,59 +57,64 @@ export default function TreatmentCatalog() {
           })}
         </div>
 
-        <p aria-live="polite" className="mt-4 text-sm text-slate-soft">
+        <p aria-live="polite" className="mono mt-4 text-label uppercase text-ink">
           {shown.length} {shown.length === 1 ? "tratamiento" : "tratamientos"}
-          {active !== "Todos" && ` en ${active}`}
+          {active !== "Todos" && ` · ${active}`}
         </p>
 
-        <ul className="mt-6 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {shown.map((t) => (
-            <li key={t.id}>
-              <article className="card-flat lift flex h-full flex-col p-5">
+        {/* Grilla sin gap: filete compartido. */}
+        <ul className="mt-6 grid border-l border-t border-rule md:grid-cols-2 lg:grid-cols-3">
+          {shown.map((t, i) => (
+            <li key={t.id} className="border-b border-r border-rule">
+              <article className="rec rec-hover flex h-full flex-col border-0 p-6">
                 <div className="flex items-start justify-between gap-3">
-                  <p className="eyebrow text-[0.6875rem]">{t.category}</p>
+                  <p className="mono text-label uppercase text-ink">
+                    {String(i + 1).padStart(2, "0")} · {t.category}
+                  </p>
                   {t.doctorOnly && (
-                    <span className="inline-flex shrink-0 items-center gap-1 rounded-sm bg-drape-wash px-2 py-1 text-[0.6875rem] font-semibold text-drape-deep">
+                    <span className="mono inline-flex shrink-0 items-center gap-1 border border-rule px-1.5 py-1 text-[0.625rem] uppercase text-espresso">
                       <CalendarClock className="h-3 w-3" aria-hidden="true" />
-                      Miércoles 17:30
+                      Mié 17:30
                     </span>
                   )}
                 </div>
 
-                <h3 className="mt-2 text-[1.125rem] font-semibold text-drape-deep">
+                <h3 className="mt-5 text-[1.25rem] font-semibold leading-tight text-espresso">
                   {t.name}
                 </h3>
                 {t.subtitle && (
-                  <p className="mt-0.5 text-[0.8125rem] text-slate-soft">{t.subtitle}</p>
+                  <p className="mono mt-1.5 text-[0.6875rem] uppercase text-ink">
+                    {t.subtitle}
+                  </p>
                 )}
 
-                <p className="mt-3 flex-1 text-[0.9375rem] leading-relaxed text-slate-soft">
+                <p className="mt-3.5 flex-1 text-[0.9375rem] leading-relaxed text-ink">
                   {t.description}
                 </p>
 
                 {/* --- Precio --- */}
-                <div className="mt-4 border-t border-line-soft pt-4">
+                <div className="mt-5 border-t border-rule pt-4">
                   {t.price !== null ? (
-                    <p className="flex items-baseline gap-2">
+                    <p className="flex items-baseline gap-2.5">
                       {t.listPrice !== null && (
-                        <span className="tnum text-sm text-slate-soft line-through">
+                        <span className="mono text-sm text-ink line-through">
                           {clp(t.listPrice)}
                         </span>
                       )}
-                      <span className="tnum text-xl font-semibold text-slate">
+                      <span className="mono text-[1.375rem] font-semibold text-espresso">
                         {clp(t.price)}
                       </span>
                     </p>
                   ) : (
-                    <p className="text-[0.875rem] text-slate-soft">
+                    <p className="mono text-label uppercase text-ink">
                       Valor según evaluación
                     </p>
                   )}
 
                   {t.needsEvaluation && (
-                    <p className="mt-2 flex items-start gap-1.5 text-[0.8125rem] text-slate-soft">
-                      <AlertCircle className="mt-px h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-                      Requiere evaluación médica previa
+                    <p className="mono mt-2.5 flex items-start gap-1.5 text-[0.625rem] uppercase leading-relaxed text-ink">
+                      <AlertCircle className="mt-px h-3 w-3 shrink-0" aria-hidden="true" />
+                      Requiere evaluación previa
                     </p>
                   )}
 

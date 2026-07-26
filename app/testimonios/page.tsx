@@ -31,16 +31,16 @@ export default function TestimoniosPage() {
       <Navigation />
 
       <main id="contenido">
-        <section className="surface-dark grain pb-12 pt-12 md:pb-16 md:pt-16">
+        <section className="surface-ink grain pb-12 pt-12 md:pb-16 md:pt-16">
           <div className="shell">
             <div className="page-enter max-w-[46ch]">
-              <p className="eyebrow">Opiniones</p>
+              <p className="field">Opiniones</p>
               <h1 className="mt-6 text-display-lg">
-                <span className="font-light text-porcelain/75">Lo que dicen</span>
+                <span className="text-sand">Lo que dicen</span>
                 <br />
                 las pacientes
               </h1>
-              <p className="mt-6 text-lead text-porcelain/85">
+              <p className="mt-6 text-lead text-sand">
                 Preferimos reseñas que puedas verificar por tu cuenta antes que
                 testimonios escritos por nosotros.
               </p>
@@ -50,9 +50,9 @@ export default function TestimoniosPage() {
 
         <StickyCTASentinel />
 
-        <section className="surface-light section">
+        <section className="bg-paper section">
           <div className="shell">
-            <div className="placeholder-flag mx-auto max-w-prose p-6">
+            <div className="todo-flag mx-auto max-w-prose p-6">
               <h2 className="text-[1.0625rem] font-semibold">
                 Espacio para reseñas reales
               </h2>
@@ -75,23 +75,23 @@ export default function TestimoniosPage() {
             {/* Maqueta de cómo se verá una reseña real, para que se entienda el
                 formato. Marcada como ejemplo, sin datos de nadie. */}
             <div className="mx-auto mt-10 max-w-prose">
-              <p className="text-[0.8125rem] font-semibold uppercase tracking-wider text-slate-soft">
+              <p className="text-[0.8125rem] font-semibold uppercase tracking-wider text-ink">
                 Ejemplo del formato — no es una reseña real
               </p>
               {/* Se marca como ejemplo con borde punteado, no con `opacity`:
                   bajar la opacidad del contenedor arrastra el contraste del
                   texto por debajo de AA (era el único fallo de contraste que
                   quedaba en el sitio). */}
-              <article className="mt-3 rounded-lg border border-dashed border-line bg-porcelain-lift p-6">
+              <article className="mt-3 rounded-lg border border-dashed border-rule bg-paper p-6">
                 <div className="flex gap-0.5" role="img" aria-label="5 de 5 estrellas">
                   {[0, 1, 2, 3, 4].map((i) => (
-                    <Star key={i} className="h-4 w-4 fill-pulse text-pulse" aria-hidden="true" />
+                    <Star key={i} className="h-4 w-4 fill-plum text-plum" aria-hidden="true" />
                   ))}
                 </div>
-                <p className="mt-3 text-[0.9375rem] leading-relaxed text-slate-soft">
+                <p className="mt-3 text-[0.9375rem] leading-relaxed text-ink">
                   Texto de la reseña tal como la escribió la paciente en Google.
                 </p>
-                <p className="mt-3 text-[0.875rem] font-medium text-slate">
+                <p className="mt-3 text-[0.875rem] font-medium text-espresso">
                   Nombre · Tratamiento · Mes y año
                 </p>
               </article>
@@ -99,19 +99,19 @@ export default function TestimoniosPage() {
           </div>
         </section>
 
-        <section className="section-tight border-t border-line-soft bg-porcelain-lift">
+        <section className="section-tight border-t border-rule/50 bg-paper">
           <div className="shell-narrow text-center">
-            <h2 className="text-display-sm text-drape-deep">
+            <h2 className="text-display-sm text-espresso">
               Mientras tanto, mira los casos
             </h2>
-            <p className="mx-auto mt-3 max-w-prose text-[1.0625rem] leading-relaxed text-slate-soft">
+            <p className="mx-auto mt-3 max-w-prose text-[1.0625rem] leading-relaxed text-ink">
               Los antes y después son de la clínica, con consentimiento y sin
               retoque.
             </p>
             <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link
                 href="/resultados"
-                className="inline-flex min-h-[44px] items-center justify-center rounded-md border border-line px-6 py-3.5 text-base font-semibold text-drape-deep transition-colors hover:bg-drape-wash"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-md border border-rule px-6 py-3.5 text-base font-semibold text-espresso transition-colors hover:bg-sand"
               >
                 Ver resultados
               </Link>

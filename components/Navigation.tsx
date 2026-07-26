@@ -13,17 +13,19 @@ const LINKS = [
   { href: "/contacto", label: "Contacto" },
 ];
 
+/**
+ * Barra de encabezado en clave de ficha: papel, filete inferior de 1px, y los
+ * enlaces en mono con caja alta. Sin sombra ni radio — la separación la da el
+ * filete, no la elevación.
+ */
 export default function Navigation() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
-  // Cierra el menú al navegar. Antes cada <Link> tenía su propio onClick para
-  // esto; con el pathname es una sola regla y no se olvida en el siguiente link.
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
 
-  // Con el menú abierto el fondo no debe scrollear.
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
@@ -31,7 +33,6 @@ export default function Navigation() {
     };
   }, [open]);
 
-  // Escape cierra.
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -41,20 +42,17 @@ export default function Navigation() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  // Todos los heroes son oscuros ahora, así que el nav va oscuro también: con
-  // la barra clara encima quedaba un corte horizontal que partía el primer
-  // pantallazo en dos.
   return (
-    <header className="sticky top-0 z-50 border-b border-porcelain/12 bg-drape-deep/95 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-rule bg-paper/95 backdrop-blur-sm">
       <nav className="shell flex h-16 items-center justify-between" aria-label="Principal">
         <Link
           href="/"
-          className="font-display text-[1.4375rem] font-semibold tracking-tight text-porcelain"
+          className="font-display text-[1.5rem] leading-none tracking-tight text-espresso"
         >
           LARRÈRE
         </Link>
 
-        <div className="hidden items-center gap-1 md:flex">
+        <div className="hidden items-center gap-7 md:flex">
           {LINKS.map((l) => {
             const active = pathname === l.href;
             return (
@@ -62,17 +60,17 @@ export default function Navigation() {
                 key={l.href}
                 href={l.href}
                 aria-current={active ? "page" : undefined}
-                className={`rounded-md px-3 py-2 text-[0.9375rem] transition-colors ${
+                className={`mono border-b pb-0.5 text-label uppercase transition-colors ${
                   active
-                    ? "font-semibold text-porcelain"
-                    : "text-porcelain/80 hover:bg-porcelain/10 hover:text-porcelain"
+                    ? "border-espresso text-espresso"
+                    : "border-transparent text-ink hover:border-rule hover:text-espresso"
                 }`}
               >
                 {l.label}
               </Link>
             );
           })}
-          <WhatsAppCTA context={{ kind: "evaluation" }} size="sm" className="ml-2">
+          <WhatsAppCTA context={{ kind: "evaluation" }} size="sm" className="ml-1">
             Escribir
           </WhatsAppCTA>
         </div>
@@ -80,7 +78,7 @@ export default function Navigation() {
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="-mr-2 flex h-11 w-11 items-center justify-center rounded-md text-porcelain transition-colors hover:bg-porcelain/10 md:hidden"
+          className="-mr-2 flex h-11 w-11 items-center justify-center text-espresso transition-colors hover:bg-sand md:hidden"
           aria-expanded={open}
           aria-controls="menu-movil"
           aria-label={open ? "Cerrar menú" : "Abrir menú"}
@@ -89,19 +87,16 @@ export default function Navigation() {
         </button>
       </nav>
 
-      {/* El panel se desmonta al cerrar: nada enfocable queda escondido. */}
       {open && (
-        <div id="menu-movil" className="border-t border-porcelain/12 bg-drape-deep md:hidden">
-          <div className="shell flex flex-col gap-1 py-4">
+        <div id="menu-movil" className="border-t border-rule bg-paper md:hidden">
+          <div className="shell flex flex-col py-2">
             {LINKS.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
                 aria-current={pathname === l.href ? "page" : undefined}
-                className={`rounded-md px-3 py-3 text-base transition-colors ${
-                  pathname === l.href
-                    ? "bg-porcelain/10 font-semibold text-porcelain"
-                    : "text-porcelain/85 hover:bg-porcelain/10"
+                className={`mono border-b border-rule/40 py-4 text-label uppercase transition-colors ${
+                  pathname === l.href ? "font-semibold text-espresso" : "text-ink"
                 }`}
               >
                 {l.label}
@@ -109,11 +104,11 @@ export default function Navigation() {
             ))}
             <Link
               href="/agendar"
-              className="rounded-md px-3 py-3 text-base text-porcelain/85 transition-colors hover:bg-porcelain/10"
+              className="mono border-b border-rule/40 py-4 text-label uppercase text-ink"
             >
               Agendar online
             </Link>
-            <WhatsAppCTA context={{ kind: "evaluation" }} block className="mt-2" />
+            <WhatsAppCTA context={{ kind: "evaluation" }} block className="mt-4 mb-2" />
           </div>
         </div>
       )}

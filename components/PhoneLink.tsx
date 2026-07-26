@@ -14,7 +14,7 @@ export default function PhoneLink({ label = "contacto" }: { label?: string }) {
     <a
       href={`tel:${clinic.phone.e164}`}
       onClick={() => trackPhoneClick(label)}
-      className="tnum mt-1 block text-[1.0625rem] text-drape underline decoration-line underline-offset-4 transition-colors hover:decoration-drape"
+      className="tnum mt-1 block text-[1.0625rem] text-plum underline decoration-rule underline-offset-4 transition-colors hover:decoration-espresso"
     >
       {clinic.phone.display}
     </a>

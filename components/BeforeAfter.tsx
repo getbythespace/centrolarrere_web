@@ -50,11 +50,9 @@ interface Props {
 export default function BeforeAfter({ data, ratio = "4 / 5", onDark = false }: Props) {
   // Colores del pie según el fondo. Medidos: porcelain sobre drape-deep da
   // 10.61:1, y porcelain/70 sigue sobre 6:1.
-  // Sobre oscuro las opacidades no bajan de 75%: medido contra el punto más
-  // claro del degradado, 75% da 5.14:1 y 60% caía a 3.12:1.
   const cap = onDark
-    ? { title: "text-porcelain", body: "text-porcelain/85", hint: "text-porcelain/75" }
-    : { title: "text-slate", body: "text-slate-soft", hint: "text-slate-soft" };
+    ? { title: "text-paper", body: "text-sand", hint: "text-sand/80" }
+    : { title: "text-espresso", body: "text-ink", hint: "text-ink" };
   const [pos, setPos] = useState(50);
   const reported = useRef(false);
   const labelId = useId();
@@ -73,7 +71,7 @@ export default function BeforeAfter({ data, ratio = "4 / 5", onDark = false }: P
   return (
     <figure className="m-0">
       <div
-        className="group relative w-full overflow-hidden rounded-lg border border-line bg-drape-wash select-none"
+        className="group relative w-full select-none overflow-hidden border border-rule bg-sand"
         style={{ aspectRatio: ratio, ["--pos" as string]: `${pos}%` }}
       >
         {/* ---- ANTES (capa de fondo) ---- */}
@@ -116,10 +114,10 @@ export default function BeforeAfter({ data, ratio = "4 / 5", onDark = false }: P
         </div>
 
         {/* ---- Etiquetas ---- */}
-        <span className="pointer-events-none absolute left-3 top-3 rounded-sm bg-slate/80 px-2 py-1 text-[0.6875rem] font-semibold uppercase tracking-wider text-porcelain backdrop-blur-sm">
+        <span className="mono pointer-events-none absolute left-0 top-0 bg-espresso px-2 py-1 text-[0.625rem] uppercase tracking-widest text-paper">
           Antes
         </span>
-        <span className="pointer-events-none absolute right-3 top-3 rounded-sm bg-drape-deep/85 px-2 py-1 text-[0.6875rem] font-semibold uppercase tracking-wider text-porcelain backdrop-blur-sm">
+        <span className="mono pointer-events-none absolute right-0 top-0 bg-espresso px-2 py-1 text-[0.625rem] uppercase tracking-widest text-paper">
           Después
         </span>
 
@@ -138,14 +136,14 @@ export default function BeforeAfter({ data, ratio = "4 / 5", onDark = false }: P
 
         {/* ---- Divisor + manija (sólo visual) ---- */}
         <div
-          className="pointer-events-none absolute inset-y-0 z-10 w-0.5 -translate-x-1/2 bg-porcelain shadow-[0_0_0_1px_rgba(8,63,69,0.25)]"
+          className="pointer-events-none absolute inset-y-0 z-10 w-px -translate-x-1/2 bg-espresso"
           style={{ left: "var(--pos)" }}
         />
         <div
-          className="pointer-events-none absolute top-1/2 z-10 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-porcelain-lift shadow-lift transition-transform duration-150 peer-focus-visible:ring-2 peer-focus-visible:ring-drape peer-focus-visible:ring-offset-2 peer-active:scale-95"
+          className="pointer-events-none absolute top-1/2 z-10 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center border border-espresso bg-paper transition-transform duration-150 peer-focus-visible:ring-2 peer-focus-visible:ring-plum peer-focus-visible:ring-offset-2 peer-active:scale-95"
           style={{ left: "var(--pos)" }}
         >
-          <svg viewBox="0 0 24 24" className="h-5 w-5 text-drape" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+          <svg viewBox="0 0 24 24" className="h-4 w-4 text-espresso" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
             <path d="M9 6 4 12l5 6M15 6l5 6-5 6" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
@@ -158,20 +156,12 @@ export default function BeforeAfter({ data, ratio = "4 / 5", onDark = false }: P
         <p className={`mt-0.5 text-sm ${cap.body}`}>{data.treatment}</p>
         {data.note && <p className={`mt-1.5 text-[0.8125rem] ${cap.body}`}>{data.note}</p>}
         {!hasImages && (
-          <p
-            className={
-              onDark
-                ? "mt-2 rounded-md border border-dashed border-pulse/70 bg-pulse/10 px-2.5 py-1.5 text-[0.75rem] font-medium text-[#f0b8b6]"
-                : "placeholder-flag mt-2 px-2.5 py-1.5 text-[0.75rem] font-medium"
-            }
-          >
-            [REEMPLAZAR con fotos reales del caso — requiere consentimiento
-            firmado del paciente]
+          <p className="todo-flag mt-2.5 px-2.5 py-1.5">
+            [REEMPLAZAR con fotos reales — requiere consentimiento firmado]
           </p>
         )}
-        <p className={`mt-2 text-[0.75rem] ${cap.hint}`}>
-          Arrastra, o usa las flechas del teclado, para comparar. Los resultados
-          varían según cada persona.
+        <p className={`mono mt-2.5 text-[0.625rem] uppercase leading-relaxed ${cap.hint}`}>
+          Arrastra o usa las flechas · Los resultados varían según cada persona
         </p>
       </figcaption>
     </figure>
@@ -187,18 +177,27 @@ function PlaceholderPane({ side }: { side: "antes" | "después" }) {
   return (
     <div
       className={`flex h-full w-full items-center justify-center ${
-        isAfter ? "bg-drape-wash" : "bg-[#e4e9ea]"
+        isAfter ? "bg-tone-2" : "bg-sand-deep"
       }`}
     >
-      <svg viewBox="0 0 200 250" className="h-full w-full opacity-25" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+      {/* Retícula de encuadre, en clave de plantilla fotográfica clínica: las
+          fotos de un caso tienen que estar tomadas en el mismo eje. */}
+      <svg
+        viewBox="0 0 200 250"
+        className="h-full w-full opacity-40"
+        aria-hidden="true"
+        preserveAspectRatio="xMidYMid slice"
+      >
         <defs>
-          <pattern id={`hatch-${side}`} width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-            <line x1="0" y1="0" x2="0" y2="8" stroke={isAfter ? "#0E5C63" : "#3D4A56"} strokeWidth="1.5" />
+          <pattern id={`g-${side}`} width="20" height="20" patternUnits="userSpaceOnUse">
+            <path d="M20 0H0v20" fill="none" stroke="#8A7860" strokeWidth="0.5" />
           </pattern>
         </defs>
-        <rect width="200" height="250" fill={`url(#hatch-${side})`} />
-        {/* Silueta de rostro, para que se lea la proporción del encuadre. */}
-        <ellipse cx="100" cy="115" rx="52" ry="66" fill="none" stroke={isAfter ? "#0E5C63" : "#3D4A56"} strokeWidth="2" />
+        <rect width="200" height="250" fill={`url(#g-${side})`} />
+        {/* Ejes de encuadre. */}
+        <line x1="100" y1="0" x2="100" y2="250" stroke="#8A7860" strokeWidth="0.75" strokeDasharray="4 4" />
+        <line x1="0" y1="115" x2="200" y2="115" stroke="#8A7860" strokeWidth="0.75" strokeDasharray="4 4" />
+        <ellipse cx="100" cy="115" rx="50" ry="64" fill="none" stroke="#5C4A3D" strokeWidth="1.25" />
       </svg>
     </div>
   );

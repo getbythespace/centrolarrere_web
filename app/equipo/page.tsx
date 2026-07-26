@@ -66,16 +66,16 @@ export default function EquipoPage() {
       <Navigation />
 
       <main id="contenido">
-        <section className="surface-dark grain pb-12 pt-12 md:pb-16 md:pt-16">
+        <section className="surface-ink grain pb-12 pt-12 md:pb-16 md:pt-16">
           <div className="shell">
             <div className="page-enter max-w-[48ch]">
-              <p className="eyebrow">Equipo</p>
+              <p className="field">Equipo</p>
               <h1 className="mt-6 text-display-lg">
-                <span className="font-light text-porcelain/75">Quién realiza</span>
+                <span className="text-sand">Quién realiza</span>
                 <br />
                 cada tratamiento
               </h1>
-              <p className="mt-6 text-lead text-porcelain/85">
+              <p className="mt-6 text-lead text-sand">
                 La diferencia entre una clínica y un centro estético informal
                 está acá: quién te atiende y con qué respaldo.
               </p>
@@ -85,33 +85,33 @@ export default function EquipoPage() {
 
         <StickyCTASentinel />
 
-        <section className="surface-light section">
+        <section className="bg-paper section">
           <div className="shell">
             <h2 className="sr-only">Integrantes del equipo</h2>
             <ul className="grid gap-6 md:grid-cols-3">
               {team.map((m) => (
-                <li key={m.name} className="reveal">
-                  <article className="card-flat flex h-full flex-col p-6">
+                <li key={m.name}>
+                  <article className="rec flex h-full flex-col p-6">
                     {/* Espacio de retrato. Sin foto real no se pone un emoji
                         gigante: se deja el marco rotulado. */}
-                    <div className="placeholder-flag flex aspect-[4/3] w-full items-center justify-center px-3 text-center text-[0.75rem] font-medium">
+                    <div className="todo-flag flex aspect-[4/3] w-full items-center justify-center px-3 text-center text-[0.75rem] font-medium">
                       [REEMPLAZAR con retrato real]
                     </div>
 
                     {m.badge && (
-                      <span className="mt-4 inline-flex w-fit items-center rounded-sm bg-drape-wash px-2 py-1 text-[0.6875rem] font-semibold text-drape-deep">
+                      <span className="mt-4 inline-flex w-fit items-center rounded-sm bg-sand px-2 py-1 text-[0.6875rem] font-semibold text-espresso">
                         {m.badge}
                       </span>
                     )}
 
-                    <h3 className="mt-4 text-[1.125rem] font-semibold text-drape-deep">
+                    <h3 className="mt-4 text-[1.125rem] font-semibold text-espresso">
                       {m.name}
                     </h3>
-                    <p className="mt-0.5 text-[0.875rem] font-medium text-drape">{m.role}</p>
-                    <p className="mt-3 flex-1 text-[0.9375rem] leading-relaxed text-slate-soft">
+                    <p className="mt-0.5 text-[0.875rem] font-medium text-plum">{m.role}</p>
+                    <p className="mt-3 flex-1 text-[0.9375rem] leading-relaxed text-ink">
                       {m.body}
                     </p>
-                    <p className="placeholder-flag mt-4 px-2.5 py-1.5 text-[0.75rem] font-medium">
+                    <p className="todo-flag mt-4 px-2.5 py-1.5 text-[0.75rem] font-medium">
                       {m.credential}
                     </p>
                   </article>
@@ -122,20 +122,20 @@ export default function EquipoPage() {
         </section>
 
         {/* Ancla de destino para el redirect desde /certificados. */}
-        <section className="surface-light section border-t border-line-soft" id="credenciales">
+        <section className="bg-paper section border-t border-rule/50" id="credenciales">
           <div className="shell">
             <div className="max-w-prose">
-              <p className="eyebrow">Credenciales y estándares</p>
-              <h2 className="mt-5 text-display-md text-drape-deep">
-                <span className="font-light">Con qué respaldo</span> trabajamos
+              <p className="field">Credenciales y estándares</p>
+              <h2 className="mt-5 text-display-md text-espresso">
+                <span className="text-ink">Con qué respaldo</span> trabajamos
               </h2>
             </div>
 
             <ul className="mt-8 grid gap-5 sm:grid-cols-2">
               {standards.map((s) => (
-                <li key={s.title} className="card-flat p-5 reveal">
-                  <h3 className="text-[1.0625rem] font-semibold text-drape-deep">{s.title}</h3>
-                  <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-slate-soft">
+                <li key={s.title} className="rec p-5 reveal">
+                  <h3 className="text-[1.0625rem] font-semibold text-espresso">{s.title}</h3>
+                  <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-ink">
                     {s.body}
                   </p>
                 </li>
@@ -145,7 +145,7 @@ export default function EquipoPage() {
             {/* Sellos de confianza: se dejan como espacio explícito porque hay
                 que verificarlos antes de mostrarlos. Una autorización sanitaria
                 afirmada de más es un problema legal, no un detalle. */}
-            <div className="placeholder-flag mt-8 max-w-prose p-5">
+            <div className="todo-flag mt-8 max-w-prose p-5">
               <h3 className="text-[0.9375rem] font-semibold">
                 Espacio para sellos y autorizaciones
               </h3>
@@ -160,12 +160,12 @@ export default function EquipoPage() {
           </div>
         </section>
 
-        <section className="surface-dark grain section-tight">
+        <section className="surface-ink grain section-tight">
           <div className="shell-narrow text-center">
             <h2 className="text-display-md">
-              <span className="font-light text-porcelain/75">Conversemos</span> tu caso
+              <span className="text-sand">Conversemos</span> tu caso
             </h2>
-            <p className="tnum mx-auto mt-5 max-w-prose text-[1.0625rem] leading-relaxed text-porcelain/85">
+            <p className="tnum mx-auto mt-5 max-w-prose text-[1.0625rem] leading-relaxed text-sand">
               Evaluación médica {clinic.evaluation.priceDisplay} ·{" "}
               {clinic.evaluation.note}
             </p>

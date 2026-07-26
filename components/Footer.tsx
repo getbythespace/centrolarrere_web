@@ -1,32 +1,33 @@
 import Link from "next/link";
 import { clinic } from "@/lib/clinic";
 import { waLink } from "@/lib/whatsapp";
+import { ToneRule } from "./ToneScale";
 
 /**
- * Todo dato de contacto sale de `lib/clinic.ts`.
+ * Pie en clave de colofón: la escala de tonos lo cierra por arriba, los datos
+ * van en mono y el logo ocupa una escala grande para que el remate tenga peso.
  *
- * El footer anterior publicaba el teléfono inventado +56 9 1234 5678 y un
- * wa.me al mismo número falso, además de describir la clínica como "centro de
- * belleza y bienestar" — el posicionamiento contrario al real.
+ * Todo dato de contacto sale de `lib/clinic.ts`.
  */
 export default function Footer() {
   return (
-    <footer className="border-t border-line-soft bg-drape-deep text-porcelain">
+    <footer className="surface-ink grain">
+      <ToneRule />
       <div className="shell py-14">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="sm:col-span-2 lg:col-span-1">
-            <p className="font-display text-xl font-semibold">LARRÈRE</p>
-            <p className="mt-2 max-w-[28ch] text-sm leading-relaxed text-porcelain/80">
-              Estética con criterio clínico. Evaluación médica previa a todo
-              tratamiento.
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.3fr_0.9fr_0.9fr_0.9fr]">
+          <div>
+            <p className="font-display text-[2.25rem] leading-none tracking-tight text-paper">
+              LARRÈRE
+            </p>
+            <p className="mono mt-4 max-w-[26ch] text-[0.6875rem] uppercase leading-relaxed text-sand">
+              Estética con criterio clínico · Fototipos I–VI · Evaluación médica
+              previa a todo tratamiento
             </p>
           </div>
 
           <nav aria-label="Navegación del sitio">
-            <h2 className="text-[0.8125rem] font-semibold uppercase tracking-wider text-porcelain/60">
-              Sitio
-            </h2>
-            <ul className="mt-3 space-y-2 text-sm">
+            <h2 className="mono text-label uppercase text-sand/70">Sitio</h2>
+            <ul className="mt-4 space-y-2.5 text-[0.9375rem]">
               {[
                 ["/servicios", "Tratamientos"],
                 ["/resultados", "Resultados"],
@@ -35,7 +36,10 @@ export default function Footer() {
                 ["/contacto", "Contacto"],
               ].map(([href, label]) => (
                 <li key={href}>
-                  <Link href={href} className="text-porcelain/85 transition-colors hover:text-porcelain">
+                  <Link
+                    href={href}
+                    className="text-sand transition-colors hover:text-paper"
+                  >
                     {label}
                   </Link>
                 </li>
@@ -44,24 +48,22 @@ export default function Footer() {
           </nav>
 
           <div>
-            <h2 className="text-[0.8125rem] font-semibold uppercase tracking-wider text-porcelain/60">
-              Contacto
-            </h2>
-            <ul className="mt-3 space-y-2 text-sm">
+            <h2 className="mono text-label uppercase text-sand/70">Contacto</h2>
+            <ul className="mt-4 space-y-2.5 text-[0.9375rem]">
               <li>
                 <a
                   href={waLink({ kind: "general" })}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-porcelain/85 transition-colors hover:text-porcelain"
+                  className="text-sand transition-colors hover:text-paper"
                 >
-                  WhatsApp {clinic.phone.display}
+                  WhatsApp
                 </a>
               </li>
               <li>
                 <a
                   href={`tel:${clinic.phone.e164}`}
-                  className="tnum text-porcelain/85 transition-colors hover:text-porcelain"
+                  className="tnum text-sand transition-colors hover:text-paper"
                 >
                   {clinic.phone.display}
                 </a>
@@ -69,42 +71,49 @@ export default function Footer() {
               <li>
                 <a
                   href={`mailto:${clinic.email}`}
-                  className="break-all text-porcelain/85 transition-colors hover:text-porcelain"
+                  className="break-all text-sand transition-colors hover:text-paper"
                 >
                   {clinic.email}
                 </a>
               </li>
-              <li className="pt-1 text-porcelain/70">{clinic.address.city}, {clinic.address.region}</li>
+              <li className="mono pt-1 text-[0.6875rem] uppercase text-sand/70">
+                {clinic.address.city}, {clinic.address.region}
+              </li>
             </ul>
           </div>
 
           <div>
-            <h2 className="text-[0.8125rem] font-semibold uppercase tracking-wider text-porcelain/60">
-              Horario
-            </h2>
-            <p className="mt-3 text-sm text-porcelain/85">{clinic.hours.display}</p>
-            <p className="mt-1 text-sm text-porcelain/70">{clinic.hours.medical}</p>
-            <ul className="mt-4 space-y-2 text-sm">
+            <h2 className="mono text-label uppercase text-sand/70">Horario</h2>
+            <p className="mt-4 text-[0.9375rem] text-sand">{clinic.hours.display}</p>
+            <p className="mono mt-2 text-[0.6875rem] uppercase text-sand/70">
+              {clinic.hours.medical}
+            </p>
+            <ul className="mt-5 space-y-2 text-[0.875rem]">
               <li>
-                <Link href="/privacidad" className="text-porcelain/70 transition-colors hover:text-porcelain">
-                  Política de privacidad
+                <Link
+                  href="/privacidad"
+                  className="text-sand/80 transition-colors hover:text-paper"
+                >
+                  Privacidad
                 </Link>
               </li>
               <li>
-                <Link href="/terminos" className="text-porcelain/70 transition-colors hover:text-porcelain">
-                  Términos y condiciones
+                <Link
+                  href="/terminos"
+                  className="text-sand/80 transition-colors hover:text-paper"
+                >
+                  Términos
                 </Link>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-12 border-t border-porcelain/15 pt-6 text-[0.8125rem] text-porcelain/60">
+        <div className="mono mt-12 border-t border-sand/25 pt-6 text-[0.6875rem] uppercase leading-relaxed text-sand/70">
           <p>
-            © {new Date().getFullYear()} {clinic.legalName}. Todos los derechos
-            reservados.
+            © {new Date().getFullYear()} {clinic.legalName}
           </p>
-          <p className="mt-1.5 max-w-prose">
+          <p className="mt-2 max-w-prose normal-case tracking-normal">
             La información de este sitio es referencial y no reemplaza una
             consulta médica. Los resultados de cada tratamiento varían según la
             persona.

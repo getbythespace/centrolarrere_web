@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Bricolage_Grotesque, IBM_Plex_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import "./premium-effects.css";
 import { Toaster } from "@/components/ui/toaster";
@@ -8,27 +8,32 @@ import Analytics, { GTMNoScript } from "@/components/Analytics";
 import { clinic } from "@/lib/clinic";
 
 /**
- * Dos familias, dos requests.
+ * Tres familias con roles que no se solapan.
  *
- * Fraunces es variable: un archivo cubre todo el rango de peso del display, así
- * que sale más barato que dos cortes estáticos. `display: "swap"` en las dos —
- * el texto se lee de inmediato con la fuente del sistema y luego cambia, que es
- * lo correcto cuando el LCP es un titular.
+ * - Bricolage Grotesque para el display. Es una grotesca con irregularidades
+ *   intencionales, así que a 8rem tiene carácter propio. Se descartó una serif
+ *   de alto contraste a propósito: serif elegante sobre fondo crema es el
+ *   cliché exacto que había que evitar.
+ * - IBM Plex Mono para etiquetas, códigos y cifras. Es la pieza que hace que
+ *   el conjunto lea como instrumento clínico y no como folleto de spa.
+ * - Inter para el cuerpo, porque la legibilidad a 15–17px en celular es lo que
+ *   decide si se entiende el tratamiento.
  *
- * Sólo subset latin. `latin-ext` agrega glifos que el español de Chile no usa.
- *
- * Sobre los ejes: la primera versión pedía SOFT, WONK y opsz. Se veía algo
- * mejor y costaba 118 KB — el archivo se llevaba solo el presupuesto de LCP y
- * bajó Performance de 96 a 87. Se quedan fuera.
- *
- * Sí se conserva el eje de peso completo (variable, un archivo): la jerarquía
- * del display depende de poder contrastar un 300 fino contra un 700 macizo, y
- * con un solo peso todo terminaba resolviéndose por tamaño.
+ * Un solo peso en display y mono: se usan en pocas palabras, y el rango
+ * variable completo costaba KB que el LCP no tiene para gastar.
  */
-const display = Fraunces({
+const display = Bricolage_Grotesque({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-display",
+  weight: ["700"],
+});
+
+const mono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-mono",
+  weight: ["500"],
 });
 
 const body = Inter({
@@ -82,7 +87,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0E5C63",
+  themeColor: "#241B15",
   width: "device-width",
   initialScale: 1,
 };
@@ -91,7 +96,10 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="es-CL" className={`${display.variable} ${body.variable}`}>
+    <html
+      lang="es-CL"
+      className={`${display.variable} ${mono.variable} ${body.variable}`}
+    >
       <head>
         <LocalBusinessSchema />
       </head>
@@ -100,7 +108,7 @@ export default function RootLayout({
         {/* Primer tabulador de la página: el sitio es largo en mobile. */}
         <a
           href="#contenido"
-          className="sr-only-focusable absolute left-4 top-4 z-[60] rounded-md bg-drape px-4 py-2 text-sm font-semibold text-porcelain"
+          className="sr-only-focusable absolute left-4 top-4 z-[60] bg-espresso px-4 py-2 text-sm font-semibold text-paper"
         >
           Saltar al contenido
         </a>

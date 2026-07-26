@@ -15,11 +15,11 @@ function WhatsAppGlyph({ className }: { className?: string }) {
 type Variant = "primary" | "solid" | "quiet";
 
 const VARIANTS: Record<Variant, string> = {
-  // Verde de WhatsApp con texto slate. Blanco sobre este verde da 1.98:1
-  // y falla AA; slate da 8.29:1.
-  primary: "bg-wa text-wa-ink hover:bg-[#1fbb5a] shadow-card",
-  solid: "bg-drape text-porcelain hover:bg-drape-deep shadow-card",
-  quiet: "bg-transparent text-drape border border-line hover:bg-drape-wash",
+  // Verde de WhatsApp con tinta espresso. Blanco sobre este verde da 1.98:1
+  // y falla AA; espresso da 8.52:1.
+  primary: "bg-wa text-wa-ink hover:bg-[#1fbb5a]",
+  solid: "bg-espresso text-paper hover:bg-umber",
+  quiet: "bg-transparent text-espresso border border-espresso hover:bg-espresso hover:text-paper",
 };
 
 interface Props {
@@ -45,9 +45,9 @@ export default function WhatsAppCTA({
   size = "md",
 }: Props) {
   const sizes = {
-    sm: "text-sm px-4 py-2.5 gap-2",
-    md: "text-[0.9375rem] px-5 py-3 gap-2.5",
-    lg: "text-base px-6 py-3.5 gap-2.5",
+    sm: "text-sm px-4 py-2.5 gap-2 min-h-[44px]",
+    md: "text-[0.9375rem] px-5 py-3 gap-2.5 min-h-[46px]",
+    lg: "text-[0.9375rem] px-6 py-3.5 gap-2.5 min-h-[48px]",
   };
 
   return (
@@ -57,10 +57,9 @@ export default function WhatsAppCTA({
       rel="noopener noreferrer"
       onClick={() => trackWhatsAppClick(waEventLabel(context))}
       className={cn(
-        "inline-flex items-center justify-center rounded-md font-semibold",
+        // Radio cero, como todo el sistema.
+        "inline-flex items-center justify-center font-semibold",
         "transition-colors duration-200",
-        // min 44px de alto táctil: el tráfico es de celular
-        "min-h-[44px]",
         sizes[size],
         VARIANTS[variant],
         block && "w-full",

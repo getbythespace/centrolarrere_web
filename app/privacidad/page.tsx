@@ -89,7 +89,7 @@ export default function PrivacidadPage() {
         </div>
       </main>
 
-      <footer className="border-t bg-slate-50 py-8">
+      <footer className="border-t bg-espresso-50 py-8">
         <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
           © {new Date().getFullYear()} LARRÈRE. Todos los derechos reservados.
         </div>

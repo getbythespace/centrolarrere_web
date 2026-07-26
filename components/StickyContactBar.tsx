@@ -52,15 +52,15 @@ export default function StickyContactBar() {
       aria-hidden={!visible}
     >
       <div
-        className="flex items-stretch gap-2 border-t border-line bg-porcelain-lift/95 px-3 py-2.5 backdrop-blur-sm"
+        className="flex items-stretch gap-px border-t border-espresso bg-paper px-0 pt-0"
         // Respeta la barra de gestos del iPhone.
-        style={{ paddingBottom: "max(0.625rem, env(safe-area-inset-bottom))" }}
+        style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
       >
         <a
           href={`tel:${clinic.phone.e164}`}
           onClick={() => trackPhoneClick("sticky-bar")}
           tabIndex={visible ? undefined : -1}
-          className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md border border-line px-4 text-drape transition-colors hover:bg-drape-wash"
+          className="flex min-h-[52px] min-w-[56px] items-center justify-center bg-espresso px-4 text-paper transition-colors hover:bg-umber"
           aria-label={`Llamar al ${clinic.phone.display}`}
         >
           <Phone className="h-[1.125rem] w-[1.125rem]" aria-hidden="true" />
@@ -73,7 +73,7 @@ export default function StickyContactBar() {
             import("@/lib/analytics").then((m) => m.trackWhatsAppClick("sticky-bar"));
           }}
           tabIndex={visible ? undefined : -1}
-          className="flex min-h-[44px] flex-1 items-center justify-center gap-2.5 rounded-md bg-wa text-[0.9375rem] font-semibold text-wa-ink transition-colors hover:bg-[#1fbb5a]"
+          className="flex min-h-[52px] flex-1 items-center justify-center gap-2.5 bg-wa text-[0.9375rem] font-semibold text-wa-ink transition-colors hover:bg-[#1fbb5a]"
         >
           <WhatsAppGlyph className="h-[1.125rem] w-[1.125rem] shrink-0" />
           Escribir por WhatsApp

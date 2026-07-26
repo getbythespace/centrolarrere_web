@@ -27,35 +27,35 @@ export default function AgendarPage() {
       <Navigation />
 
       <main id="contenido">
-        <section className="surface-dark grain pb-12 pt-12 md:pb-16 md:pt-16">
+        <section className="surface-ink grain pb-12 pt-12 md:pb-16 md:pt-16">
           <div className="shell">
             <div className="page-enter max-w-[46ch]">
-              <p className="eyebrow">Agendar</p>
+              <p className="field">Agendar</p>
               <h1 className="mt-6 text-display-lg">
-                <span className="font-light text-porcelain/75">Reserva tu</span>
+                <span className="text-sand">Reserva tu</span>
                 <br />
                 evaluación médica
               </h1>
-              <p className="mt-6 text-lead text-porcelain/85">
+              <p className="mt-6 text-lead text-sand">
                 Elige día y hora en el calendario, o escríbenos por WhatsApp y lo
                 coordinamos contigo.
               </p>
             </div>
 
-            <div className="card-dark mt-11 flex flex-col gap-6 p-6 sm:flex-row sm:items-center sm:justify-between md:p-7">
+            <div className="rec mt-11 flex flex-col gap-6 p-6 sm:flex-row sm:items-center sm:justify-between md:p-7">
               <div>
-                <p className="text-[0.875rem] uppercase tracking-wider text-porcelain/75">
+                <p className="text-[0.875rem] uppercase tracking-wider text-sand">
                   Evaluación médica
                 </p>
                 <p className="mt-2 flex items-baseline gap-2">
-                  <span className="figure-stat text-figure text-porcelain">
+                  <span className="text-[1.75rem] font-semibold leading-none text-paper">
                     {clinic.evaluation.priceDisplay}
                   </span>
-                  <span className="text-[0.875rem] text-porcelain/75">
+                  <span className="text-[0.875rem] text-sand">
                     {clinic.evaluation.note}
                   </span>
                 </p>
-                <p className="mt-3 text-[0.875rem] text-porcelain/85">
+                <p className="mt-3 text-[0.875rem] text-sand">
                   {clinic.hours.display} · {clinic.hours.medical}
                 </p>
               </div>
@@ -66,9 +66,9 @@ export default function AgendarPage() {
 
         <StickyCTASentinel />
 
-        <section className="surface-light section-tight">
+        <section className="bg-paper section-tight">
           <div className="shell">
-            <h2 className="text-display-sm text-drape-deep">Calendario</h2>
+            <h2 className="text-display-sm text-espresso">Calendario</h2>
             <div className="mt-6">
               <DeferredCalendar />
             </div>
@@ -76,28 +76,28 @@ export default function AgendarPage() {
             {/* Política de reservas. Antes iba en rojo de alerta con cuatro
                 emoji, que leía como error del sistema; es información
                 contractual y se presenta como tal. */}
-            <div className="mt-8 max-w-prose rounded-lg border border-line bg-porcelain-lift p-6">
-              <h3 className="flex items-center gap-2 text-[1.0625rem] font-semibold text-drape-deep">
-                <AlertTriangle className="h-[1.125rem] w-[1.125rem] shrink-0 text-pulse-deep" aria-hidden="true" strokeWidth={2} />
+            <div className="mt-8 max-w-prose rounded-lg border border-rule bg-paper p-6">
+              <h3 className="flex items-center gap-2 text-[1.0625rem] font-semibold text-espresso">
+                <AlertTriangle className="h-[1.125rem] w-[1.125rem] shrink-0 text-plum-deep" aria-hidden="true" strokeWidth={2} />
                 Política de reservas
               </h3>
               <dl className="mt-4 space-y-3 text-[0.9375rem] leading-relaxed">
                 <div>
-                  <dt className="font-semibold text-slate">Aviso mínimo</dt>
-                  <dd className="text-slate-soft">
+                  <dt className="font-semibold text-espresso">Aviso mínimo</dt>
+                  <dd className="text-ink">
                     Las reservas se toman con al menos 12 horas de anticipación.
                   </dd>
                 </div>
                 <div>
-                  <dt className="font-semibold text-slate">Cancelaciones</dt>
-                  <dd className="text-slate-soft">
+                  <dt className="font-semibold text-espresso">Cancelaciones</dt>
+                  <dd className="text-ink">
                     Con 12 horas o más de aviso, sin cargo. Con menos de 12
                     horas, se pierde la hora reservada.
                   </dd>
                 </div>
                 <div>
-                  <dt className="font-semibold text-slate">Confirmación</dt>
-                  <dd className="text-slate-soft">
+                  <dt className="font-semibold text-espresso">Confirmación</dt>
+                  <dd className="text-ink">
                     Se requiere un abono del 50% para confirmar la cita.
                   </dd>
                 </div>
@@ -106,21 +106,21 @@ export default function AgendarPage() {
           </div>
         </section>
 
-        <section className="surface-dark grain section-tight">
+        <section className="surface-ink grain section-tight">
           <div className="shell-narrow text-center">
             <h2 className="text-display-md">
-              <span className="font-light text-porcelain/75">¿Prefieres coordinar</span>
+              <span className="text-sand">¿Prefieres coordinar</span>
               <br />
               por mensaje?
             </h2>
-            <p className="mx-auto mt-5 max-w-prose text-[1.0625rem] leading-relaxed text-porcelain/85">
+            <p className="mx-auto mt-5 max-w-prose text-[1.0625rem] leading-relaxed text-sand">
               Escríbenos y te damos las horas disponibles.
             </p>
             <div className="mt-7 flex flex-col items-center gap-4">
               <WhatsAppCTA context={{ kind: "evaluation" }} size="lg" />
-              <div className="text-[0.9375rem] text-porcelain/80">
+              <div className="text-[0.9375rem] text-sand">
                 <span className="mr-2">o llámanos:</span>
-                <span className="inline-block [&_a]:text-porcelain [&_a]:decoration-porcelain/40">
+                <span className="inline-block [&_a]:text-paper [&_a]:decoration-porcelain/40">
                   <PhoneLink label="agendar" />
                 </span>
               </div>

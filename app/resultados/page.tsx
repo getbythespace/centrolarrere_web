@@ -19,17 +19,17 @@ export default function ResultadosPage() {
       <Navigation />
 
       <main id="contenido">
-        <section className="surface-dark grain pb-12 pt-12 md:pb-16 md:pt-16">
+        <section className="surface-ink grain pb-12 pt-12 md:pb-16 md:pt-16">
           <div className="shell">
             <div className="grid gap-10 lg:grid-cols-[1fr_0.9fr] lg:gap-16">
               <div className="page-enter">
-                <p className="eyebrow">Resultados</p>
+                <p className="field">Resultados</p>
                 <h1 className="mt-6 text-display-lg">
-                  <span className="font-light text-porcelain/75">Casos</span>
+                  <span className="text-sand">Casos</span>
                   <br />
                   tratados acá
                 </h1>
-                <p className="mt-6 max-w-[44ch] text-lead text-porcelain/85">
+                <p className="mt-6 max-w-[44ch] text-lead text-sand">
                   Arrastra el control de cada imagen para comparar. Todos los
                   casos son de la clínica, con consentimiento firmado y sin
                   retoque digital.
@@ -37,11 +37,11 @@ export default function ResultadosPage() {
               </div>
 
               {/* Contrato honesto con el paciente, antes de las imágenes. */}
-              <div className="card-dark self-end p-6">
-                <h2 className="text-[0.9375rem] font-semibold text-porcelain">
+              <div className="rec self-end p-6">
+                <h2 className="text-[0.9375rem] font-semibold text-paper">
                   Cómo leer estas fotos
                 </h2>
-                <ul className="mt-4 space-y-3 text-[0.9375rem] leading-relaxed text-porcelain/85">
+                <ul className="mt-4 space-y-3 text-[0.9375rem] leading-relaxed text-sand">
                   <li className="flex gap-3">
                     <span aria-hidden="true" className="mt-2 h-1 w-1 shrink-0 rounded-full bg-[#e08b88]" />
                     Misma luz, mismo ángulo y misma distancia. Si el «después»
@@ -64,12 +64,12 @@ export default function ResultadosPage() {
 
         <StickyCTASentinel />
 
-        <section className="surface-light section">
+        <section className="bg-paper section">
           <div className="shell">
             <h2 className="sr-only">Galería de casos</h2>
             <ul className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
               {showcaseCases.map((c) => (
-                <li key={c.id} className="reveal">
+                <li key={c.id}>
                   <BeforeAfter data={c} />
                 </li>
               ))}
@@ -77,14 +77,14 @@ export default function ResultadosPage() {
           </div>
         </section>
 
-        <section className="surface-dark grain section-tight">
+        <section className="surface-ink grain section-tight">
           <div className="shell-narrow text-center">
             <h2 className="text-display-md">
-              <span className="font-light text-porcelain/75">¿Tu caso se parece</span>
+              <span className="text-sand">¿Tu caso se parece</span>
               <br />
               a alguno?
             </h2>
-            <p className="mx-auto mt-5 max-w-prose text-[1.0625rem] leading-relaxed text-porcelain/85">
+            <p className="mx-auto mt-5 max-w-prose text-[1.0625rem] leading-relaxed text-sand">
               Mándanos una foto por WhatsApp y te decimos si es tratable acá o
               si conviene derivarte.
             </p>

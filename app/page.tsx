@@ -1,19 +1,20 @@
 import Link from "next/link";
-import { ArrowRight, ShieldCheck, Stethoscope, ClipboardCheck } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
 import StickyContactBar, { StickyCTASentinel } from "@/components/StickyContactBar";
 import BeforeAfter from "@/components/BeforeAfter";
+import ToneScale, { ToneRule } from "@/components/ToneScale";
 import { clinic } from "@/lib/clinic";
 import { treatments } from "@/lib/treatments";
 import { showcaseCases } from "@/lib/cases";
 
 /**
- * El hero abre con lo que diferencia a la clínica —respaldo médico y de
- * enfermería— y con el antes/después, que es el producto. No con un titular en
- * degradado: el anterior tenía la mitad del H1 en dorado sobre crema (1.55:1)
- * y no se leía.
+ * La home está compuesta como una ficha clínica: campos con etiqueta mono,
+ * filetes de 1px, radio cero y un salto de escala fuerte entre la etiqueta y el
+ * titular. La escala de fototipos abre la página, porque es la que justifica la
+ * paleta y anuncia de qué se trata la consulta.
  */
 
 const DESTACADOS = ["laser-rosacea", "acne", "telangiectasia", "prp-capilar"];
@@ -26,40 +27,52 @@ export default function HomePage() {
       <Navigation />
 
       <main id="contenido">
-        {/* ================= HERO =================
-            Oscuro y con atmósfera desde el primer pantallazo. El fondo claro
-            anterior era correcto y no decía nada; el verde quirúrgico con un
-            bloom de luz descentrado hace que el comparador funcione como caja
-            de luz, que es exactamente lo que es una consulta de piel. */}
-        <section className="surface-dark grain overflow-hidden pb-14 pt-12 md:pb-20 md:pt-16">
+        {/* ================= HERO ================= */}
+        <section className="grain bg-paper">
           <div className="shell">
-            {/* Grid asimétrico: el texto pesa más que la imagen y arranca
-                antes. Un 50/50 centrado se lee como plantilla. */}
-            <div className="grid items-end gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14">
-              <div className="page-enter">
-                <p className="eyebrow">Chillán · Ñuble</p>
+            {/* Cabecera de ficha: dos campos mono en una fila, con filete
+                abajo. Antes de cualquier titular, para que el primer gesto de
+                la página sea el del instrumento. */}
+            <div className="hair-soft grid gap-x-8 gap-y-3 border-b border-rule py-4 text-label sm:grid-cols-3">
+              <p className="mono uppercase text-ink">
+                Estética clínica · Chillán
+              </p>
+              <p className="mono uppercase text-ink sm:text-center">
+                Fototipos I–VI
+              </p>
+              <p className="mono uppercase text-ink sm:text-right">
+                {clinic.hours.display}
+              </p>
+            </div>
 
-                {/* El peso fino en "La piel" contra el macizo en "criterio
-                    clínico" es lo que hace la frase. Con un solo peso esto no
-                    se podía componer. */}
-                <h1 className="mt-6 text-display-xl">
-                  <span className="block font-light text-porcelain/75">La piel</span>
-                  <span className="block font-semibold text-porcelain">se trata con</span>
-                  <span className="block font-semibold text-[#7fd4dc]">criterio clínico</span>
+            <div className="grid gap-10 pb-12 pt-10 lg:grid-cols-[1.25fr_0.75fr] lg:gap-12 lg:pb-16 lg:pt-14">
+              <div>
+                {/* Escala arriba del titular: es la tesis del sitio. */}
+                <ToneScale size="md" className="max-w-md" />
+
+                <h1 className="mt-8 text-display-2xl text-espresso">
+                  Cada piel
+                  <br />
+                  tiene un
+                  <br />
+                  <span className="text-plum">protocolo.</span>
                 </h1>
 
-                <p className="mt-7 max-w-[46ch] text-lead text-porcelain/85">
-                  Rosácea, lesiones vasculares, acné y alopecia. Cada tratamiento
-                  parte de una evaluación médica, con respaldo de enfermería.
-                </p>
+                <div className="mt-8 max-w-prose">
+                  <p className="text-lead text-umber">
+                    Rosácea, lesiones vasculares, acné y alopecia. El láser no se
+                    calibra igual para un fototipo II que para un V — por eso acá
+                    se parte por el diagnóstico y no por el equipo.
+                  </p>
+                </div>
 
                 <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
                   <WhatsAppCTA context={{ kind: "evaluation" }} size="lg" />
                   <Link
                     href="/servicios"
-                    className="group inline-flex min-h-[44px] items-center justify-center gap-2 rounded-md border border-porcelain/25 px-6 py-3.5 text-base font-semibold text-porcelain transition-colors hover:border-porcelain/50 hover:bg-porcelain/10"
+                    className="group inline-flex min-h-[48px] items-center justify-center gap-2.5 border border-espresso px-6 py-3.5 text-[0.9375rem] font-semibold text-espresso transition-colors hover:bg-espresso hover:text-paper"
                   >
-                    Ver tratamientos
+                    Ver {treatments.length} tratamientos
                     <ArrowRight
                       className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5"
                       aria-hidden="true"
@@ -67,30 +80,33 @@ export default function HomePage() {
                   </Link>
                 </div>
 
-                {/* Datos duros como tira, no como frase corrida.
-                    `whitespace-nowrap` en las cifras: "$40.000" partido en dos
-                    líneas se lee como error, no como dato. */}
-                <dl className="mt-11 grid max-w-xl grid-cols-3 gap-5 border-t border-porcelain/15 pt-6">
+                {/* Datos como campos de ficha, no como «stats» decorativas. */}
+                <dl className="mt-12 grid grid-cols-2 border-t border-rule sm:grid-cols-3">
                   {[
-                    [String(treatments.length), "Tratamientos"],
-                    [clinic.evaluation.priceDisplay, "Evaluación"],
-                    ["Lun–Sáb", "11–19 h"],
-                  ].map(([value, label]) => (
-                    <div key={label}>
-                      <dd className="figure-stat whitespace-nowrap text-stat text-porcelain">
+                    ["Evaluación", clinic.evaluation.priceDisplay, clinic.evaluation.note],
+                    ["Atención médica", "Miércoles", "desde 17:30"],
+                    ["Respaldo", "Enfermería", "titulada"],
+                  ].map(([label, value, note]) => (
+                    <div
+                      key={label}
+                      className="border-b border-rule/50 py-4 pr-6 sm:border-b-0"
+                    >
+                      <dt className="mono text-label uppercase text-ink">{label}</dt>
+                      <dd className="mt-2 text-[1.375rem] font-semibold leading-none text-espresso">
                         {value}
                       </dd>
-                      <dt className="mt-1.5 text-[0.6875rem] uppercase tracking-wider text-porcelain/75">
-                        {label}
-                      </dt>
+                      <dd className="mono mt-1.5 text-[0.6875rem] uppercase text-ink">
+                        {note}
+                      </dd>
                     </div>
                   ))}
                 </dl>
               </div>
 
-              {/* El signature, arriba del pliegue en desktop. */}
-              <div className="lg:pb-2">
-                <BeforeAfter data={showcaseCases[0]} onDark />
+              {/* El comparador, encuadrado como pieza de expediente. */}
+              <div className="lg:pt-2">
+                <p className="field mb-3">Caso 01</p>
+                <BeforeAfter data={showcaseCases[0]} />
               </div>
             </div>
           </div>
@@ -98,93 +114,99 @@ export default function HomePage() {
 
         <StickyCTASentinel />
 
-        {/* ================= RESPALDO =================
-            Grid editorial: el título ocupa una columna propia a la izquierda y
-            los tres puntos se apilan a la derecha con reglas entre ellos. Antes
-            eran tres columnas iguales, que se leen como pie de página. */}
-        <section className="surface-light section">
+        {/* ================= DIFERENCIAL ================= */}
+        <section className="surface-ink grain section">
           <div className="shell">
-            <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
-              <div className="lg:sticky lg:top-24 lg:self-start">
-                <p className="eyebrow">El diferencial</p>
-                <h2 className="mt-5 text-display-md text-drape-deep">
-                  <span className="font-light">No es un centro</span>
-                  <br />
-                  estético más
+            <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+              <div>
+                <p className="field">El diferencial</p>
+                <h2 className="mt-6 text-display-lg text-paper">
+                  No es un centro estético.
                 </h2>
-                <p className="mt-5 max-w-[38ch] text-[1.0625rem] leading-relaxed text-slate-soft">
-                  La diferencia con la competencia informal no es el equipo que
-                  se usa. Es quién decide que ese equipo es el adecuado para tu
-                  piel.
+                <p className="mt-6 max-w-prose text-lead text-sand">
+                  La diferencia con la competencia informal no está en el equipo
+                  que se usa. Está en quién decide que ese equipo es el adecuado
+                  para tu piel.
                 </p>
               </div>
 
-              <ul className="divide-y divide-line-soft">
+              {/* Lista numerada como protocolo. Acá el orden sí es secuencia:
+                  es lo que pasa, en orden, cuando llegas. */}
+              <ol className="border-t border-sand/30">
                 {[
                   {
-                    Icon: Stethoscope,
-                    title: "Evaluación médica previa",
-                    body: "El médico define el procedimiento según tu tipo de piel, tu condición y tus antecedentes. No se parte por el equipo, se parte por el diagnóstico.",
+                    n: "01",
+                    title: "Evaluación médica",
+                    body: "El médico revisa tu tipo de piel, tu condición y tus antecedentes. Determina el fototipo y con eso la calibración del equipo.",
                   },
                   {
-                    Icon: ShieldCheck,
-                    title: "Respaldo de enfermería",
-                    body: "Los procedimientos invasivos menores y el seguimiento post-tratamiento los realiza personal de enfermería titulado.",
+                    n: "02",
+                    title: "Procedimiento con respaldo",
+                    body: "Los procedimientos invasivos menores y el control posterior los realiza personal de enfermería titulado.",
                   },
                   {
-                    Icon: ClipboardCheck,
-                    title: "Derivación cuando corresponde",
-                    body: "Si tu caso necesita otra especialidad, lo decimos y derivamos. Hay condiciones que no se resuelven con láser.",
+                    n: "03",
+                    title: "Derivación si corresponde",
+                    body: "Si tu caso necesita otra especialidad, lo decimos. Hay condiciones de la piel que no se resuelven con láser.",
                   },
-                ].map(({ Icon, title, body }) => (
-                  <li key={title} className="reveal flex gap-5 py-7 first:pt-0 last:pb-0">
-                    <span className="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-md border border-line-soft bg-porcelain-lift">
-                      <Icon className="h-5 w-5 text-drape" aria-hidden="true" strokeWidth={1.75} />
-                    </span>
+                ].map((s) => (
+                  <li
+                    key={s.n}
+                    className="grid grid-cols-[3rem_1fr] gap-4 border-b border-sand/30 py-7 sm:grid-cols-[4.5rem_1fr] sm:gap-6"
+                  >
+                    <span className="mono text-label text-sand/80">{s.n}</span>
                     <div>
-                      <h3 className="text-[1.125rem] font-semibold text-drape-deep">{title}</h3>
-                      <p className="mt-2 max-w-prose text-[0.9375rem] leading-relaxed text-slate-soft">
-                        {body}
+                      <h3 className="text-[1.1875rem] font-semibold text-paper">
+                        {s.title}
+                      </h3>
+                      <p className="mt-2 max-w-prose text-[0.9375rem] leading-relaxed text-sand">
+                        {s.body}
                       </p>
                     </div>
                   </li>
                 ))}
-              </ul>
+              </ol>
             </div>
           </div>
         </section>
 
+        <ToneRule />
+
         {/* ================= TRATAMIENTOS ================= */}
-        <section className="surface-light section border-t border-line-soft">
+        <section className="section bg-paper">
           <div className="shell">
             <div className="flex flex-wrap items-end justify-between gap-6">
               <div>
-                <p className="eyebrow">Tratamientos</p>
-                <h2 className="mt-5 text-display-md text-drape-deep">
-                  <span className="font-light">Lo que más</span> nos consultan
+                <p className="field w-56">Tratamientos</p>
+                <h2 className="mt-6 text-display-md text-espresso">
+                  Lo que más nos consultan
                 </h2>
               </div>
               <Link
                 href="/servicios"
-                className="group inline-flex items-center gap-2 border-b border-line pb-1 text-[0.9375rem] font-semibold text-drape transition-colors hover:border-drape hover:text-drape-deep"
+                className="mono group inline-flex items-center gap-2 border-b border-espresso pb-1 text-label uppercase text-espresso"
               >
-                Ver los {treatments.length} tratamientos
+                Catálogo completo
                 <ArrowRight
-                  className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5"
+                  className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
                   aria-hidden="true"
                 />
               </Link>
             </div>
 
-            <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {featured.map((t) => (
-                <li key={t.id} className="reveal">
-                  <article className="card-flat lift flex h-full flex-col p-6">
-                    <p className="eyebrow text-[0.625rem]">{t.category}</p>
-                    <h3 className="mt-4 text-[1.1875rem] font-semibold leading-snug text-drape-deep">
+            {/* Grilla sin gap: las tarjetas comparten filete, como celdas de una
+                tabla. Es lo que separa esto de cuatro cajas flotando. */}
+            <ul className="mt-10 grid border-l border-t border-rule sm:grid-cols-2 lg:grid-cols-4">
+              {featured.map((t, i) => (
+                <li key={t.id} className="border-b border-r border-rule">
+                  <article className="rec rec-hover flex h-full flex-col border-0 p-6">
+                    <p className="mono text-label uppercase text-ink">
+                      {String(i + 1).padStart(2, "0")} · {t.category}
+                    </p>
+                    <h3 className="mt-5 text-[1.25rem] font-semibold leading-tight text-espresso">
                       {t.name}
                     </h3>
-                    <p className="mt-2.5 flex-1 text-[0.9375rem] leading-relaxed text-slate-soft">
+                    <p className="mt-3 flex-1 text-[0.9375rem] leading-relaxed text-ink">
                       {t.summary}
                     </p>
                     <WhatsAppCTA
@@ -192,7 +214,7 @@ export default function HomePage() {
                       variant="quiet"
                       size="sm"
                       block
-                      className="mt-5"
+                      className="mt-6"
                     >
                       Consultar
                     </WhatsAppCTA>
@@ -203,40 +225,37 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ================= RESULTADOS =================
-            Va sobre oscuro: los antes/después se leen mucho mejor sobre fondo
-            profundo, igual que una radiografía en un negatoscopio. */}
-        <section className="surface-dark grain section">
+        {/* ================= RESULTADOS ================= */}
+        <section className="surface-sand section">
           <div className="shell">
             <div className="flex flex-wrap items-end justify-between gap-6">
-              <div className="max-w-[44ch]">
-                <p className="eyebrow">Resultados</p>
-                <h2 className="mt-5 text-display-md">
-                  <span className="font-light text-porcelain/75">Casos tratados</span>
-                  <br />
-                  en la clínica
+              <div className="max-w-[46ch]">
+                <p className="field w-40">Resultados</p>
+                <h2 className="mt-6 text-display-md text-espresso">
+                  Casos tratados acá
                 </h2>
-                <p className="mt-5 text-[1.0625rem] leading-relaxed text-porcelain/85">
+                <p className="mt-5 text-[1.0625rem] leading-relaxed text-umber">
                   Sólo casos propios, con consentimiento firmado y sin retoque.
-                  Cada uno indica el tratamiento y el número de sesiones.
+                  Cada uno indica tratamiento, fototipo y número de sesiones.
                 </p>
               </div>
               <Link
                 href="/resultados"
-                className="group inline-flex items-center gap-2 border-b border-porcelain/30 pb-1 text-[0.9375rem] font-semibold text-porcelain transition-colors hover:border-porcelain"
+                className="mono group inline-flex items-center gap-2 border-b border-espresso pb-1 text-label uppercase text-espresso"
               >
-                Ver todos los casos
+                Todos los casos
                 <ArrowRight
-                  className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5"
+                  className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
                   aria-hidden="true"
                 />
               </Link>
             </div>
 
-            <ul className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {showcaseCases.slice(1, 4).map((c) => (
-                <li key={c.id} className="reveal">
-                  <BeforeAfter data={c} onDark />
+            <ul className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {showcaseCases.slice(1, 4).map((c, i) => (
+                <li key={c.id}>
+                  <p className="field mb-3">Caso {String(i + 2).padStart(2, "0")}</p>
+                  <BeforeAfter data={c} />
                 </li>
               ))}
             </ul>
@@ -244,30 +263,35 @@ export default function HomePage() {
         </section>
 
         {/* ================= CIERRE ================= */}
-        <section className="surface-light section border-t border-line-soft">
-          <div className="shell-narrow text-center">
-            <h2 className="text-display-lg text-drape-deep">
-              <span className="font-light">¿Empezamos por</span>
-              <br />
-              la evaluación?
-            </h2>
-            <p className="mx-auto mt-6 max-w-prose text-lead text-slate-soft">
-              Cuéntanos qué te preocupa por WhatsApp y coordinamos la hora. Si
-              prefieres reservar tú, la agenda está abierta.
-            </p>
-            <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <WhatsAppCTA context={{ kind: "evaluation" }} size="lg" />
-              <Link
-                href="/agendar"
-                className="inline-flex min-h-[44px] items-center justify-center rounded-md border border-line px-6 py-3.5 text-base font-semibold text-drape-deep transition-colors hover:bg-drape-wash"
-              >
-                Agendar online
-              </Link>
+        <section className="surface-ink grain section">
+          <div className="shell">
+            <div className="grid items-center gap-10 lg:grid-cols-[1fr_auto]">
+              <div>
+                <p className="field w-48">Siguiente paso</p>
+                <h2 className="mt-6 text-display-xl text-paper">
+                  Empecemos por
+                  <br />
+                  la evaluación.
+                </h2>
+                <p className="mt-6 max-w-prose text-lead text-sand">
+                  Cuéntanos qué te preocupa por WhatsApp. Si prefieres reservar
+                  tú, la agenda está abierta.
+                </p>
+              </div>
+
+              <div className="flex flex-col gap-3 lg:min-w-[16rem]">
+                <WhatsAppCTA context={{ kind: "evaluation" }} size="lg" block />
+                <Link
+                  href="/agendar"
+                  className="inline-flex min-h-[48px] items-center justify-center border border-sand/40 px-6 py-3.5 text-[0.9375rem] font-semibold text-paper transition-colors hover:bg-paper hover:text-espresso"
+                >
+                  Agendar online
+                </Link>
+                <p className="mono mt-2 text-[0.6875rem] uppercase leading-relaxed text-sand">
+                  {clinic.evaluation.priceDisplay} · {clinic.evaluation.note}
+                </p>
+              </div>
             </div>
-            <p className="tnum mt-7 text-sm text-slate-soft">
-              {clinic.evaluation.priceDisplay} · {clinic.evaluation.note} ·{" "}
-              {clinic.hours.display}
-            </p>
           </div>
         </section>
       </main>

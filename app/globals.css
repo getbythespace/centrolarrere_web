@@ -3,80 +3,97 @@
 @tailwind utilities;
 
 /* ==========================================================================
-   Sistema LARRÈRE
+   LARRÈRE — sistema «ficha clínica»
    --------------------------------------------------------------------------
-   Concepto: la clínica es fría, limpia y precisa; el calor lo pone la piel.
-   Base porcelana + verde quirúrgico, y UN solo acento cálido sacado de
-   tejido perfundido, dosificado.
+   El encargo pedía pastel beige sin caer en genérico. El beige suave es
+   justamente la fórmula más vista (crema + serif de alto contraste + terracota),
+   así que la novedad no puede venir del color: viene de la ESTRUCTURA.
 
-   Todos los ratios de abajo están medidos, no estimados.
+   Tres decisiones sostienen todo:
+
+   1. La paleta no es decorativa: sale de la escala de fototipos de Fitzpatrick,
+      el instrumento dermatológico que clasifica la piel de I a VI. El beige
+      queda justificado clínicamente, y la escala se usa como sistema de color
+      —chips de tono como dato— no como relleno.
+
+   2. Radio cero y grilla visible. Pastel + cantos duros + filetes de 1px es
+      tensión; pastel + esquinas redondeadas es spa.
+
+   3. Salto de escala extremo: etiquetas mono de 11px contra display de 8rem.
+      Nada intermedio.
    ========================================================================== */
 
 @layer base {
   :root {
-    /* --- Paleta ---------------------------------------------------------- */
-    --slate: #17202a; /* texto — 15.02:1 sobre porcelain (AAA) */
-    --slate-soft: #3d4a56; /*  8.05:1 sobre porcelain (AAA) — texto secundario */
-    --porcelain: #f2f5f6; /* fondo frío. NO crema. */
-    --porcelain-lift: #fafbfb; /* tarjetas sobre porcelain */
-    --drape: #0e5c63; /* marca — 7.02:1 sobre porcelain (AAA) */
-    --drape-deep: #083f45; /* secciones oscuras — 10.61:1 (AAA) */
-    --drape-wash: #e6eeef; /* fondo teñido, muy leve */
-    --pulse: #c8615e; /* acento — 3.60:1 → SÓLO ≥24px bold o no-texto */
-    --pulse-deep: #a6413f; /* acento en texto normal — 5.56:1 (AA) */
-    --pulse-wash: #f7ecec;
+    /* --- Superficies: papel y yeso, no crema amarilla ------------------- */
+    --paper: #f2eee7;
+    --sand: #e7dfd2;
+    --sand-deep: #d8ccba;
 
-    /* Líneas: mist puro (#C4D4D6) da 1.40:1 sobre porcelain — demasiado
-       flojo para un borde con significado. Se reserva a divisores decorativos. */
-    --line: #a8bec1; /* bordes estructurales */
-    --line-soft: #d4dfe0; /* divisores decorativos */
+    /* --- Tinta ---------------------------------------------------------- */
+    --espresso: #241b15; /* 14.61:1 sobre papel (AAA) */
+    --umber: #3a2c22; /* 11.62:1 (AAA) */
+    --ink-60: #5c4a3d; /*  7.26:1 (AAA) — texto secundario */
 
-    /* WhatsApp: verde de marca. Texto blanco encima da 1.98:1 — falla.
-       El botón va con texto slate (8.29:1, AAA). */
+    /* --- Señal ---------------------------------------------------------- */
+    /* Ciruela apagada, no terracota. Es lo único que no viene de la piel. */
+    --plum: #7a4a5c; /* 6.13:1 sobre papel (AA) */
+    --plum-deep: #5e3547; /* 8.75:1 (AAA) */
+
+    /* --- Escala de fototipos (I–VI) ------------------------------------- */
+    /* Los cuatro primeros tienen 1.04–2.21:1 contra el papel: es correcto para
+       una escala contigua, pero significa que un chip suelto NO se percibe sin
+       filete. Por eso `.tone-band` siempre lleva borde. */
+    --tone-1: #f7e7dc;
+    --tone-2: #f0d5c2;
+    --tone-3: #e3bc9f;
+    --tone-4: #c99873;
+    --tone-5: #a2714e;
+    --tone-6: #6b4630;
+
+    /* --- Filetes -------------------------------------------------------- */
+    /* La grilla es un elemento de diseño, así que tiene que verse. Los tonos
+       arena daban 1.6–2.8:1 y desaparecían; --rule llega a ~3.2:1. */
+    --rule: #8a7860;
+    --rule-soft: #c9bca9;
+
+    /* --- Interacción ---------------------------------------------------- */
+    --focus-ring: #7a4a5c;
+    --sel-bg: #e3bc9f;
+    --sel-fg: #241b15;
+
+    /* WhatsApp: verde de marca, tinta espresso encima (8.52:1). */
     --wa: #25d366;
-    --wa-ink: #17202a;
+    --wa-ink: #241b15;
 
-    /* --- Interacción ----------------------------------------------------- */
-    --focus-ring: #0e5c63;
-    --sel-bg: #cfe0e2;
-    --sel-fg: #083f45;
+    /* --- Radio: cero, a propósito -------------------------------------- */
+    --radius: 0px;
+    --radius-lg: 0px;
 
-    /* --- Elevación ------------------------------------------------------- */
-    /* Sombras teñidas de verde, no grises: se asientan sobre porcelain. */
-    --shadow-sm: 0 1px 2px rgba(8, 63, 69, 0.06);
-    --shadow-card: 0 1px 2px rgba(8, 63, 69, 0.05), 0 4px 12px rgba(8, 63, 69, 0.05);
-    --shadow-lift: 0 2px 4px rgba(8, 63, 69, 0.07), 0 12px 28px rgba(8, 63, 69, 0.1);
-
-    /* --- Radios ---------------------------------------------------------- */
-    --radius: 0.625rem;
-    --radius-lg: 1rem;
-
-    /* --- Shadcn (mapeado a los tokens de arriba) ------------------------- */
-    --background: 192 15% 96%;
-    --foreground: 210 29% 13%;
-    --card: 0 0% 100%;
-    --card-foreground: 210 29% 13%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 210 29% 13%;
-    --primary: 185 75% 22%;
-    --primary-foreground: 192 15% 96%;
-    --secondary: 187 18% 92%;
-    --secondary-foreground: 185 69% 15%;
-    --muted: 187 18% 92%;
-    --muted-foreground: 209 17% 29%;
-    --accent: 185 75% 22%;
-    --accent-foreground: 192 15% 96%;
-    --destructive: 1 44% 45%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 185 15% 71%;
-    --input: 185 15% 71%;
-    --ring: 185 75% 22%;
+    /* --- Shadcn --------------------------------------------------------- */
+    --background: 42 27% 93%;
+    --foreground: 24 25% 11%;
+    --card: 42 27% 93%;
+    --card-foreground: 24 25% 11%;
+    --popover: 42 27% 93%;
+    --popover-foreground: 24 25% 11%;
+    --primary: 337 24% 38%;
+    --primary-foreground: 42 27% 93%;
+    --secondary: 38 27% 86%;
+    --secondary-foreground: 24 25% 11%;
+    --muted: 38 27% 86%;
+    --muted-foreground: 26 20% 30%;
+    --accent: 337 24% 38%;
+    --accent-foreground: 42 27% 93%;
+    --destructive: 337 28% 29%;
+    --destructive-foreground: 42 27% 93%;
+    --border: 33 18% 46%;
+    --input: 33 18% 46%;
+    --ring: 337 24% 38%;
   }
 
   * {
     @apply border-border;
-    /* Sólo palabras largas (emails, URLs). `break-word` a secas rompía
-       palabras normales en columnas angostas. */
     overflow-wrap: break-word;
   }
 
@@ -92,39 +109,42 @@
   }
 
   body {
-    @apply bg-porcelain text-slate antialiased;
+    @apply bg-paper text-espresso antialiased;
     font-feature-settings: "kern", "liga";
-    /* El nav sticky mide 4rem; los anchors no deben quedar debajo. */
     scroll-padding-top: 5rem;
   }
 
-  /* Display: Fraunces en un solo peso. Sin `font-variation-settings`: los ejes
-     SOFT/WONK/opsz se sacaron del bundle por costo (ver app/layout.tsx). */
+  /* Display: grotesca con carácter. Deliberadamente NO una serif de alto
+     contraste — esa, sobre crema, es exactamente el default que había que
+     evitar. */
   h1,
   h2,
   .font-display {
-    font-family: var(--font-display), Georgia, serif;
-    font-weight: 600;
-    letter-spacing: -0.021em;
-    line-height: 1.04;
-    text-wrap: balance;
+    font-family: var(--font-display), "Helvetica Neue", sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 0.92;
+    text-transform: none;
   }
 
   h3,
   h4 {
-    letter-spacing: -0.012em;
-    line-height: 1.2;
-    text-wrap: balance;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
   }
 
-  /* Precios, horarios, cualquier cifra que se compare en columna.
-     Es una feature de Inter, no una tercera fuente. */
+  /* Mono para etiquetas, datos y numeración. Es el elemento que hace que el
+     conjunto lea como instrumento de laboratorio y no como folleto de spa. */
+  .mono {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+  }
+
   .tnum {
     font-variant-numeric: tabular-nums;
-    font-feature-settings: "tnum";
   }
 
-  /* Escondido para la vista, presente para lectores de pantalla. */
   .sr-only-focusable:not(:focus):not(:focus-within) {
     position: absolute;
     width: 1px;
@@ -140,204 +160,168 @@
 
 @layer components {
   /* ======================================================================
-     ATMÓSFERA
-     ----------------------------------------------------------------------
-     La razón por la que el diseño se sentía plano no era la paleta: era que
-     todo pasaba sobre porcelana lisa, sin profundidad ni textura. Estas tres
-     capas dan el peso, y ninguna cuesta un solo KB de JavaScript.
+     CONTENEDOR Y GRILLA
      ====================================================================== */
+  .shell {
+    width: 100%;
+    max-width: 84rem;
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 4vw, 2.25rem);
+  }
 
-  /* --- Grano ------------------------------------------------------------ */
-  /* feTurbulence en un data URI: ~300 bytes, cero requests. Es lo que separa
-     una superficie "de plantilla" de una que parece impresa. Va con
-     `pointer-events: none` para no interferir con nada. */
+  .shell-narrow {
+    width: 100%;
+    max-width: 52rem;
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 4vw, 2.25rem);
+  }
+
+  .section {
+    padding-block: clamp(3.5rem, 8vw, 6.5rem);
+  }
+
+  .section-tight {
+    padding-block: clamp(2.25rem, 5vw, 3.75rem);
+  }
+
+  /* Filete estructural. Se usa como elemento, no como separador timido. */
+  .hair {
+    border-top: 1px solid var(--rule);
+  }
+
+  .hair-soft {
+    border-top: 1px solid var(--rule-soft);
+  }
+
+  /* ======================================================================
+     ETIQUETA DE FICHA
+     ----------------------------------------------------------------------
+     Reemplaza al «eyebrow» con barrita. Formato de campo de formulario
+     clínico: código mono + regla que se extiende. Es el patrón que se repite
+     en todo el sitio y le da identidad.
+     ====================================================================== */
+  .field {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-60);
+  }
+
+  .field::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  .surface-ink .field {
+    color: var(--sand);
+  }
+
+  .surface-ink .field::after {
+    background: rgba(231, 223, 210, 0.35);
+  }
+
+  /* ======================================================================
+     SUPERFICIE INVERTIDA
+     ----------------------------------------------------------------------
+     Espresso plano, sin degradados: el contraste duro contra el papel es el
+     ritmo del sitio.
+     ====================================================================== */
+  .surface-ink {
+    background: var(--espresso);
+    color: var(--paper);
+  }
+
+  .surface-sand {
+    background: var(--sand);
+  }
+
+  /* ======================================================================
+     TARJETA DE FICHA
+     ----------------------------------------------------------------------
+     Sin sombra y sin radio. Solo filete. La jerarquía la da el peso del borde
+     y la etiqueta mono, no la elevación.
+     ====================================================================== */
+  .rec {
+    position: relative;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .rec-hover:hover {
+      background: var(--sand);
+      border-color: var(--espresso);
+    }
+  }
+
+  .surface-ink .rec {
+    background: transparent;
+    border-color: rgba(231, 223, 210, 0.3);
+  }
+
+  /* ======================================================================
+     GRANO
+     ----------------------------------------------------------------------
+     Papel, no pantalla. ~300 bytes en un data URI.
+     ====================================================================== */
+  .grain {
+    position: relative;
+    isolation: isolate;
+  }
+
   .grain::before {
     content: "";
     position: absolute;
     inset: 0;
     pointer-events: none;
     z-index: 0;
-    opacity: 0.4;
-    mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.32;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  /* Sobre fondo oscuro el grano necesita más presencia. */
-  .surface-dark .grain::before,
-  .grain.on-dark::before {
-    opacity: 0.55;
-    mix-blend-mode: soft-light;
+  .surface-ink.grain::before {
+    mix-blend-mode: screen;
+    opacity: 0.16;
   }
 
-  /* --- Superficie oscura ------------------------------------------------ */
-  /* Verde quirúrgico profundo con un bloom de luz descentrado, como un foco de
-     estudio sobre la piel. El degradado va con `at 72% 8%` a propósito: la luz
-     centrada se lee como plantilla, la descentrada se lee como fotografía. */
-  /* La opacidad del bloom está topada en 0.18 por contraste, no por gusto: a
-     0.32 el punto más claro del degradado quedaba en #166067 y el texto a 75%
-     de opacidad caía a 3.97:1, bajo AA. A 0.18 el pico es #10555C y hasta el
-     texto al 75% da 5.14:1. */
-  .surface-dark {
-    position: relative;
-    isolation: isolate;
-    background-color: var(--drape-deep);
-    background-image:
-      radial-gradient(60rem 40rem at 72% 8%, rgba(46, 148, 156, 0.18), transparent 62%),
-      radial-gradient(38rem 30rem at 12% 92%, rgba(200, 97, 94, 0.1), transparent 66%),
-      linear-gradient(178deg, #0a474e 0%, var(--drape-deep) 46%, #052f34 100%);
-    color: var(--porcelain);
-  }
-
-  .surface-dark > * {
+  .grain > * {
     position: relative;
     z-index: 1;
   }
 
-  /* --- Superficie clara ------------------------------------------------- */
-  /* Porcelana con una insinuación de luz arriba, para que no sea un plano
-     muerto de color. */
-  .surface-light {
-    position: relative;
-    isolation: isolate;
-    background-color: var(--porcelain);
-    background-image:
-      radial-gradient(52rem 30rem at 78% -6%, rgba(14, 92, 99, 0.07), transparent 60%),
-      radial-gradient(34rem 24rem at 6% 108%, rgba(14, 92, 99, 0.05), transparent 62%);
-  }
-
-  .surface-light > * {
-    position: relative;
-    z-index: 1;
-  }
-
-  /* --- Regla de sección ------------------------------------------------- */
-  /* Hairline que se desvanece: cierra secciones sin el corte duro de un
-     border-top. */
-  .rule-fade {
-    height: 1px;
-    border: 0;
-    background: linear-gradient(90deg, transparent, var(--line), transparent);
-  }
-
-  .surface-dark .rule-fade {
-    background: linear-gradient(90deg, transparent, rgba(242, 245, 246, 0.22), transparent);
-  }
-
-  /* --- Contenedor ------------------------------------------------------- */
-  .shell {
-    width: 100%;
-    max-width: 75rem;
-    margin-inline: auto;
-    padding-inline: clamp(1.125rem, 5vw, 2.5rem);
-  }
-
-  .shell-narrow {
-    width: 100%;
-    max-width: 48rem;
-    margin-inline: auto;
-    padding-inline: clamp(1.125rem, 5vw, 2.5rem);
-  }
-
-  /* --- Ritmo vertical --------------------------------------------------- */
-  /* Una sola clase por sección. Antes cada página traía su propio
-     `py-12 md:py-20` y se pisaban entre sí. */
-  .section {
-    padding-block: clamp(3.5rem, 9vw, 7rem);
-  }
-
-  .section-tight {
-    padding-block: clamp(2.5rem, 6vw, 4.5rem);
-  }
-
-  /* --- Etiqueta de sección ---------------------------------------------- */
-  /* Ahora lleva una barra corta antes del texto: da un punto de anclaje
-     visual y estructura la columna. */
-  .eyebrow {
-    display: flex;
-    align-items: center;
-    gap: 0.625rem;
+  /* ======================================================================
+     MARCA DE CONTENIDO PENDIENTE
+     ====================================================================== */
+  .todo-flag {
+    border: 1px dashed var(--plum);
+    background: transparent;
+    color: var(--plum-deep);
+    font-family: var(--font-mono), ui-monospace, monospace;
     font-size: 0.6875rem;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--drape);
+    line-height: 1.5;
+    letter-spacing: 0.01em;
   }
 
-  .eyebrow::before {
-    content: "";
-    width: 1.75rem;
-    height: 2px;
-    flex-shrink: 0;
-    background: var(--pulse);
+  .surface-ink .todo-flag {
+    border-color: #c58fa2;
+    color: #e2b9c6;
   }
+}
 
-  /* Sobre oscuro el eyebrow sube a #a8d8dd (5.47:1) — es texto chico, así que
-     necesita 4.5 y no le sirve el 3.25:1 de un tono más saturado. La regla
-     también se aclara: el pulse original daba 2.15:1 e desaparecía. */
-  .surface-dark .eyebrow {
-    color: #a8d8dd;
-  }
-
-  .surface-dark .eyebrow::before {
-    background: #e08b88;
-  }
-
-  /* --- Tarjeta ---------------------------------------------------------- */
-  /* Antes era un rectángulo con borde tenue y todas iguales. Ahora tiene una
-     regla de acento arriba que se ilumina al hover, y el borde se define. */
-  .card-flat {
-    position: relative;
-    overflow: hidden;
-    background: var(--porcelain-lift);
-    border: 1px solid var(--line-soft);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-card);
-  }
-
-  .card-flat::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--drape), var(--pulse) 68%, transparent);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    .card-flat.lift:hover {
-      border-color: var(--line);
-    }
-    .card-flat.lift:hover::after {
-      opacity: 1;
-    }
-  }
-
-  /* Variante sobre fondo oscuro. */
-  .card-dark {
-    position: relative;
-    overflow: hidden;
-    background: rgba(242, 245, 246, 0.055);
-    border: 1px solid rgba(242, 245, 246, 0.14);
-    border-radius: var(--radius-lg);
-    backdrop-filter: blur(2px);
-  }
-
-  /* --- Cifra de dato ---------------------------------------------------- */
-  .figure-stat {
-    font-family: var(--font-display), Georgia, serif;
-    font-weight: 300;
-    font-variant-numeric: tabular-nums;
-  }
-
-  /* --- Marca de contenido pendiente ------------------------------------- */
-  /* Deliberadamente visible: nadie publica esto por accidente. */
-  .placeholder-flag {
-    border: 1px dashed var(--pulse);
-    background: var(--pulse-wash);
-    border-radius: var(--radius);
-    color: var(--pulse-deep);
+@layer utilities {
+  /* Numeral romano de fototipo. La secuencia I–VI es una escala clínica real,
+     así que numerar acá no es decoración: es el dato. */
+  .roman {
+    font-variant-numeric: normal;
+    font-feature-settings: "tnum" 0;
   }
 }

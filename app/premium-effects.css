@@ -83,25 +83,17 @@
 /* --- Hover de tarjetas -------------------------------------------------- */
 /* Sólo transform + box-shadow, y sólo en punteros finos: en touch el hover
    se queda pegado y se siente roto. */
+/* El sistema «ficha clínica» no usa sombras ni elevación: el hover cambia
+   fondo y color de filete. Nada se despega del papel — la profundidad falsa es
+   justamente lo que hacía genérico al diseño anterior. */
 .lift {
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 0.28s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .lift:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-lift);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .lift {
-    transition: border-color 0.28s ease, box-shadow 0.28s ease;
-  }
-  .lift:hover {
-    transform: none;
+    background-color: var(--sand);
+    border-color: var(--espresso);
   }
 }
 
@@ -149,7 +141,7 @@
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.18em;
-  text-decoration-color: var(--line);
+  text-decoration-color: var(--rule);
   transition: text-decoration-color 0.2s ease, color 0.2s ease;
 }
 

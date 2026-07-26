@@ -55,13 +55,13 @@ export default function DeferredCalendar() {
     <div
       ref={boxRef}
       // Altura reservada de entrada: el iframe entra sin mover nada.
-      className="relative min-h-[42rem] overflow-hidden rounded-lg border border-line bg-porcelain-lift"
+      className="relative min-h-[42rem] overflow-hidden rounded-lg border border-rule bg-paper"
     >
       {mount ? (
         <>
           {!loaded && (
-            <div className="absolute inset-0 z-10 flex items-center justify-center bg-porcelain-lift">
-              <p className="text-[0.9375rem] text-slate-soft">Cargando calendario…</p>
+            <div className="absolute inset-0 z-10 flex items-center justify-center bg-paper">
+              <p className="text-[0.9375rem] text-ink">Cargando calendario…</p>
             </div>
           )}
           <iframe
@@ -74,11 +74,11 @@ export default function DeferredCalendar() {
         </>
       ) : (
         <div className="flex min-h-[42rem] flex-col items-center justify-center gap-4 p-8 text-center">
-          <CalendarDays className="h-8 w-8 text-drape" aria-hidden="true" strokeWidth={1.5} />
-          <p className="text-[1.0625rem] font-semibold text-drape-deep">
+          <CalendarDays className="h-8 w-8 text-plum" aria-hidden="true" strokeWidth={1.5} />
+          <p className="text-[1.0625rem] font-semibold text-espresso">
             Calendario de reservas
           </p>
-          <p className="max-w-[40ch] text-[0.9375rem] leading-relaxed text-slate-soft">
+          <p className="max-w-[40ch] text-[0.9375rem] leading-relaxed text-ink">
             {saveData
               ? "Tienes activo el ahorro de datos. El calendario pesa cerca de 2 MB, así que no se carga solo."
               : "Cargando al llegar a esta sección…"}
@@ -86,7 +86,7 @@ export default function DeferredCalendar() {
           <button
             type="button"
             onClick={() => setMount(true)}
-            className="inline-flex min-h-[44px] items-center rounded-md bg-drape px-5 py-3 text-[0.9375rem] font-semibold text-porcelain transition-colors hover:bg-drape-deep"
+            className="inline-flex min-h-[44px] items-center rounded-md bg-espresso px-5 py-3 text-[0.9375rem] font-semibold text-paper transition-colors hover:bg-espresso"
           >
             Cargar calendario
           </button>

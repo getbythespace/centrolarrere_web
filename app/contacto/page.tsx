@@ -27,16 +27,16 @@ export default function ContactoPage() {
       <Navigation />
 
       <main id="contenido">
-        <section className="surface-dark grain pb-12 pt-12 md:pb-16 md:pt-16">
+        <section className="surface-ink grain pb-12 pt-12 md:pb-16 md:pt-16">
           <div className="shell">
             <div className="page-enter max-w-[46ch]">
-              <p className="eyebrow">Contacto</p>
+              <p className="field">Contacto</p>
               <h1 className="mt-6 text-display-lg">
-                <span className="font-light text-porcelain/75">Escríbenos</span>
+                <span className="text-sand">Escríbenos</span>
                 <br />
                 y coordinamos
               </h1>
-              <p className="mt-6 text-lead text-porcelain/85">
+              <p className="mt-6 text-lead text-sand">
                 Lo más rápido es WhatsApp. Cuéntanos qué te preocupa y te
                 orientamos antes de agendar.
               </p>
@@ -49,32 +49,32 @@ export default function ContactoPage() {
 
         <StickyCTASentinel />
 
-        <section className="surface-light section">
+        <section className="bg-paper section">
           <div className="shell">
             <h2 className="sr-only">Datos de contacto</h2>
 
             <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
               <ul className="space-y-8">
                 <li className="flex gap-4">
-                  <Phone className="mt-0.5 h-5 w-5 shrink-0 text-drape" aria-hidden="true" strokeWidth={1.75} />
+                  <Phone className="mt-0.5 h-5 w-5 shrink-0 text-plum" aria-hidden="true" strokeWidth={1.75} />
                   <div>
-                    <h3 className="text-[0.9375rem] font-semibold text-drape-deep">
+                    <h3 className="text-[0.9375rem] font-semibold text-espresso">
                       Teléfono y WhatsApp
                     </h3>
                     <PhoneLink />
-                    <p className="mt-1 text-[0.875rem] text-slate-soft">
+                    <p className="mt-1 text-[0.875rem] text-ink">
                       Mismo número para llamadas y mensajes.
                     </p>
                   </div>
                 </li>
 
                 <li className="flex gap-4">
-                  <Mail className="mt-0.5 h-5 w-5 shrink-0 text-drape" aria-hidden="true" strokeWidth={1.75} />
+                  <Mail className="mt-0.5 h-5 w-5 shrink-0 text-plum" aria-hidden="true" strokeWidth={1.75} />
                   <div>
-                    <h3 className="text-[0.9375rem] font-semibold text-drape-deep">Email</h3>
+                    <h3 className="text-[0.9375rem] font-semibold text-espresso">Email</h3>
                     <a
                       href={`mailto:${clinic.email}`}
-                      className="mt-1 block break-all text-[1.0625rem] text-drape underline decoration-line underline-offset-4 transition-colors hover:decoration-drape"
+                      className="mt-1 block break-all text-[1.0625rem] text-plum underline decoration-rule underline-offset-4 transition-colors hover:decoration-espresso"
                     >
                       {clinic.email}
                     </a>
@@ -82,34 +82,34 @@ export default function ContactoPage() {
                 </li>
 
                 <li className="flex gap-4">
-                  <Clock className="mt-0.5 h-5 w-5 shrink-0 text-drape" aria-hidden="true" strokeWidth={1.75} />
+                  <Clock className="mt-0.5 h-5 w-5 shrink-0 text-plum" aria-hidden="true" strokeWidth={1.75} />
                   <div>
-                    <h3 className="text-[0.9375rem] font-semibold text-drape-deep">Horario</h3>
+                    <h3 className="text-[0.9375rem] font-semibold text-espresso">Horario</h3>
                     <dl className="mt-2 space-y-1.5 text-[0.9375rem]">
-                      <div className="flex justify-between gap-6 border-b border-line-soft pb-1.5">
-                        <dt className="text-slate-soft">Lunes a sábado</dt>
-                        <dd className="tnum font-medium text-slate">11:00 – 19:00</dd>
+                      <div className="flex justify-between gap-6 border-b border-rule/50 pb-1.5">
+                        <dt className="text-ink">Lunes a sábado</dt>
+                        <dd className="tnum font-medium text-espresso">11:00 – 19:00</dd>
                       </div>
-                      <div className="flex justify-between gap-6 border-b border-line-soft pb-1.5">
-                        <dt className="text-slate-soft">Domingo</dt>
-                        <dd className="font-medium text-slate">Cerrado</dd>
+                      <div className="flex justify-between gap-6 border-b border-rule/50 pb-1.5">
+                        <dt className="text-ink">Domingo</dt>
+                        <dd className="font-medium text-espresso">Cerrado</dd>
                       </div>
                       <div className="flex justify-between gap-6">
-                        <dt className="text-slate-soft">Atención médica</dt>
-                        <dd className="tnum font-medium text-slate">Mié. desde 17:30</dd>
+                        <dt className="text-ink">Atención médica</dt>
+                        <dd className="tnum font-medium text-espresso">Mié. desde 17:30</dd>
                       </div>
                     </dl>
                   </div>
                 </li>
 
                 <li className="flex gap-4">
-                  <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-drape" aria-hidden="true" strokeWidth={1.75} />
+                  <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-plum" aria-hidden="true" strokeWidth={1.75} />
                   <div>
-                    <h3 className="text-[0.9375rem] font-semibold text-drape-deep">Dirección</h3>
-                    <p className="mt-1 text-[1.0625rem] text-slate">
+                    <h3 className="text-[0.9375rem] font-semibold text-espresso">Dirección</h3>
+                    <p className="mt-1 text-[1.0625rem] text-espresso">
                       {clinic.address.city}, {clinic.address.region}
                     </p>
-                    <p className="placeholder-flag mt-2 px-2.5 py-1.5 text-[0.75rem] font-medium">
+                    <p className="todo-flag mt-2 px-2.5 py-1.5 text-[0.75rem] font-medium">
                       [REEMPLAZAR con la dirección exacta — calle, número y
                       oficina]
                     </p>
@@ -121,7 +121,7 @@ export default function ContactoPage() {
                 {/* Mapa: se deja como espacio porque sin la dirección real un
                     embed apuntaría al lugar equivocado, que es peor que no
                     tener mapa. */}
-                <div className="placeholder-flag flex aspect-[4/3] w-full flex-col items-center justify-center gap-2 p-6 text-center">
+                <div className="todo-flag flex aspect-[4/3] w-full flex-col items-center justify-center gap-2 p-6 text-center">
                   <MapPin className="h-6 w-6" aria-hidden="true" strokeWidth={1.75} />
                   <p className="text-[0.875rem] font-semibold">Espacio para el mapa</p>
                   <p className="max-w-[38ch] text-[0.8125rem] leading-relaxed">
@@ -132,18 +132,18 @@ export default function ContactoPage() {
                   </p>
                 </div>
 
-                <div className="card-flat mt-6 p-6">
-                  <h3 className="text-[1.0625rem] font-semibold text-drape-deep">
+                <div className="rec mt-6 p-6">
+                  <h3 className="text-[1.0625rem] font-semibold text-espresso">
                     Evaluación médica
                   </h3>
-                  <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-slate-soft">
+                  <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-ink">
                     Primera consulta obligatoria para cualquier tratamiento.
                   </p>
                   <p className="mt-3">
-                    <span className="tnum text-2xl font-semibold text-slate">
+                    <span className="tnum text-2xl font-semibold text-espresso">
                       {clinic.evaluation.priceDisplay}
                     </span>
-                    <span className="ml-2 text-[0.875rem] text-slate-soft">
+                    <span className="ml-2 text-[0.875rem] text-ink">
                       {clinic.evaluation.note}
                     </span>
                   </p>
@@ -151,7 +151,7 @@ export default function ContactoPage() {
                     <WhatsAppCTA context={{ kind: "evaluation" }} block />
                     <Link
                       href="/agendar"
-                      className="inline-flex min-h-[44px] flex-1 items-center justify-center rounded-md border border-line px-5 py-3 text-[0.9375rem] font-semibold text-drape-deep transition-colors hover:bg-drape-wash"
+                      className="inline-flex min-h-[44px] flex-1 items-center justify-center rounded-md border border-rule px-5 py-3 text-[0.9375rem] font-semibold text-espresso transition-colors hover:bg-sand"
                     >
                       Agendar online
                     </Link>

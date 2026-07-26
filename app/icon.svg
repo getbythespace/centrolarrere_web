@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="13" fill="#0E5C63"/>
+  <!-- Monograma L. Sin texto real: a 16px una "L" limpia se lee y "LARRÈRE" no. -->
+  <path d="M23 16v27h19" stroke="#F2F5F6" stroke-width="7" stroke-linecap="square" fill="none"/>
+  <!-- El punto de acento: el único guiño cálido de la marca. -->
+  <circle cx="45" cy="21" r="4.5" fill="#C8615E"/>
+</svg>

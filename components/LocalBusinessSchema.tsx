@@ -1,90 +1,89 @@
+import { clinic } from "@/lib/clinic";
+import { treatments } from "@/lib/treatments";
+
+/**
+ * Datos estructurados para SEO local.
+ *
+ * Se corrigieron cuatro cosas graves que había antes:
+ *
+ * 1. Se eliminó `aggregateRating` (5★ / 50 reseñas). No existían esas reseñas.
+ *    Marcado de reseñas inventado es motivo de acción manual de Google, y
+ *    además es una afirmación falsa sobre una clínica real. NO se vuelve a
+ *    agregar hasta que haya reseñas verificables, y en ese caso el valor tiene
+ *    que salir de la fuente real (Google Business Profile), no de una constante.
+ *
+ * 2. `@type` pasó de `BeautySalon` a `MedicalClinic`: es una clínica con
+ *    respaldo médico y de enfermería, y ese tipo es el que Google usa para
+ *    búsquedas de salud.
+ *
+ * 3. Se sacaron los servicios que la clínica no presta (masaje relajante,
+ *    manicure, pedicure). Ahora la lista se deriva del catálogo real.
+ *
+ * 4. Teléfono, dirección y geo salen de `lib/clinic.ts`. Antes había un
+ *    teléfono inventado y coordenadas de Santiago para una clínica de Chillán.
+ */
 export default function LocalBusinessSchema() {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://larrere.cl";
+
+  // Sólo perfiles que existan de verdad.
+  const sameAs = [clinic.social.instagram, clinic.social.facebook].filter(
+    (u): u is string => typeof u === "string" && u.length > 0
+  );
+
   const schema = {
     "@context": "https://schema.org",
-    "@type": "BeautySalon",
-    "name": "LARRÈRE",
-    "description": "Centro de belleza y bienestar profesional. Servicios de masajes, tratamientos faciales, manicure, pedicure y depilación láser.",
-    "url": process.env.NEXT_PUBLIC_SITE_URL || "https://larrere.cl",
-    "telephone": "+56912345678",
-    "email": "larreresaludyestetica@gmail.com",
-    "address": {
+    "@type": "MedicalClinic",
+    name: clinic.name,
+    legalName: clinic.legalName,
+    description:
+      "Clínica de estética con enfoque clínico en Chillán. Tratamientos láser para rosácea y lesiones vasculares, acné, PRP facial y capilar, y procedimientos con evaluación médica previa.",
+    url: siteUrl,
+    telephone: clinic.phone.e164,
+    email: clinic.email,
+    medicalSpecialty: "Dermatology",
+    address: {
       "@type": "PostalAddress",
-      "streetAddress": "Calle Principal 123",
-      "addressLocality": "Comuna",
-      "addressRegion": "Región",
-      "postalCode": "1234567",
-      "addressCountry": "CL"
+      streetAddress: clinic.address.street,
+      addressLocality: clinic.address.city,
+      addressRegion: clinic.address.region,
+      addressCountry: clinic.address.country,
     },
-    "geo": {
+    geo: {
       "@type": "GeoCoordinates",
-      "latitude": "-33.4488897",
-      "longitude": "-70.6692655"
+      latitude: clinic.address.geo.lat,
+      longitude: clinic.address.geo.lng,
     },
-    "openingHoursSpecification": [
+    openingHoursSpecification: clinic.hours.spec.map((s) => ({
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: s.days,
+      opens: s.opens,
+      closes: s.closes,
+    })),
+    priceRange: "$$",
+    currenciesAccepted: "CLP",
+    ...(sameAs.length > 0 && { sameAs }),
+    // Se declara sólo la evaluación médica con precio, que es el único
+    // confirmado. Los demás tratamientos se listan sin `offers`.
+    makesOffer: [
       {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        "opens": "09:00",
-        "closes": "19:00"
+        "@type": "Offer",
+        priceCurrency: "CLP",
+        price: clinic.evaluation.price,
+        itemOffered: {
+          "@type": "MedicalProcedure",
+          name: "Evaluación médica estética",
+          description:
+            "Consulta médica previa para determinar el tratamiento adecuado según tipo de piel y condición.",
+        },
       },
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": "Saturday",
-        "opens": "10:00",
-        "closes": "14:00"
-      }
     ],
-    "priceRange": "$$",
-    "paymentAccepted": "Transferencia bancaria, Efectivo",
-    "currenciesAccepted": "CLP",
-    "hasMap": "https://maps.google.com/?q=LARRERE",
-    "sameAs": [
-      "https://www.instagram.com/larrere",
-      "https://www.facebook.com/larrere"
-    ],
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "5",
-      "reviewCount": "50"
-    },
-    "makesOffer": [
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Masaje Relajante",
-          "description": "Masaje de cuerpo completo para aliviar tensiones",
-          "provider": {
-            "@type": "BeautySalon",
-            "name": "LARRÈRE"
-          }
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Facial Limpieza Profunda",
-          "description": "Limpieza facial con extracción y tratamiento hidratante",
-          "provider": {
-            "@type": "BeautySalon",
-            "name": "LARRÈRE"
-          }
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Manicure y Pedicure",
-          "description": "Cuidado completo de manos y pies",
-          "provider": {
-            "@type": "BeautySalon",
-            "name": "LARRÈRE"
-          }
-        }
-      }
-    ]
+    availableService: treatments
+      .filter((t) => t.id !== "evaluacion-medica")
+      .map((t) => ({
+        "@type": "MedicalProcedure",
+        name: t.name,
+        description: t.summary,
+      })),
   };
 
   return (

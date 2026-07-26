@@ -1,258 +1,179 @@
-'use client';
+import type { Metadata } from "next";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+import StickyContactBar, { StickyCTASentinel } from "@/components/StickyContactBar";
+import WhatsAppCTA from "@/components/WhatsAppCTA";
+import { clinic } from "@/lib/clinic";
 
-import * as React from 'react';
-import { motion } from 'framer-motion';
-import Navigation from '@/components/Navigation';
-import { Award, Heart, Stethoscope, Sparkles } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+export const metadata: Metadata = {
+  title: "Equipo",
+  description:
+    "Cosmetólogas, enfermería titulada y atención médica. Quién realiza cada tratamiento en LARRÈRE, Chillán.",
+  alternates: { canonical: "/equipo" },
+};
 
-const teamMembers = [
+/**
+ * Los nombres y roles de abajo venían de la iteración anterior y coinciden con
+ * los datos que sí estaban en el sitio. Lo que NO se conserva son las
+ * credenciales inventadas de /certificados ("Universidad Católica", "Cruz Roja
+ * Chilena", años 2017-2024): esas se reemplazaron por espacios rotulados,
+ * porque atribuir un título falso a una persona real es serio.
+ */
+const team = [
   {
-    name: 'Cosmetólogas Especialistas',
-    role: 'Fundadoras y Expertas en Estética',
-    description:
-      'Especialistas en tratamientos estéticos y de salud de la piel con más de 7 años de experiencia. Comprometidas con entregar soluciones reales basadas en la salud antes que la estética.',
-    icon: '👩‍⚕️',
-    color: 'gold',
+    name: "Cosmetólogas especialistas",
+    role: "Fundadoras",
+    body: "A cargo de los tratamientos estéticos y del seguimiento de la piel. Más de 7 años de experiencia en tratamientos láser.",
+    credential: "[REEMPLAZAR con título e institución reales]",
   },
   {
-    name: 'Belén Muñoz',
-    role: 'Enfermera Profesional',
-    description:
-      'Enfermera titulada especializada en procedimientos de salud estética. Encargada de tratamientos invasivos menores y seguimiento post-tratamiento para garantizar resultados seguros.',
-    icon: '💉',
-    color: 'sage',
+    name: "Belén Muñoz",
+    role: "Enfermera",
+    body: "Realiza los procedimientos invasivos menores y el control post-tratamiento.",
+    credential: "[REEMPLAZAR con título, institución y año reales]",
   },
   {
-    name: 'Dr. Jhon Pablo Mero',
-    role: 'Atención Médica Miércoles',
-    description:
-      'Médico cirujano especializado en tratamientos láser avanzados (CO₂ Fraccionado, Láser Vascular). Realiza evaluaciones médicas obligatorias y procedimientos de alta complejidad.',
-    icon: '🩺',
-    color: 'brown',
-    badge: 'Miércoles ≥17:30',
+    name: "Dr. Jhon Pablo Mero",
+    role: "Médico cirujano",
+    body: "Realiza las evaluaciones médicas y los procedimientos de mayor complejidad: láser CO₂ fraccionado y láser vascular.",
+    credential: "[REEMPLAZAR con título, institución y nº de registro (RNPI) reales]",
+    badge: "Miércoles desde 17:30",
   },
 ];
 
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-    },
+const standards = [
+  {
+    title: "Evaluación previa",
+    body: "Ningún tratamiento parte sin diagnóstico médico.",
   },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 },
-};
+  {
+    title: "Higiene y bioseguridad",
+    body: "Protocolos de esterilización y material desechable.",
+  },
+  {
+    title: "Seguimiento",
+    body: "Control posterior a cargo de enfermería.",
+  },
+  {
+    title: "Derivación",
+    body: "Si el caso requiere otra especialidad, se deriva.",
+  },
+];
 
 export default function EquipoPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-ivory via-sand-light to-sage-light">
+    <>
       <Navigation />
 
-      {/* Hero Section */}
-      <motion.section
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        className="relative pt-24 md:pt-32 pb-12 md:pb-20 px-6 overflow-hidden"
-      >
-        {/* Decorative background */}
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-20 right-10 w-72 h-72 bg-gold/20 rounded-full blur-3xl" />
-          <div className="absolute bottom-20 left-10 w-96 h-96 bg-sage/20 rounded-full blur-3xl" />
-        </div>
+      <main id="contenido">
+        <section className="section-tight bg-porcelain">
+          <div className="shell">
+            <div className="max-w-prose page-enter">
+              <p className="eyebrow">Equipo</p>
+              <h1 className="mt-4 text-display-lg text-drape-deep">
+                Quién realiza cada tratamiento
+              </h1>
+              <p className="mt-5 text-lead text-slate-soft">
+                La diferencia entre una clínica y un centro estético informal
+                está acá: quién te atiende y con qué respaldo.
+              </p>
+            </div>
+          </div>
+        </section>
 
-        <div className="max-w-6xl mx-auto relative z-10">
-          <motion.div
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h1 className="text-4xl md:text-6xl font-bold text-brown mb-6">
-              Nuestro{' '}
-              <span className="bg-gradient-gold bg-clip-text text-transparent">Equipo</span>
-            </h1>
-            <p className="text-base md:text-xl text-brown-light max-w-3xl mx-auto leading-relaxed">
-              Profesionales certificados comprometidos con tu salud y bienestar. Cada tratamiento es
-              realizado por especialistas con años de experiencia.
-            </p>
-          </motion.div>
-        </div>
-      </motion.section>
+        <StickyCTASentinel />
 
-      {/* Team Members */}
-      <section className="pb-12 md:pb-24 px-6">
-        <motion.div
-          variants={container}
-          initial="hidden"
-          animate="show"
-          className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8"
-        >
-          {teamMembers.map((member) => (
-            <motion.div key={member.name} variants={item} className="h-full">
-              <Card className="h-full glass-effect border-gold/20 hover-lift cursor-pointer group overflow-hidden">
-                <CardHeader>
-                  <div className="flex flex-col items-center text-center mb-4">
-                    <div
-                      className={`w-24 h-24 rounded-full bg-gradient-${member.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}
-                    >
-                      <span className="text-5xl">{member.icon}</span>
+        <section className="section border-y border-line-soft bg-porcelain-lift">
+          <div className="shell">
+            <h2 className="sr-only">Integrantes del equipo</h2>
+            <ul className="grid gap-6 md:grid-cols-3">
+              {team.map((m) => (
+                <li key={m.name} className="reveal">
+                  <article className="card-flat flex h-full flex-col p-6">
+                    {/* Espacio de retrato. Sin foto real no se pone un emoji
+                        gigante: se deja el marco rotulado. */}
+                    <div className="placeholder-flag flex aspect-[4/3] w-full items-center justify-center px-3 text-center text-[0.75rem] font-medium">
+                      [REEMPLAZAR con retrato real]
                     </div>
-                    {member.badge && (
-                      <span className="text-xs font-medium px-3 py-1 rounded-full bg-brown/90 text-ivory mb-2">
-                        {member.badge}
+
+                    {m.badge && (
+                      <span className="mt-4 inline-flex w-fit items-center rounded-sm bg-drape-wash px-2 py-1 text-[0.6875rem] font-semibold text-drape-deep">
+                        {m.badge}
                       </span>
                     )}
-                  </div>
-                  <CardTitle className="text-2xl text-brown text-center group-hover:text-gold transition-colors">
-                    {member.name}
-                  </CardTitle>
-                  <CardDescription className="text-center font-semibold text-gold">
-                    {member.role}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-brown/80 leading-relaxed text-center">{member.description}</p>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </motion.div>
-      </section>
 
-      {/* Why Choose Us */}
-      <section className="pb-24 px-6">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-4xl font-bold text-brown mb-4">¿Por qué elegirnos?</h2>
-            <p className="text-brown/70 text-lg max-w-2xl mx-auto">
-              Nuestro compromiso es tu salud y bienestar, con profesionalismo y atención
-              personalizada
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-            >
-              <Card className="glass-effect border-gold/20 hover-lift text-center h-full">
-                <CardContent className="p-6">
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-gold mb-4">
-                    <Award className="w-8 h-8 text-brown" />
-                  </div>
-                  <h3 className="font-bold text-brown text-lg mb-2">Certificación Profesional</h3>
-                  <p className="text-brown/70 text-sm">
-                    Equipo completamente certificado con capacitación continua
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-            >
-              <Card className="glass-effect border-gold/20 hover-lift text-center h-full">
-                <CardContent className="p-6">
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-sage mb-4">
-                    <Stethoscope className="w-8 h-8 text-brown" />
-                  </div>
-                  <h3 className="font-bold text-brown text-lg mb-2">Evaluación Médica</h3>
-                  <p className="text-brown/70 text-sm">
-                    Diagnóstico profesional antes de cada tratamiento
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-            >
-              <Card className="glass-effect border-gold/20 hover-lift text-center h-full">
-                <CardContent className="p-6">
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-gold mb-4">
-                    <Heart className="w-8 h-8 text-brown" />
-                  </div>
-                  <h3 className="font-bold text-brown text-lg mb-2">Atención Personalizada</h3>
-                  <p className="text-brown/70 text-sm">
-                    Cada tratamiento adaptado a tus necesidades específicas
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-            >
-              <Card className="glass-effect border-gold/20 hover-lift text-center h-full">
-                <CardContent className="p-6">
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-sage mb-4">
-                    <Sparkles className="w-8 h-8 text-brown" />
-                  </div>
-                  <h3 className="font-bold text-brown text-lg mb-2">Resultados Comprobados</h3>
-                  <p className="text-brown/70 text-sm">
-                    Más de 7 años de experiencia con resultados reales
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
+                    <h3 className="mt-4 text-[1.125rem] font-semibold text-drape-deep">
+                      {m.name}
+                    </h3>
+                    <p className="mt-0.5 text-[0.875rem] font-medium text-drape">{m.role}</p>
+                    <p className="mt-3 flex-1 text-[0.9375rem] leading-relaxed text-slate-soft">
+                      {m.body}
+                    </p>
+                    <p className="placeholder-flag mt-4 px-2.5 py-1.5 text-[0.75rem] font-medium">
+                      {m.credential}
+                    </p>
+                  </article>
+                </li>
+              ))}
+            </ul>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* CTA */}
-      <motion.section
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="pb-24 px-6"
-      >
-        <div className="max-w-4xl mx-auto">
-          <Card className="glass-effect border-gold/30 shadow-2xl overflow-hidden">
-            <div className="bg-gradient-gold p-12 text-center">
-              <h2 className="text-3xl md:text-4xl font-bold text-brown mb-4">
-                ¿Listo para conocernos?
+        {/* Ancla de destino para el redirect desde /certificados. */}
+        <section className="section" id="credenciales">
+          <div className="shell">
+            <div className="max-w-prose">
+              <p className="eyebrow">Credenciales y estándares</p>
+              <h2 className="mt-3 text-display-md text-drape-deep">
+                Con qué respaldo trabajamos
               </h2>
-              <p className="text-brown/80 text-lg mb-8 max-w-2xl mx-auto">
-                Agenda tu evaluación médica y conoce a nuestro equipo de profesionales
-              </p>
-              <motion.a
-                href="/agendar"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center gap-2 bg-brown text-ivory px-8 py-4 rounded-full font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-300"
-              >
-                <Stethoscope className="w-5 h-5" />
-                Agendar Evaluación
-              </motion.a>
             </div>
-          </Card>
-        </div>
-      </motion.section>
-    </div>
+
+            <ul className="mt-8 grid gap-5 sm:grid-cols-2">
+              {standards.map((s) => (
+                <li key={s.title} className="card-flat p-5 reveal">
+                  <h3 className="text-[1.0625rem] font-semibold text-drape-deep">{s.title}</h3>
+                  <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-slate-soft">
+                    {s.body}
+                  </p>
+                </li>
+              ))}
+            </ul>
+
+            {/* Sellos de confianza: se dejan como espacio explícito porque hay
+                que verificarlos antes de mostrarlos. Una autorización sanitaria
+                afirmada de más es un problema legal, no un detalle. */}
+            <div className="placeholder-flag mt-8 max-w-prose p-5">
+              <h3 className="text-[0.9375rem] font-semibold">
+                Espacio para sellos y autorizaciones
+              </h3>
+              <p className="mt-2 text-[0.875rem] leading-relaxed">
+                [REEMPLAZAR con las autorizaciones reales: resolución SEREMI de
+                Salud (con número), registro de los equipos láser, títulos
+                profesionales. Adjunta los documentos y los publico con el
+                número visible — es lo que la competencia usa como sello de
+                confianza, pero sólo sirve si es verificable.]
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="section-tight bg-drape-deep text-porcelain">
+          <div className="shell-narrow text-center">
+            <h2 className="text-display-sm">Conversemos tu caso</h2>
+            <p className="tnum mx-auto mt-3 max-w-prose text-[1.0625rem] leading-relaxed text-porcelain/80">
+              Evaluación médica {clinic.evaluation.priceDisplay} ·{" "}
+              {clinic.evaluation.note}
+            </p>
+            <div className="mt-7 flex justify-center">
+              <WhatsAppCTA context={{ kind: "evaluation" }} size="lg" />
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+      <StickyContactBar />
+    </>
   );
 }

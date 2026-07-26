@@ -6,50 +6,43 @@ const config: Config = {
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}",
   ],
-  prefix: "",
   theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
-    },
     extend: {
       colors: {
-        // Paleta LARRÈRE - Dorado + Pasteles
-        gold: {
-          DEFAULT: '#E5C589',
-          light: '#F4E4C1',
-          dark: '#D4A968',
+        // Paleta LARRÈRE. Ratios medidos contra --porcelain (#F2F5F6).
+        slate: {
+          DEFAULT: "#17202A", // 15.02:1 AAA
+          soft: "#3D4A56", //  8.05:1 AAA
         },
-        ivory: {
-          DEFAULT: '#FAF7F2',
-          dark: '#F0EDE8',
+        porcelain: {
+          DEFAULT: "#F2F5F6",
+          lift: "#FAFBFB",
         },
-        sand: {
-          DEFAULT: '#EBDDCB',
-          light: '#F5EFE5',
-          dark: '#D8C7B3',
+        drape: {
+          DEFAULT: "#0E5C63", //  7.02:1 AAA
+          deep: "#083F45", // 10.61:1 AAA
+          wash: "#E6EEEF",
         },
-        sage: {
-          DEFAULT: '#E7EFE7',
-          light: '#F3F8F3',
-          dark: '#D1E0D1',
+        // 3.60:1 — válido para ≥24px bold y elementos no textuales.
+        // Para texto de tamaño normal usar `pulse-deep`.
+        pulse: {
+          DEFAULT: "#C8615E",
+          deep: "#A6413F", //  5.56:1 AA
+          wash: "#F7ECEC",
         },
-        brown: {
-          DEFAULT: '#7F4829',
-          light: '#9F6349',
-          dark: '#5B3119',
+        line: {
+          DEFAULT: "#A8BEC1",
+          soft: "#D4DFE0",
         },
-        ink: {
-          DEFAULT: '#2B2B2B',
-          light: '#4A4A4A',
+        // Verde de marca de WhatsApp. Texto blanco encima falla (1.98:1):
+        // usar `wa-ink` (8.29:1).
+        wa: {
+          DEFAULT: "#25D366",
+          ink: "#17202A",
         },
-        
-        // Shadcn UI colors
+
+        // Shadcn
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -84,16 +77,38 @@ const config: Config = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
-      backgroundImage: {
-        'gradient-gold': 'linear-gradient(135deg, #F4E4C1 0%, #E5C589 50%, #D4A968 100%)',
-        'gradient-sage': 'linear-gradient(135deg, #F3F8F3 0%, #E7EFE7 50%, #D1E0D1 100%)',
-        'gradient-ivory': 'linear-gradient(135deg, #FAF7F2 0%, #F5EFE5 100%)',
+
+      fontFamily: {
+        sans: ["var(--font-body)", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "Georgia", "serif"],
       },
+
+      // Escala fluida. El mínimo es lo que ve el tráfico de Instagram, así
+      // que se eligió primero el mobile y después el techo de desktop.
+      fontSize: {
+        "display-xl": ["clamp(2.5rem, 9.5vw, 5.25rem)", { lineHeight: "1.02", letterSpacing: "-0.028em" }],
+        "display-lg": ["clamp(2.125rem, 7vw, 3.75rem)", { lineHeight: "1.05", letterSpacing: "-0.024em" }],
+        "display-md": ["clamp(1.75rem, 5vw, 2.75rem)", { lineHeight: "1.1", letterSpacing: "-0.018em" }],
+        "display-sm": ["clamp(1.375rem, 3.4vw, 1.875rem)", { lineHeight: "1.18", letterSpacing: "-0.014em" }],
+        lead: ["clamp(1.0625rem, 2.1vw, 1.3125rem)", { lineHeight: "1.55" }],
+      },
+
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        lg: "var(--radius-lg)",
+        md: "var(--radius)",
+        sm: "calc(var(--radius) - 3px)",
       },
+
+      boxShadow: {
+        card: "var(--shadow-card)",
+        lift: "var(--shadow-lift)",
+      },
+
+      maxWidth: {
+        prose: "62ch",
+      },
+
+      // Sólo transiciones finitas y disparadas por interacción.
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
@@ -103,40 +118,10 @@ const config: Config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
-        slideUp: {
-          '0%': { transform: 'translateY(30px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
-        },
-        slideDown: {
-          '0%': { transform: 'translateY(-30px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
-        },
-        scaleIn: {
-          '0%': { transform: 'scale(0.9)', opacity: '0' },
-          '100%': { transform: 'scale(1)', opacity: '1' },
-        },
-        shimmer: {
-          '0%': { backgroundPosition: '-1000px 0' },
-          '100%': { backgroundPosition: '1000px 0' },
-        },
-        float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-10px)' },
-        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        'fade-in': 'fadeIn 0.6s ease-in-out',
-        'slide-up': 'slideUp 0.8s ease-out',
-        'slide-down': 'slideDown 0.8s ease-out',
-        'scale-in': 'scaleIn 0.5s ease-out',
-        'shimmer': 'shimmer 2.5s infinite',
-        'float': 'float 3s ease-in-out infinite',
       },
     },
   },

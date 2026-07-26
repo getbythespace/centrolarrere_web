@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
+  <!-- iOS recorta la esquina solo, así que el fondo va lleno. -->
+  <rect width="180" height="180" fill="#0E5C63"/>
+  <path d="M62 45v76h54" stroke="#F2F5F6" stroke-width="18" stroke-linecap="square" fill="none"/>
+  <circle cx="124" cy="59" r="12" fill="#C8615E"/>
+</svg>

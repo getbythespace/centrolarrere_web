@@ -2,115 +2,192 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ==========================================================================
+   Sistema LARRÈRE
+   --------------------------------------------------------------------------
+   Concepto: la clínica es fría, limpia y precisa; el calor lo pone la piel.
+   Base porcelana + verde quirúrgico, y UN solo acento cálido sacado de
+   tejido perfundido, dosificado.
+
+   Todos los ratios de abajo están medidos, no estimados.
+   ========================================================================== */
+
 @layer base {
   :root {
-    /* Paleta LARRÈRE */
-    --larrere-gold: 37 66% 72%;
-    --larrere-ivory: 40 60% 97%;
-    --larrere-sand: 30 35% 85%;
-    --larrere-sage: 120 20% 93%;
-    --larrere-brown: 24 52% 33%;
-    
-    /* Shadcn UI - Adaptado a paleta LARRÈRE */
-    --background: 40 60% 97%; /* ivory */
-    --foreground: 0 0% 17%; /* ink */
+    /* --- Paleta ---------------------------------------------------------- */
+    --slate: #17202a; /* texto — 15.02:1 sobre porcelain (AAA) */
+    --slate-soft: #3d4a56; /*  8.05:1 sobre porcelain (AAA) — texto secundario */
+    --porcelain: #f2f5f6; /* fondo frío. NO crema. */
+    --porcelain-lift: #fafbfb; /* tarjetas sobre porcelain */
+    --drape: #0e5c63; /* marca — 7.02:1 sobre porcelain (AAA) */
+    --drape-deep: #083f45; /* secciones oscuras — 10.61:1 (AAA) */
+    --drape-wash: #e6eeef; /* fondo teñido, muy leve */
+    --pulse: #c8615e; /* acento — 3.60:1 → SÓLO ≥24px bold o no-texto */
+    --pulse-deep: #a6413f; /* acento en texto normal — 5.56:1 (AA) */
+    --pulse-wash: #f7ecec;
+
+    /* Líneas: mist puro (#C4D4D6) da 1.40:1 sobre porcelain — demasiado
+       flojo para un borde con significado. Se reserva a divisores decorativos. */
+    --line: #a8bec1; /* bordes estructurales */
+    --line-soft: #d4dfe0; /* divisores decorativos */
+
+    /* WhatsApp: verde de marca. Texto blanco encima da 1.98:1 — falla.
+       El botón va con texto slate (8.29:1, AAA). */
+    --wa: #25d366;
+    --wa-ink: #17202a;
+
+    /* --- Interacción ----------------------------------------------------- */
+    --focus-ring: #0e5c63;
+    --sel-bg: #cfe0e2;
+    --sel-fg: #083f45;
+
+    /* --- Elevación ------------------------------------------------------- */
+    /* Sombras teñidas de verde, no grises: se asientan sobre porcelain. */
+    --shadow-sm: 0 1px 2px rgba(8, 63, 69, 0.06);
+    --shadow-card: 0 1px 2px rgba(8, 63, 69, 0.05), 0 4px 12px rgba(8, 63, 69, 0.05);
+    --shadow-lift: 0 2px 4px rgba(8, 63, 69, 0.07), 0 12px 28px rgba(8, 63, 69, 0.1);
+
+    /* --- Radios ---------------------------------------------------------- */
+    --radius: 0.625rem;
+    --radius-lg: 1rem;
+
+    /* --- Shadcn (mapeado a los tokens de arriba) ------------------------- */
+    --background: 192 15% 96%;
+    --foreground: 210 29% 13%;
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 17%;
+    --card-foreground: 210 29% 13%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 17%;
-    --primary: 37 66% 72%; /* gold */
-    --primary-foreground: 24 52% 33%; /* brown */
-    --secondary: 30 35% 85%; /* sand */
-    --secondary-foreground: 0 0% 17%;
-    --muted: 120 20% 93%; /* sage */
-    --muted-foreground: 0 0% 40%;
-    --accent: 37 66% 72%; /* gold */
-    --accent-foreground: 0 0% 17%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 30 35% 85%;
-    --input: 30 35% 85%;
-    --ring: 37 66% 72%;
-    --radius: 0.75rem;
+    --popover-foreground: 210 29% 13%;
+    --primary: 185 75% 22%;
+    --primary-foreground: 192 15% 96%;
+    --secondary: 187 18% 92%;
+    --secondary-foreground: 185 69% 15%;
+    --muted: 187 18% 92%;
+    --muted-foreground: 209 17% 29%;
+    --accent: 185 75% 22%;
+    --accent-foreground: 192 15% 96%;
+    --destructive: 1 44% 45%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 185 15% 71%;
+    --input: 185 15% 71%;
+    --ring: 185 75% 22%;
   }
 
-  /* Fix mobile overflow */
-  * {
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-  }
-
-  body {
-    overflow-x: hidden;
-  }
-
-  /* Prevent horizontal scroll */
-  html {
-    overflow-x: hidden;
-    max-width: 100vw;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-  }
-}
-
-@layer base {
   * {
     @apply border-border;
+    /* Sólo palabras largas (emails, URLs). `break-word` a secas rompía
+       palabras normales en columnas angostas. */
+    overflow-wrap: break-word;
   }
+
+  html {
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
   body {
-    @apply bg-ivory text-ink antialiased;
-    font-feature-settings: "liga", "kern";
+    @apply bg-porcelain text-slate antialiased;
+    font-feature-settings: "kern", "liga";
+    /* El nav sticky mide 4rem; los anchors no deben quedar debajo. */
+    scroll-padding-top: 5rem;
+  }
+
+  /* Display: Fraunces en un solo peso. Sin `font-variation-settings`: los ejes
+     SOFT/WONK/opsz se sacaron del bundle por costo (ver app/layout.tsx). */
+  h1,
+  h2,
+  .font-display {
+    font-family: var(--font-display), Georgia, serif;
+    font-weight: 600;
+    letter-spacing: -0.021em;
+    line-height: 1.04;
+    text-wrap: balance;
+  }
+
+  h3,
+  h4 {
+    letter-spacing: -0.012em;
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+
+  /* Precios, horarios, cualquier cifra que se compare en columna.
+     Es una feature de Inter, no una tercera fuente. */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+
+  /* Escondido para la vista, presente para lectores de pantalla. */
+  .sr-only-focusable:not(:focus):not(:focus-within) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
   }
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@layer components {
+  /* --- Contenedor ------------------------------------------------------- */
+  .shell {
+    width: 100%;
+    max-width: 75rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.125rem, 5vw, 2.5rem);
   }
-  
-  .gold-shimmer {
-    background: linear-gradient(
-      90deg,
-      #F4E4C1 0%,
-      #E5C589 50%,
-      #D4A968 100%
-    );
-    background-size: 200% auto;
-    animation: shimmer 2.5s linear infinite;
+
+  .shell-narrow {
+    width: 100%;
+    max-width: 48rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.125rem, 5vw, 2.5rem);
   }
-  
-  .glass-effect {
-    background: rgba(250, 247, 242, 0.8);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(229, 197, 137, 0.2);
+
+  /* --- Ritmo vertical --------------------------------------------------- */
+  /* Una sola clase por sección. Antes cada página traía su propio
+     `py-12 md:py-20` y se pisaban entre sí. */
+  .section {
+    padding-block: clamp(3.5rem, 9vw, 7rem);
   }
-  
-  .hover-lift {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  .section-tight {
+    padding-block: clamp(2.5rem, 6vw, 4.5rem);
   }
-  
-  .hover-lift:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(127, 72, 41, 0.15);
+
+  /* --- Etiqueta de sección ---------------------------------------------- */
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--drape);
+  }
+
+  /* --- Tarjeta ---------------------------------------------------------- */
+  .card-flat {
+    background: var(--porcelain-lift);
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+  }
+
+  /* --- Marca de contenido pendiente ------------------------------------- */
+  /* Deliberadamente visible: nadie publica esto por accidente. */
+  .placeholder-flag {
+    border: 1px dashed var(--pulse);
+    background: var(--pulse-wash);
+    border-radius: var(--radius);
+    color: var(--pulse-deep);
   }
 }

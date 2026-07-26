@@ -1,93 +1,119 @@
-'use client';
+"use client";
 
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Calendar, Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { Menu, X } from "lucide-react";
+import WhatsAppCTA from "./WhatsAppCTA";
+
+const LINKS = [
+  { href: "/servicios", label: "Tratamientos" },
+  { href: "/resultados", label: "Resultados" },
+  { href: "/equipo", label: "Equipo" },
+  { href: "/contacto", label: "Contacto" },
+];
 
 export default function Navigation() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Cierra el menú al navegar. Antes cada <Link> tenía su propio onClick para
+  // esto; con el pathname es una sola regla y no se olvida en el siguiente link.
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  // Con el menú abierto el fondo no debe scrollear.
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
+  // Escape cierra.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
 
   return (
-    <nav className="border-b border-gold/20 sticky top-0 glass-effect z-50 shadow-sm">
-      <div className="container mx-auto px-4 h-20 flex items-center justify-between">
-        <Link href="/" className="text-3xl font-bold text-brown hover:text-gold transition-colors tracking-tight">
+    <header className="sticky top-0 z-50 border-b border-line-soft bg-porcelain/90 backdrop-blur-md">
+      <nav className="shell flex h-16 items-center justify-between" aria-label="Principal">
+        <Link
+          href="/"
+          className="font-display text-[1.375rem] font-semibold tracking-tight text-drape-deep"
+        >
           LARRÈRE
         </Link>
-        
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
-          <Link href="/servicios" className="text-brown/80 hover:text-gold transition-colors font-medium">
-            Tratamientos
-          </Link>
-          <Link href="/equipo" className="text-brown/80 hover:text-gold transition-colors font-medium">
-            Equipo
-          </Link>
-          <Link href="/testimonios" className="text-brown/80 hover:text-gold transition-colors font-medium">
-            Testimonios
-          </Link>
-          <Link href="/contacto" className="text-brown/80 hover:text-gold transition-colors font-medium">
-            Contacto
-          </Link>
-          <Link href="/agendar">
-            <Button className="bg-gradient-gold hover:shadow-lg hover:scale-105 transition-all duration-300 text-brown font-semibold rounded-full px-6">
-              <Calendar className="mr-2 h-4 w-4" />
-              Agendar
-            </Button>
-          </Link>
+
+        <div className="hidden items-center gap-1 md:flex">
+          {LINKS.map((l) => {
+            const active = pathname === l.href;
+            return (
+              <Link
+                key={l.href}
+                href={l.href}
+                aria-current={active ? "page" : undefined}
+                className={`rounded-md px-3 py-2 text-[0.9375rem] transition-colors ${
+                  active
+                    ? "font-semibold text-drape-deep"
+                    : "text-slate-soft hover:bg-drape-wash hover:text-drape-deep"
+                }`}
+              >
+                {l.label}
+              </Link>
+            );
+          })}
+          <WhatsAppCTA context={{ kind: "evaluation" }} size="sm" className="ml-2">
+            Escribir
+          </WhatsAppCTA>
         </div>
 
-        {/* Mobile Menu Button */}
         <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="md:hidden p-2 text-brown hover:text-gold transition-colors"
-          aria-label="Menú"
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          className="-mr-2 flex h-11 w-11 items-center justify-center rounded-md text-drape-deep transition-colors hover:bg-drape-wash md:hidden"
+          aria-expanded={open}
+          aria-controls="menu-movil"
+          aria-label={open ? "Cerrar menú" : "Abrir menú"}
         >
-          {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          {open ? <X className="h-6 w-6" aria-hidden="true" /> : <Menu className="h-6 w-6" aria-hidden="true" />}
         </button>
-      </div>
+      </nav>
 
-      {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div className="md:hidden border-t border-gold/20 glass-effect">
-          <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
-            <Link 
-              href="/servicios" 
-              className="text-brown/80 hover:text-gold transition-colors font-medium py-2"
-              onClick={() => setIsMenuOpen(false)}
+      {/* El panel se desmonta al cerrar: nada enfocable queda escondido. */}
+      {open && (
+        <div id="menu-movil" className="border-t border-line-soft bg-porcelain md:hidden">
+          <div className="shell flex flex-col gap-1 py-4">
+            {LINKS.map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                aria-current={pathname === l.href ? "page" : undefined}
+                className={`rounded-md px-3 py-3 text-base transition-colors ${
+                  pathname === l.href
+                    ? "bg-drape-wash font-semibold text-drape-deep"
+                    : "text-slate hover:bg-drape-wash"
+                }`}
+              >
+                {l.label}
+              </Link>
+            ))}
+            <Link
+              href="/agendar"
+              className="rounded-md px-3 py-3 text-base text-slate transition-colors hover:bg-drape-wash"
             >
-              Tratamientos
+              Agendar online
             </Link>
-            <Link 
-              href="/equipo" 
-              className="text-brown/80 hover:text-gold transition-colors font-medium py-2"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Equipo
-            </Link>
-            <Link 
-              href="/testimonios" 
-              className="text-brown/80 hover:text-gold transition-colors font-medium py-2"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Testimonios
-            </Link>
-            <Link 
-              href="/contacto" 
-              className="text-brown/80 hover:text-gold transition-colors font-medium py-2"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Contacto
-            </Link>
-            <Link href="/agendar" onClick={() => setIsMenuOpen(false)}>
-              <Button className="w-full bg-gradient-gold hover:shadow-lg transition-all duration-300 text-brown font-semibold rounded-full px-6">
-                <Calendar className="mr-2 h-4 w-4" />
-                Agendar
-              </Button>
-            </Link>
+            <WhatsAppCTA context={{ kind: "evaluation" }} block className="mt-2" />
           </div>
         </div>
       )}
-    </nav>
+    </header>
   );
 }

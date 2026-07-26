@@ -1,121 +1,218 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Calendar, Sparkles, Shield, Heart } from "lucide-react";
+import { ArrowRight, ShieldCheck, Stethoscope, ClipboardCheck } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import WhatsAppCTA from "@/components/WhatsAppCTA";
+import StickyContactBar, { StickyCTASentinel } from "@/components/StickyContactBar";
+import BeforeAfter from "@/components/BeforeAfter";
+import { clinic } from "@/lib/clinic";
+import { treatments } from "@/lib/treatments";
+import { showcaseCases } from "@/lib/cases";
+
+/**
+ * El hero abre con lo que diferencia a la clínica —respaldo médico y de
+ * enfermería— y con el antes/después, que es el producto. No con un titular en
+ * degradado: el anterior tenía la mitad del H1 en dorado sobre crema (1.55:1)
+ * y no se leía.
+ */
+
+const DESTACADOS = ["laser-rosacea", "acne", "telangiectasia", "prp-capilar"];
 
 export default function HomePage() {
+  const featured = DESTACADOS.map((id) => treatments.find((t) => t.id === id)!).filter(Boolean);
+
   return (
-    <div className="flex flex-col min-h-screen page-enter">
+    <>
       <Navigation />
 
-      {/* Hero Section */}
-      <section className="relative flex-1 flex items-center justify-center bg-gradient-to-br from-ivory via-sand-light to-sage-light py-12 md:py-32 overflow-hidden">
-        {/* Decorative Elements */}
-        <div className="absolute inset-0 opacity-40">
-          <div className="absolute top-20 right-10 w-96 h-96 bg-gold/30 rounded-full blur-3xl animate-float" />
-          <div className="absolute bottom-20 left-10 w-72 h-72 bg-sage/30 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }} />
-        </div>
+      <main id="contenido">
+        {/* ================= HERO ================= */}
+        <section className="section-tight relative overflow-hidden bg-porcelain">
+          <div className="shell">
+            <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+              <div className="page-enter">
+                <p className="eyebrow">Chillán · Región de Ñuble</p>
 
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-5xl mx-auto text-center space-y-6 md:space-y-8 animate-fade-in">
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass-effect border border-gold/30 text-gold text-sm font-semibold shadow-lg badge-pulse">
-              <Shield className="h-4 w-4 icon-bounce" />
-              Enfoque Médico Profesional
+                <h1 className="mt-4 text-display-xl text-drape-deep">
+                  La piel se trata
+                  <br />
+                  con criterio clínico.
+                </h1>
+
+                <p className="mt-6 max-w-prose text-lead text-slate-soft">
+                  Rosácea, lesiones vasculares, acné y alopecia. Cada tratamiento
+                  parte de una evaluación médica, con respaldo de enfermería y
+                  derivación cuando corresponde.
+                </p>
+
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+                  <WhatsAppCTA context={{ kind: "evaluation" }} size="lg" />
+                  <Link
+                    href="/servicios"
+                    className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-md border border-line px-6 py-3.5 text-base font-semibold text-drape-deep transition-colors hover:bg-drape-wash"
+                  >
+                    Ver tratamientos
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </Link>
+                </div>
+
+                <p className="mt-5 text-sm text-slate-soft">
+                  Evaluación médica{" "}
+                  <span className="tnum font-semibold text-slate">
+                    {clinic.evaluation.priceDisplay}
+                  </span>{" "}
+                  · {clinic.evaluation.note} · {clinic.hours.display}
+                </p>
+              </div>
+
+              {/* El signature, arriba del pliegue en desktop. */}
+              <div className="lg:pl-4">
+                <BeforeAfter data={showcaseCases[0]} />
+              </div>
             </div>
-            
-            <h1 className="text-4xl md:text-8xl font-bold tracking-tight leading-tight gpu-accelerated">
-              <span className="text-brown">Salud Primero,</span>
-              <br />
-              <span className="text-gradient-animated">
-                Estética Como Consecuencia
-              </span>
-            </h1>
-            
-            <p className="text-xl md:text-2xl text-brown/80 max-w-3xl mx-auto leading-relaxed">
-              Tratamientos láser y médico-estéticos con evaluación profesional previa. 
-              No invasivos, enfoque clínico y resultados reales basados en tu salud.
+          </div>
+        </section>
+
+        <StickyCTASentinel />
+
+        {/* ================= RESPALDO ================= */}
+        <section className="section-tight border-y border-line-soft bg-drape-wash">
+          <div className="shell">
+            <h2 className="sr-only">Por qué el enfoque es clínico</h2>
+            <ul className="grid gap-8 sm:grid-cols-3">
+              {[
+                {
+                  Icon: Stethoscope,
+                  title: "Evaluación médica previa",
+                  body: "El médico define el procedimiento según tu tipo de piel, tu condición y tus antecedentes. No se parte por el equipo, se parte por el diagnóstico.",
+                },
+                {
+                  Icon: ShieldCheck,
+                  title: "Respaldo de enfermería",
+                  body: "Los procedimientos invasivos menores y el seguimiento post-tratamiento los realiza personal de enfermería titulado.",
+                },
+                {
+                  Icon: ClipboardCheck,
+                  title: "Derivación cuando corresponde",
+                  body: "Si tu caso necesita otra especialidad, lo decimos y derivamos. Hay condiciones que no se resuelven con láser.",
+                },
+              ].map(({ Icon, title, body }) => (
+                <li key={title} className="reveal">
+                  <Icon className="h-6 w-6 text-drape" aria-hidden="true" strokeWidth={1.75} />
+                  <h3 className="mt-3 text-[1.0625rem] font-semibold text-drape-deep">{title}</h3>
+                  <p className="mt-2 text-[0.9375rem] leading-relaxed text-slate-soft">{body}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* ================= TRATAMIENTOS ================= */}
+        <section className="section">
+          <div className="shell">
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <p className="eyebrow">Tratamientos</p>
+                <h2 className="mt-3 text-display-md text-drape-deep">
+                  Lo que más nos consultan
+                </h2>
+              </div>
+              <Link
+                href="/servicios"
+                className="inline-flex items-center gap-1.5 text-[0.9375rem] font-semibold text-drape transition-colors hover:text-drape-deep"
+              >
+                Ver los {treatments.length} tratamientos
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </div>
+
+            <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {featured.map((t) => (
+                <li key={t.id} className="reveal">
+                  <article className="card-flat lift flex h-full flex-col p-5">
+                    <p className="eyebrow text-[0.6875rem]">{t.category}</p>
+                    <h3 className="mt-2 text-[1.0625rem] font-semibold text-drape-deep">
+                      {t.name}
+                    </h3>
+                    <p className="mt-2 flex-1 text-[0.9375rem] leading-relaxed text-slate-soft">
+                      {t.summary}
+                    </p>
+                    <WhatsAppCTA
+                      context={{ kind: "treatment", treatment: t.name }}
+                      variant="quiet"
+                      size="sm"
+                      block
+                      className="mt-4"
+                    >
+                      Consultar
+                    </WhatsAppCTA>
+                  </article>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* ================= RESULTADOS ================= */}
+        <section className="section border-t border-line-soft bg-porcelain-lift">
+          <div className="shell">
+            <div className="max-w-prose">
+              <p className="eyebrow">Resultados</p>
+              <h2 className="mt-3 text-display-md text-drape-deep">
+                Casos tratados en la clínica
+              </h2>
+              <p className="mt-4 text-[1.0625rem] leading-relaxed text-slate-soft">
+                Publicamos sólo casos propios, con consentimiento firmado y sin
+                retoque. Cada uno indica el tratamiento y el número de sesiones.
+              </p>
+            </div>
+
+            <ul className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {showcaseCases.slice(1, 4).map((c) => (
+                <li key={c.id} className="reveal">
+                  <BeforeAfter data={c} />
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-10">
+              <Link
+                href="/resultados"
+                className="inline-flex items-center gap-1.5 text-[0.9375rem] font-semibold text-drape transition-colors hover:text-drape-deep"
+              >
+                Ver todos los casos
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* ================= CIERRE ================= */}
+        <section className="section bg-drape-deep text-porcelain">
+          <div className="shell-narrow text-center">
+            <h2 className="text-display-md">¿Empezamos por la evaluación?</h2>
+            <p className="mx-auto mt-4 max-w-prose text-[1.0625rem] leading-relaxed text-porcelain/80">
+              Cuéntanos qué te preocupa por WhatsApp y coordinamos la hora. Si
+              prefieres reservar tú, la agenda está abierta.
             </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-              <Link href="/agendar">
-                <Button 
-                  size="lg" 
-                  className="button-ripple bg-gradient-gold hover:shadow-2xl hover:scale-105 transition-all duration-300 text-brown font-bold text-base md:text-lg px-6 md:px-10 py-6 md:py-7 rounded-full border-2 border-gold-dark card-glow w-full sm:w-auto"
-                >
-                  <Calendar className="mr-2 h-4 w-4 md:h-5 md:w-5 icon-interactive" />
-                  <span className="truncate">Agendar Evaluación Médica</span>
-                  <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5 icon-interactive" />
-                </Button>
-              </Link>
-              <Link href="/servicios">
-                <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="button-ripple bg-white/60 hover:bg-white hover:scale-105 transition-all duration-300 text-brown border-2 border-brown/30 font-semibold text-base md:text-lg px-6 md:px-10 py-6 md:py-7 rounded-full backdrop-premium w-full sm:w-auto"
-                >
-                  <Sparkles className="mr-2 h-4 w-4 md:h-5 md:w-5 icon-interactive" />
-                  Ver Tratamientos
-                </Button>
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <WhatsAppCTA context={{ kind: "evaluation" }} size="lg" />
+              <Link
+                href="/agendar"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-md border border-porcelain/30 px-6 py-3.5 text-base font-semibold text-porcelain transition-colors hover:bg-porcelain/10"
+              >
+                Agendar online
               </Link>
             </div>
-
-            <div className="pt-6 md:pt-8 flex flex-wrap items-center justify-center gap-6 md:gap-8 text-brown/70">
-              <div className="text-center">
-                <div className="text-2xl md:text-3xl font-bold text-gold">+1200</div>
-                <div className="text-xs md:text-sm">Pacientes Tratados</div>
-              </div>
-              <div className="hidden md:block h-12 w-px bg-brown/20" />
-              <div className="text-center">
-                <div className="text-2xl md:text-3xl font-bold text-gold">100%</div>
-                <div className="text-xs md:text-sm">Evaluación Previa</div>
-              </div>
-              <div className="hidden md:block h-12 w-px bg-brown/20" />
-              <div className="text-center">
-                <div className="text-2xl md:text-3xl font-bold text-gold">No Invasivo</div>
-                <div className="text-xs md:text-sm">Enfoque Clínico</div>
-              </div>
-            </div>
+            <p className="tnum mt-6 text-sm text-porcelain/70">
+              {clinic.evaluation.priceDisplay} · {clinic.evaluation.note}
+            </p>
           </div>
-        </div>
-      </section>
-
-      {/* Features */}
-      <section className="py-12 md:py-20 bg-white parallax-section">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-12 max-w-6xl mx-auto">
-            <div className="text-center space-y-4 group premium-card cursor-pointer glass-effect p-8 rounded-3xl depth-effect">
-              <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-gold shadow-lg group-hover:shadow-2xl transition-shadow gpu-accelerated">
-                <Shield className="h-10 w-10 text-brown icon-interactive" />
-              </div>
-              <h3 className="text-xl md:text-2xl font-bold text-brown">Evaluación Médica Obligatoria</h3>
-              <p className="text-brown/70 leading-relaxed">
-                Cada tratamiento comienza con evaluación profesional. Determinamos el procedimiento más adecuado según tu tipo de piel y salud.
-              </p>
-            </div>
-            <div className="text-center space-y-4 group premium-card cursor-pointer glass-effect p-8 rounded-3xl depth-effect">
-              <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-gold shadow-lg group-hover:shadow-2xl transition-shadow gpu-accelerated">
-                <Heart className="h-10 w-10 text-brown icon-interactive" />
-              </div>
-              <h3 className="text-xl md:text-2xl font-bold text-brown">Enfoque No Invasivo</h3>
-              <p className="text-brown/70 leading-relaxed">
-                Tecnología láser de última generación. Tratamientos seguros, efectivos y sin cirugía para resultados naturales y duraderos.
-              </p>
-            </div>
-            <div className="text-center space-y-4 group premium-card cursor-pointer glass-effect p-8 rounded-3xl depth-effect">
-              <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-gold shadow-lg group-hover:shadow-2xl transition-shadow gpu-accelerated">
-                <Sparkles className="h-10 w-10 text-brown icon-interactive" />
-              </div>
-              <h3 className="text-xl md:text-2xl font-bold text-brown">Soluciones Reales</h3>
-              <p className="text-brown/70 leading-relaxed">
-                Priorizamos tu salud sobre la estética. Tratamientos basados en diagnóstico clínico, no en tendencias temporales.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
       <Footer />
-    </div>
+      <StickyContactBar />
+    </>
   );
 }

@@ -1,235 +1,126 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { Star, Quote, Heart, Sparkles } from "lucide-react";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { Star } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import StickyContactBar, { StickyCTASentinel } from "@/components/StickyContactBar";
+import WhatsAppCTA from "@/components/WhatsAppCTA";
 
-const testimonials = [
-  {
-    name: "María José S.",
-    age: 35,
-    service: "Láser CO₂ Fraccionado",
-    rating: 5,
-    comment: "Quedé muy contenta con el tratamiento. La doctora me explicó todo súper bien y el resultado fue justo lo que esperaba.",
-    date: "Febrero 2024",
-    result: "Manchas más claras",
-    avatar: "👩",
-  },
-  {
-    name: "Carla P.",
-    age: 28,
-    service: "Depilación Láser",
-    rating: 5,
-    comment: "Llevo 5 sesiones y se nota harto la diferencia. Me gusta que sean serias con los tratamientos.",
-    date: "Enero 2024",
-    result: "Menos vello",
-    avatar: "👱‍♀️",
-  },
-  {
-    name: "Belén R.",
-    age: 23,
-    service: "Tratamiento de Acné",
-    rating: 5,
-    comment: "Tenía acné hace años y nada me funcionaba. Aquí me hicieron un plan con láser y productos específicos. Mi piel cambió harto.",
-    date: "Marzo 2024",
-    result: "Menos brotes",
-    avatar: "👧",
-  },
-];
-
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.15 }
-  }
+export const metadata: Metadata = {
+  title: "Opiniones",
+  description:
+    "Opiniones de pacientes de LARRÈRE, Chillán. Reseñas verificables desde Google.",
+  alternates: { canonical: "/testimonios" },
+  // Sin reseñas reales todavía, esta página no aporta a la búsqueda. Se
+  // desindexa hasta que tenga contenido; el sitemap tampoco la lista.
+  robots: { index: false, follow: true },
 };
 
-const item = {
-  hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0 }
-};
-
+/**
+ * Esta página tenía tres testimonios inventados —nombres, edades, fechas y
+ * resultados— más un promedio de 5,0 escrito a mano. Se eliminaron.
+ *
+ * La estructura queda armada para reseñas reales. La recomendación es traerlas
+ * de Google Business Profile en vez de escribirlas acá: son verificables, el
+ * paciente puede comprobarlas, y habilitan las estrellas en el buscador de
+ * forma legítima.
+ */
 export default function TestimoniosPage() {
-  const averageRating = 5;
-
   return (
-    <div className="min-h-screen flex flex-col page-enter">
+    <>
       <Navigation />
 
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-ivory via-sand-light to-sage-light py-12 md:py-20 overflow-hidden">
-        {/* Decorative Elements */}
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-20 right-10 w-96 h-96 bg-gold/20 rounded-full blur-3xl animate-float" />
-          <div className="absolute bottom-20 left-10 w-72 h-72 bg-sage/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '1.5s' }} />
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-4xl mx-auto text-center space-y-6"
-          >
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass-effect border border-gold/30 text-gold text-sm font-semibold shadow-lg badge-pulse">
-              <Heart className="h-4 w-4" />
-              Testimonios Reales
+      <main id="contenido">
+        <section className="section-tight bg-porcelain">
+          <div className="shell">
+            <div className="max-w-prose page-enter">
+              <p className="eyebrow">Opiniones</p>
+              <h1 className="mt-4 text-display-lg text-drape-deep">
+                Lo que dicen las pacientes
+              </h1>
+              <p className="mt-5 text-lead text-slate-soft">
+                Preferimos reseñas que puedas verificar por tu cuenta antes que
+                testimonios escritos por nosotros.
+              </p>
             </div>
-
-            <h1 className="text-4xl md:text-7xl font-bold text-brown leading-tight">
-              Testimonios de{" "}
-              <span className="text-gradient-animated">nuestras clientas</span>
-            </h1>
-
-            <p className="text-base md:text-xl text-brown/80 max-w-2xl mx-auto leading-relaxed">
-              Lo que dicen quienes ya probaron nuestros tratamientos.
-            </p>
-
-            {/* Rating Summary */}
-            <div className="flex items-center justify-center gap-2 pt-4">
-              <div className="flex gap-1">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <Star
-                    key={star}
-                    className="h-8 w-8 fill-gold text-gold icon-bounce"
-                    style={{ animationDelay: `${star * 0.1}s` }}
-                  />
-                ))}
-              </div>
-              <span className="text-3xl font-bold text-gold ml-2">{averageRating.toFixed(1)}</span>
-              <span className="text-brown/60 text-lg">/ 5.0</span>
-            </div>
-            <p className="text-brown/60 text-sm">
-              {testimonials.length} opiniones
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Testimonials Grid */}
-      <section className="py-20 bg-white relative overflow-hidden">
-        <div className="container mx-auto px-4">
-          <motion.div
-            variants={container}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            className="grid md:grid-cols-2 gap-8 max-w-7xl mx-auto"
-          >
-            {testimonials.map((testimonial, index) => (
-              <motion.div
-                key={index}
-                variants={item}
-                className="premium-card glass-effect p-8 rounded-3xl depth-effect relative overflow-hidden group"
-              >
-                {/* Quote Icon */}
-                <Quote className="absolute top-4 right-4 h-16 w-16 text-gold/10 group-hover:text-gold/20 transition-colors" />
-
-                {/* Header */}
-                <div className="flex items-start gap-4 mb-6 relative z-10">
-                  <div className="w-16 h-16 rounded-full bg-gradient-gold flex items-center justify-center text-3xl shadow-lg gpu-accelerated group-hover:scale-110 transition-transform">
-                    {testimonial.avatar}
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-bold text-xl text-brown">{testimonial.name}</h3>
-                    <p className="text-brown/60 text-sm">{testimonial.age} años • {testimonial.date}</p>
-                    <div className="flex gap-1 mt-2">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <Star
-                          key={star}
-                          className={`h-4 w-4 ${star <= testimonial.rating ? 'fill-gold text-gold' : 'text-gold/20'}`}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Service Badge */}
-                <div className="inline-block px-4 py-1.5 bg-sage/20 text-brown rounded-full text-sm font-semibold mb-4">
-                  {testimonial.service}
-                </div>
-
-                {/* Comment */}
-                <p className="text-brown/80 leading-relaxed mb-4 relative z-10">
-                  "{testimonial.comment}"
-                </p>
-
-                {/* Result */}
-                <div className="mt-6 pt-6 border-t border-gold/20">
-                  <div className="flex items-start gap-2">
-                    <Sparkles className="h-5 w-5 text-gold flex-shrink-0 mt-0.5 icon-interactive" />
-                    <div>
-                      <p className="text-xs font-semibold text-gold uppercase tracking-wide mb-1">Resultado</p>
-                      <p className="text-sm text-brown/70">{testimonial.result}</p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <motion.section
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="py-20 bg-gradient-to-br from-ivory to-sand-light relative overflow-hidden"
-      >
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gold/30 rounded-full blur-3xl animate-pulse" />
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-3xl mx-auto text-center space-y-8 glass-effect p-12 rounded-3xl shadow-2xl">
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-gold shadow-xl gpu-accelerated">
-              <Heart className="h-10 w-10 text-brown icon-bounce" />
-            </div>
-
-            <h2 className="text-4xl md:text-5xl font-bold text-brown leading-tight">
-              ¿Lista para agendar tu{" "}
-              <span className="text-gradient-animated">primera cita?</span>
-            </h2>
-
-            <p className="text-xl text-brown/80 leading-relaxed">
-              Agenda tu evaluación médica y conoce las opciones que tenemos para ti.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-              <Link href="/agendar">
-                <Button
-                  size="lg"
-                  className="button-ripple bg-gradient-gold hover:shadow-2xl hover:scale-105 transition-all duration-300 text-brown font-bold text-lg px-10 py-7 rounded-full border-2 border-gold-dark card-glow"
-                >
-                  <Sparkles className="mr-2 h-5 w-5 icon-interactive" />
-                  Agendar Evaluación Médica
-                </Button>
-              </Link>
-              <Link href="/servicios">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="button-ripple bg-white/60 hover:bg-white hover:scale-105 transition-all duration-300 text-brown border-2 border-brown/30 font-semibold text-lg px-10 py-7 rounded-full"
-                >
-                  Ver Tratamientos
-                </Button>
-              </Link>
-            </div>
-
-            <p className="text-sm text-brown/60 pt-4">
-              💚 Evaluación Médica: $40,000 • Todo medio de pago • Lun-Sáb 11-19h
-            </p>
           </div>
-        </div>
-      </motion.section>
+        </section>
+
+        <StickyCTASentinel />
+
+        <section className="section border-t border-line-soft">
+          <div className="shell">
+            <div className="placeholder-flag mx-auto max-w-prose p-6">
+              <h2 className="text-[1.0625rem] font-semibold">
+                Espacio para reseñas reales
+              </h2>
+              <p className="mt-3 text-[0.9375rem] leading-relaxed">
+                Acá había tres testimonios que no correspondían a pacientes
+                reales, junto a una calificación de 5,0 sobre 5 escrita a mano.
+                Los saqué: no publicamos opiniones inventadas de una clínica de
+                verdad, y el marcado de reseñas falsas es motivo de sanción de
+                Google.
+              </p>
+              <p className="mt-3 text-[0.9375rem] leading-relaxed">
+                <strong>Lo que necesito de ti:</strong> el enlace del perfil de
+                Google Business de la clínica. Con eso muestro las reseñas
+                reales acá y activo las estrellas en el buscador de forma
+                legítima. Si prefieres testimonios escritos, mándame los textos
+                con la autorización de cada paciente.
+              </p>
+            </div>
+
+            {/* Maqueta de cómo se verá una reseña real, para que se entienda el
+                formato. Marcada como ejemplo, sin datos de nadie. */}
+            <div className="mx-auto mt-10 max-w-prose">
+              <p className="text-[0.8125rem] font-semibold uppercase tracking-wider text-slate-soft">
+                Ejemplo del formato — no es una reseña real
+              </p>
+              {/* Se marca como ejemplo con borde punteado, no con `opacity`:
+                  bajar la opacidad del contenedor arrastra el contraste del
+                  texto por debajo de AA (era el único fallo de contraste que
+                  quedaba en el sitio). */}
+              <article className="mt-3 rounded-lg border border-dashed border-line bg-porcelain-lift p-6">
+                <div className="flex gap-0.5" role="img" aria-label="5 de 5 estrellas">
+                  {[0, 1, 2, 3, 4].map((i) => (
+                    <Star key={i} className="h-4 w-4 fill-pulse text-pulse" aria-hidden="true" />
+                  ))}
+                </div>
+                <p className="mt-3 text-[0.9375rem] leading-relaxed text-slate-soft">
+                  Texto de la reseña tal como la escribió la paciente en Google.
+                </p>
+                <p className="mt-3 text-[0.875rem] font-medium text-slate">
+                  Nombre · Tratamiento · Mes y año
+                </p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section className="section-tight border-t border-line-soft bg-porcelain-lift">
+          <div className="shell-narrow text-center">
+            <h2 className="text-display-sm text-drape-deep">
+              Mientras tanto, mira los casos
+            </h2>
+            <p className="mx-auto mt-3 max-w-prose text-[1.0625rem] leading-relaxed text-slate-soft">
+              Los antes y después son de la clínica, con consentimiento y sin
+              retoque.
+            </p>
+            <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Link
+                href="/resultados"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-md border border-line px-6 py-3.5 text-base font-semibold text-drape-deep transition-colors hover:bg-drape-wash"
+              >
+                Ver resultados
+              </Link>
+              <WhatsAppCTA context={{ kind: "general" }} size="lg" />
+            </div>
+          </div>
+        </section>
+      </main>
 
       <Footer />
-    </div>
+      <StickyContactBar />
+    </>
   );
 }

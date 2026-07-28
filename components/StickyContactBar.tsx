@@ -52,7 +52,7 @@ export default function StickyContactBar() {
       aria-hidden={!visible}
     >
       <div
-        className="flex items-stretch gap-px border-t border-espresso bg-paper px-0 pt-0"
+        className="flex items-stretch gap-px border-t border-pine bg-paper px-0 pt-0"
         // Respeta la barra de gestos del iPhone.
         style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
       >
@@ -60,7 +60,7 @@ export default function StickyContactBar() {
           href={`tel:${clinic.phone.e164}`}
           onClick={() => trackPhoneClick("sticky-bar")}
           tabIndex={visible ? undefined : -1}
-          className="flex min-h-[52px] min-w-[56px] items-center justify-center bg-espresso px-4 text-paper transition-colors hover:bg-umber"
+          className="flex min-h-[52px] min-w-[56px] items-center justify-center bg-pine px-4 text-paper transition-colors hover:bg-pine-deep"
           aria-label={`Llamar al ${clinic.phone.display}`}
         >
           <Phone className="h-[1.125rem] w-[1.125rem]" aria-hidden="true" />

@@ -68,7 +68,7 @@ export default function AgendarPage() {
 
         <section className="bg-paper section-tight">
           <div className="shell">
-            <h2 className="text-display-sm text-espresso">Calendario</h2>
+            <h2 className="text-display-sm text-pine">Calendario</h2>
             <div className="mt-6">
               <DeferredCalendar />
             </div>
@@ -77,26 +77,26 @@ export default function AgendarPage() {
                 emoji, que leía como error del sistema; es información
                 contractual y se presenta como tal. */}
             <div className="mt-8 max-w-prose rounded-lg border border-rule bg-paper p-6">
-              <h3 className="flex items-center gap-2 text-[1.0625rem] font-semibold text-espresso">
+              <h3 className="flex items-center gap-2 text-[1.0625rem] font-semibold text-pine">
                 <AlertTriangle className="h-[1.125rem] w-[1.125rem] shrink-0 text-plum-deep" aria-hidden="true" strokeWidth={2} />
                 Política de reservas
               </h3>
               <dl className="mt-4 space-y-3 text-[0.9375rem] leading-relaxed">
                 <div>
-                  <dt className="font-semibold text-espresso">Aviso mínimo</dt>
+                  <dt className="font-semibold text-pine">Aviso mínimo</dt>
                   <dd className="text-ink">
                     Las reservas se toman con al menos 12 horas de anticipación.
                   </dd>
                 </div>
                 <div>
-                  <dt className="font-semibold text-espresso">Cancelaciones</dt>
+                  <dt className="font-semibold text-pine">Cancelaciones</dt>
                   <dd className="text-ink">
                     Con 12 horas o más de aviso, sin cargo. Con menos de 12
                     horas, se pierde la hora reservada.
                   </dd>
                 </div>
                 <div>
-                  <dt className="font-semibold text-espresso">Confirmación</dt>
+                  <dt className="font-semibold text-pine">Confirmación</dt>
                   <dd className="text-ink">
                     Se requiere un abono del 50% para confirmar la cita.
                   </dd>

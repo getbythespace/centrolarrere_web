@@ -18,8 +18,8 @@ const VARIANTS: Record<Variant, string> = {
   // Verde de WhatsApp con tinta espresso. Blanco sobre este verde da 1.98:1
   // y falla AA; espresso da 8.52:1.
   primary: "bg-wa text-wa-ink hover:bg-[#1fbb5a]",
-  solid: "bg-espresso text-paper hover:bg-umber",
-  quiet: "bg-transparent text-espresso border border-espresso hover:bg-espresso hover:text-paper",
+  solid: "bg-pine text-paper hover:bg-pine-deep",
+  quiet: "bg-transparent text-pine border border-pine hover:bg-pine hover:text-paper",
 };
 
 interface Props {

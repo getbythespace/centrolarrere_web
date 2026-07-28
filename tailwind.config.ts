@@ -10,21 +10,28 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Superficies. Papel y yeso cálido, no crema amarilla.
-        paper: "#F2EEE7",
+        // Superficies. Beige cálido.
+        paper: "#FEF7E5",
         sand: {
-          DEFAULT: "#E7DFD2",
-          deep: "#D8CCBA",
+          DEFAULT: "#F6EBCF",
+          deep: "#EADCB8",
         },
-        // Tinta. Ratios medidos sobre --paper.
-        espresso: "#241B15", // 14.61:1 AAA
-        umber: "#3A2C22", // 11.62:1 AAA
-        ink: "#5C4A3D", //  7.26:1 AAA — secundario
-        // Señal. Ciruela apagada: lo único que no sale de la piel, y
-        // deliberadamente no terracota.
+        // Tinta verde. Ratios medidos sobre --paper.
+        pine: {
+          DEFAULT: "#0D3320", // 13.00:1 AAA — texto y superficie oscura
+          deep: "#00311E", // 13.48:1 AAA
+        },
+        // `ink` es el cuerpo de texto: 8.13:1, un escalón claro por debajo del
+        // titular en pino, que va a 13.00:1.
+        ink: "#3A5139", //  8.13:1 AAA
+        olive: "#4D694E", //  5.70:1 AA — terciario, no bajar de acá
+        // Salvia: el acento SOBRE pino. El oliva ahí da 2.28:1 y no sirve.
+        sage: "#A9C0A4", //  7.12:1 sobre pino (AAA)
+        // Ciruela: sólo rótulos de contenido pendiente. Tiene que cantar
+        // contra el verde, y se va cuando llegue el contenido real.
         plum: {
-          DEFAULT: "#7A4A5C", // 6.13:1 AA
-          deep: "#5E3547", // 8.75:1 AAA
+          DEFAULT: "#7A4A5C", // 6.63:1 AA
+          deep: "#5E3547",
         },
         // Escala de fototipos Fitzpatrick I–VI. Es el sistema de color del
         // sitio, usado como dato. Los tonos 1–4 llevan texto espresso encima;
@@ -38,12 +45,13 @@ const config: Config = {
           6: "#6B4630",
         },
         rule: {
-          DEFAULT: "#8A7860", // ~3.2:1 — perceptible, la grilla es diseño
+          DEFAULT: "#6F8168", // 3.92:1 — perceptible, la grilla es diseño
           soft: "#C9BCA9", // decorativo
         },
         wa: {
           DEFAULT: "#25D366",
-          ink: "#241B15", // 8.52:1 sobre el verde
+          // Texto papel sobre este verde da 1.86:1 y falla. Pino da 7.01:1.
+          ink: "#0D3320",
         },
 
         // Shadcn

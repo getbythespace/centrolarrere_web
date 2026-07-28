@@ -47,8 +47,8 @@ export default function TreatmentCatalog() {
                 onClick={() => setActive(cat)}
                 className={`mono min-h-[44px] flex-1 whitespace-nowrap border-b border-r border-rule px-4 py-2.5 text-label uppercase transition-colors ${
                   selected
-                    ? "bg-espresso text-paper"
-                    : "bg-paper text-ink hover:bg-sand hover:text-espresso"
+                    ? "bg-pine text-paper"
+                    : "bg-paper text-ink hover:bg-sand hover:text-pine"
                 }`}
               >
                 {cat}
@@ -72,14 +72,14 @@ export default function TreatmentCatalog() {
                     {String(i + 1).padStart(2, "0")} · {t.category}
                   </p>
                   {t.doctorOnly && (
-                    <span className="mono inline-flex shrink-0 items-center gap-1 border border-rule px-1.5 py-1 text-[0.625rem] uppercase text-espresso">
+                    <span className="mono inline-flex shrink-0 items-center gap-1 border border-rule px-1.5 py-1 text-[0.625rem] uppercase text-pine">
                       <CalendarClock className="h-3 w-3" aria-hidden="true" />
                       Mié 17:30
                     </span>
                   )}
                 </div>
 
-                <h3 className="mt-5 text-[1.25rem] font-semibold leading-tight text-espresso">
+                <h3 className="mt-5 text-[1.25rem] font-semibold leading-tight text-pine">
                   {t.name}
                 </h3>
                 {t.subtitle && (
@@ -101,7 +101,7 @@ export default function TreatmentCatalog() {
                           {clp(t.listPrice)}
                         </span>
                       )}
-                      <span className="mono text-[1.375rem] font-semibold text-espresso">
+                      <span className="mono text-[1.375rem] font-semibold text-pine">
                         {clp(t.price)}
                       </span>
                     </p>

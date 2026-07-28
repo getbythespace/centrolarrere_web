@@ -50,16 +50,21 @@ export default function HomePage() {
                 {/* Escala arriba del titular: es la tesis del sitio. */}
                 <ToneScale size="md" className="max-w-md" />
 
-                <h1 className="mt-8 text-display-2xl text-espresso">
+                <h1 className="mt-8 text-display-2xl text-pine">
                   Cada piel
                   <br />
                   tiene un
                   <br />
-                  <span className="text-plum">protocolo.</span>
+                  {/* El acento del titular se resuelve dentro del verde, no
+                      con un tercer color: las referencias son sistemas de dos
+                      tonos, y meter un ciruela acá diluiría eso. Pino 13.00:1
+                      contra oliva 5.70:1 da un salto de luminancia suficiente
+                      para que se lea como acento. */}
+                  <span className="text-olive">protocolo.</span>
                 </h1>
 
                 <div className="mt-8 max-w-prose">
-                  <p className="text-lead text-umber">
+                  <p className="text-lead text-ink">
                     Rosácea, lesiones vasculares, acné y alopecia. El láser no se
                     calibra igual para un fototipo II que para un V — por eso acá
                     se parte por el diagnóstico y no por el equipo.
@@ -70,7 +75,7 @@ export default function HomePage() {
                   <WhatsAppCTA context={{ kind: "evaluation" }} size="lg" />
                   <Link
                     href="/servicios"
-                    className="group inline-flex min-h-[48px] items-center justify-center gap-2.5 border border-espresso px-6 py-3.5 text-[0.9375rem] font-semibold text-espresso transition-colors hover:bg-espresso hover:text-paper"
+                    className="group inline-flex min-h-[48px] items-center justify-center gap-2.5 border border-pine px-6 py-3.5 text-[0.9375rem] font-semibold text-pine transition-colors hover:bg-pine hover:text-paper"
                   >
                     Ver {treatments.length} tratamientos
                     <ArrowRight
@@ -92,7 +97,7 @@ export default function HomePage() {
                       className="border-b border-rule/50 py-4 pr-6 sm:border-b-0"
                     >
                       <dt className="mono text-label uppercase text-ink">{label}</dt>
-                      <dd className="mt-2 text-[1.375rem] font-semibold leading-none text-espresso">
+                      <dd className="mt-2 text-[1.375rem] font-semibold leading-none text-pine">
                         {value}
                       </dd>
                       <dd className="mono mt-1.5 text-[0.6875rem] uppercase text-ink">
@@ -178,13 +183,13 @@ export default function HomePage() {
             <div className="flex flex-wrap items-end justify-between gap-6">
               <div>
                 <p className="field w-56">Tratamientos</p>
-                <h2 className="mt-6 text-display-md text-espresso">
+                <h2 className="mt-6 text-display-md text-pine">
                   Lo que más nos consultan
                 </h2>
               </div>
               <Link
                 href="/servicios"
-                className="mono group inline-flex items-center gap-2 border-b border-espresso pb-1 text-label uppercase text-espresso"
+                className="mono group inline-flex items-center gap-2 border-b border-pine pb-1 text-label uppercase text-pine"
               >
                 Catálogo completo
                 <ArrowRight
@@ -203,7 +208,7 @@ export default function HomePage() {
                     <p className="mono text-label uppercase text-ink">
                       {String(i + 1).padStart(2, "0")} · {t.category}
                     </p>
-                    <h3 className="mt-5 text-[1.25rem] font-semibold leading-tight text-espresso">
+                    <h3 className="mt-5 text-[1.25rem] font-semibold leading-tight text-pine">
                       {t.name}
                     </h3>
                     <p className="mt-3 flex-1 text-[0.9375rem] leading-relaxed text-ink">
@@ -231,17 +236,17 @@ export default function HomePage() {
             <div className="flex flex-wrap items-end justify-between gap-6">
               <div className="max-w-[46ch]">
                 <p className="field w-40">Resultados</p>
-                <h2 className="mt-6 text-display-md text-espresso">
+                <h2 className="mt-6 text-display-md text-pine">
                   Casos tratados acá
                 </h2>
-                <p className="mt-5 text-[1.0625rem] leading-relaxed text-umber">
+                <p className="mt-5 text-[1.0625rem] leading-relaxed text-ink">
                   Sólo casos propios, con consentimiento firmado y sin retoque.
                   Cada uno indica tratamiento, fototipo y número de sesiones.
                 </p>
               </div>
               <Link
                 href="/resultados"
-                className="mono group inline-flex items-center gap-2 border-b border-espresso pb-1 text-label uppercase text-espresso"
+                className="mono group inline-flex items-center gap-2 border-b border-pine pb-1 text-label uppercase text-pine"
               >
                 Todos los casos
                 <ArrowRight
@@ -283,7 +288,7 @@ export default function HomePage() {
                 <WhatsAppCTA context={{ kind: "evaluation" }} size="lg" block />
                 <Link
                   href="/agendar"
-                  className="inline-flex min-h-[48px] items-center justify-center border border-sand/40 px-6 py-3.5 text-[0.9375rem] font-semibold text-paper transition-colors hover:bg-paper hover:text-espresso"
+                  className="inline-flex min-h-[48px] items-center justify-center border border-sand/40 px-6 py-3.5 text-[0.9375rem] font-semibold text-paper transition-colors hover:bg-paper hover:text-pine"
                 >
                   Agendar online
                 </Link>

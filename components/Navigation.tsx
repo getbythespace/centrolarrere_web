@@ -47,7 +47,7 @@ export default function Navigation() {
       <nav className="shell flex h-16 items-center justify-between" aria-label="Principal">
         <Link
           href="/"
-          className="font-display text-[1.5rem] leading-none tracking-tight text-espresso"
+          className="font-display text-[1.5rem] leading-none tracking-tight text-pine"
         >
           LARRÈRE
         </Link>
@@ -62,8 +62,8 @@ export default function Navigation() {
                 aria-current={active ? "page" : undefined}
                 className={`mono border-b pb-0.5 text-label uppercase transition-colors ${
                   active
-                    ? "border-espresso text-espresso"
-                    : "border-transparent text-ink hover:border-rule hover:text-espresso"
+                    ? "border-pine text-pine"
+                    : "border-transparent text-ink hover:border-rule hover:text-pine"
                 }`}
               >
                 {l.label}
@@ -78,7 +78,7 @@ export default function Navigation() {
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="-mr-2 flex h-11 w-11 items-center justify-center text-espresso transition-colors hover:bg-sand md:hidden"
+          className="-mr-2 flex h-11 w-11 items-center justify-center text-pine transition-colors hover:bg-sand md:hidden"
           aria-expanded={open}
           aria-controls="menu-movil"
           aria-label={open ? "Cerrar menú" : "Abrir menú"}
@@ -96,7 +96,7 @@ export default function Navigation() {
                 href={l.href}
                 aria-current={pathname === l.href ? "page" : undefined}
                 className={`mono border-b border-rule/40 py-4 text-label uppercase transition-colors ${
-                  pathname === l.href ? "font-semibold text-espresso" : "text-ink"
+                  pathname === l.href ? "font-semibold text-pine" : "text-ink"
                 }`}
               >
                 {l.label}

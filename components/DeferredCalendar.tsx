@@ -74,8 +74,8 @@ export default function DeferredCalendar() {
         </>
       ) : (
         <div className="flex min-h-[42rem] flex-col items-center justify-center gap-4 p-8 text-center">
-          <CalendarDays className="h-8 w-8 text-plum" aria-hidden="true" strokeWidth={1.5} />
-          <p className="text-[1.0625rem] font-semibold text-espresso">
+          <CalendarDays className="h-8 w-8 text-olive" aria-hidden="true" strokeWidth={1.5} />
+          <p className="text-[1.0625rem] font-semibold text-pine">
             Calendario de reservas
           </p>
           <p className="max-w-[40ch] text-[0.9375rem] leading-relaxed text-ink">
@@ -86,7 +86,7 @@ export default function DeferredCalendar() {
           <button
             type="button"
             onClick={() => setMount(true)}
-            className="inline-flex min-h-[44px] items-center rounded-md bg-espresso px-5 py-3 text-[0.9375rem] font-semibold text-paper transition-colors hover:bg-espresso"
+            className="inline-flex min-h-[44px] items-center rounded-md bg-pine px-5 py-3 text-[0.9375rem] font-semibold text-paper transition-colors hover:bg-pine"
           >
             Cargar calendario
           </button>

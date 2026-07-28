@@ -25,20 +25,25 @@
 
 @layer base {
   :root {
-    /* --- Superficies: papel y yeso, no crema amarilla ------------------- */
-    --paper: #f2eee7;
-    --sand: #e7dfd2;
-    --sand-deep: #d8ccba;
+    /* --- Superficies: beige cálido -------------------------------------- */
+    --paper: #fef7e5;
+    --sand: #f6ebcf;
+    --sand-deep: #eadcb8;
 
-    /* --- Tinta ---------------------------------------------------------- */
-    --espresso: #241b15; /* 14.61:1 sobre papel (AAA) */
-    --umber: #3a2c22; /* 11.62:1 (AAA) */
-    --ink-60: #5c4a3d; /*  7.26:1 (AAA) — texto secundario */
+    /* --- Tinta: verde pino ---------------------------------------------- */
+    --pine: #0d3320; /* 13.00:1 sobre papel (AAA) — texto y superficie oscura */
+    --pine-deep: #00311e; /* 13.48:1 (AAA) */
+    --olive-deep: #3a5139; /*  8.13:1 (AAA) — cuerpo y secundario */
+    --olive: #4d694e; /*  5.70:1 (AA)  — terciario, no bajar de acá */
+
+    /* Salvia: el acento sobre pino. El oliva no sirve ahí — da 2.28:1. */
+    --sage: #a9c0a4; /*  7.12:1 sobre pino (AAA) */
 
     /* --- Señal ---------------------------------------------------------- */
-    /* Ciruela apagada, no terracota. Es lo único que no viene de la piel. */
-    --plum: #7a4a5c; /* 6.13:1 sobre papel (AA) */
-    --plum-deep: #5e3547; /* 8.75:1 (AAA) */
+    /* Ciruela: reservada a los rótulos de contenido pendiente. Su trabajo es
+       cantar contra el verde, y desaparece cuando llegue el contenido real. */
+    --plum: #7a4a5c; /* 6.63:1 sobre papel (AA) */
+    --plum-deep: #5e3547;
 
     /* --- Escala de fototipos (I–VI) ------------------------------------- */
     /* Los cuatro primeros tienen 1.04–2.21:1 contra el papel: es correcto para
@@ -52,44 +57,46 @@
     --tone-6: #6b4630;
 
     /* --- Filetes -------------------------------------------------------- */
-    /* La grilla es un elemento de diseño, así que tiene que verse. Los tonos
-       arena daban 1.6–2.8:1 y desaparecían; --rule llega a ~3.2:1. */
-    --rule: #8a7860;
+    /* La grilla es elemento de diseño, así que tiene que verse. Los beige
+       daban 1.7–3.0:1 y desaparecían; este verde apagado llega a 3.92:1. */
+    --rule: #6f8168;
     --rule-soft: #c9bca9;
 
     /* --- Interacción ---------------------------------------------------- */
-    --focus-ring: #7a4a5c;
-    --sel-bg: #e3bc9f;
-    --sel-fg: #241b15;
+    --focus-ring: #0d3320;
+    --sel-bg: #a9c0a4;
+    --sel-fg: #0d3320;
 
-    /* WhatsApp: verde de marca, tinta espresso encima (8.52:1). */
+    /* WhatsApp: verde de marca. Texto papel encima da 1.86:1 y falla; con
+       tinta pino son 7.01:1. Y contra el pino de la marca contrasta 7.01, así
+       que los dos verdes no se confunden entre sí. */
     --wa: #25d366;
-    --wa-ink: #241b15;
+    --wa-ink: #0d3320;
 
     /* --- Radio: cero, a propósito -------------------------------------- */
     --radius: 0px;
     --radius-lg: 0px;
 
     /* --- Shadcn --------------------------------------------------------- */
-    --background: 42 27% 93%;
-    --foreground: 24 25% 11%;
-    --card: 42 27% 93%;
-    --card-foreground: 24 25% 11%;
-    --popover: 42 27% 93%;
-    --popover-foreground: 24 25% 11%;
-    --primary: 337 24% 38%;
-    --primary-foreground: 42 27% 93%;
-    --secondary: 38 27% 86%;
-    --secondary-foreground: 24 25% 11%;
-    --muted: 38 27% 86%;
-    --muted-foreground: 26 20% 30%;
-    --accent: 337 24% 38%;
-    --accent-foreground: 42 27% 93%;
-    --destructive: 337 28% 29%;
-    --destructive-foreground: 42 27% 93%;
-    --border: 33 18% 46%;
-    --input: 33 18% 46%;
-    --ring: 337 24% 38%;
+    --background: 44 90% 95%;
+    --foreground: 145 60% 12%;
+    --card: 44 90% 95%;
+    --card-foreground: 145 60% 12%;
+    --popover: 44 90% 95%;
+    --popover-foreground: 145 60% 12%;
+    --primary: 145 60% 12%;
+    --primary-foreground: 44 90% 95%;
+    --secondary: 44 62% 89%;
+    --secondary-foreground: 145 60% 12%;
+    --muted: 44 62% 89%;
+    --muted-foreground: 116 17% 27%;
+    --accent: 121 16% 36%;
+    --accent-foreground: 44 90% 95%;
+    --destructive: 337 24% 38%;
+    --destructive-foreground: 44 90% 95%;
+    --border: 106 10% 46%;
+    --input: 106 10% 46%;
+    --ring: 145 60% 12%;
   }
 
   * {
@@ -109,7 +116,7 @@
   }
 
   body {
-    @apply bg-paper text-espresso antialiased;
+    @apply bg-paper text-pine antialiased;
     font-feature-settings: "kern", "liga";
     scroll-padding-top: 5rem;
   }
@@ -209,7 +216,7 @@
     font-weight: 500;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--ink-60);
+    color: var(--olive-deep);
   }
 
   .field::after {
@@ -234,7 +241,7 @@
      ritmo del sitio.
      ====================================================================== */
   .surface-ink {
-    background: var(--espresso);
+    background: var(--pine);
     color: var(--paper);
   }
 
@@ -258,7 +265,7 @@
   @media (hover: hover) and (pointer: fine) {
     .rec-hover:hover {
       background: var(--sand);
-      border-color: var(--espresso);
+      border-color: var(--pine);
     }
   }
 

@@ -87,7 +87,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#241B15",
+  themeColor: "#0D3320",
   width: "device-width",
   initialScale: 1,
 };
@@ -108,7 +108,7 @@ export default function RootLayout({
         {/* Primer tabulador de la página: el sitio es largo en mobile. */}
         <a
           href="#contenido"
-          className="sr-only-focusable absolute left-4 top-4 z-[60] bg-espresso px-4 py-2 text-sm font-semibold text-paper"
+          className="sr-only-focusable absolute left-4 top-4 z-[60] bg-pine px-4 py-2 text-sm font-semibold text-paper"
         >
           Saltar al contenido
         </a>

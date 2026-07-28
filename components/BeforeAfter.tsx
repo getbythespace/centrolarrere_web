@@ -52,7 +52,7 @@ export default function BeforeAfter({ data, ratio = "4 / 5", onDark = false }: P
   // 10.61:1, y porcelain/70 sigue sobre 6:1.
   const cap = onDark
     ? { title: "text-paper", body: "text-sand", hint: "text-sand/80" }
-    : { title: "text-espresso", body: "text-ink", hint: "text-ink" };
+    : { title: "text-pine", body: "text-ink", hint: "text-ink" };
   const [pos, setPos] = useState(50);
   const reported = useRef(false);
   const labelId = useId();
@@ -114,10 +114,10 @@ export default function BeforeAfter({ data, ratio = "4 / 5", onDark = false }: P
         </div>
 
         {/* ---- Etiquetas ---- */}
-        <span className="mono pointer-events-none absolute left-0 top-0 bg-espresso px-2 py-1 text-[0.625rem] uppercase tracking-widest text-paper">
+        <span className="mono pointer-events-none absolute left-0 top-0 bg-pine px-2 py-1 text-[0.625rem] uppercase tracking-widest text-paper">
           Antes
         </span>
-        <span className="mono pointer-events-none absolute right-0 top-0 bg-espresso px-2 py-1 text-[0.625rem] uppercase tracking-widest text-paper">
+        <span className="mono pointer-events-none absolute right-0 top-0 bg-pine px-2 py-1 text-[0.625rem] uppercase tracking-widest text-paper">
           Después
         </span>
 
@@ -136,14 +136,14 @@ export default function BeforeAfter({ data, ratio = "4 / 5", onDark = false }: P
 
         {/* ---- Divisor + manija (sólo visual) ---- */}
         <div
-          className="pointer-events-none absolute inset-y-0 z-10 w-px -translate-x-1/2 bg-espresso"
+          className="pointer-events-none absolute inset-y-0 z-10 w-px -translate-x-1/2 bg-pine"
           style={{ left: "var(--pos)" }}
         />
         <div
-          className="pointer-events-none absolute top-1/2 z-10 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center border border-espresso bg-paper transition-transform duration-150 peer-focus-visible:ring-2 peer-focus-visible:ring-plum peer-focus-visible:ring-offset-2 peer-active:scale-95"
+          className="pointer-events-none absolute top-1/2 z-10 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center border border-pine bg-paper transition-transform duration-150 peer-focus-visible:ring-2 peer-focus-visible:ring-plum peer-focus-visible:ring-offset-2 peer-active:scale-95"
           style={{ left: "var(--pos)" }}
         >
-          <svg viewBox="0 0 24 24" className="h-4 w-4 text-espresso" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+          <svg viewBox="0 0 24 24" className="h-4 w-4 text-pine" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
             <path d="M9 6 4 12l5 6M15 6l5 6-5 6" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>

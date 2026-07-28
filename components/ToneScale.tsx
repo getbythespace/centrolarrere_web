@@ -17,16 +17,16 @@
  */
 
 const PHOTOTYPES = [
-  { roman: "I", bg: "bg-tone-1", ink: "text-espresso", desc: "muy clara, siempre se quema" },
-  { roman: "II", bg: "bg-tone-2", ink: "text-espresso", desc: "clara, se quema con facilidad" },
-  { roman: "III", bg: "bg-tone-3", ink: "text-espresso", desc: "intermedia, se quema moderadamente" },
-  { roman: "IV", bg: "bg-tone-4", ink: "text-espresso", desc: "morena clara, se quema poco" },
-  { roman: "V", bg: "bg-tone-5", ink: "text-paper", desc: "morena oscura, rara vez se quema" },
-  { roman: "VI", bg: "bg-tone-6", ink: "text-paper", desc: "muy oscura, no se quema" },
+  { roman: "I", bg: "bg-tone-1", desc: "muy clara, siempre se quema" },
+  { roman: "II", bg: "bg-tone-2", desc: "clara, se quema con facilidad" },
+  { roman: "III", bg: "bg-tone-3", desc: "intermedia, se quema moderadamente" },
+  { roman: "IV", bg: "bg-tone-4", desc: "morena clara, se quema poco" },
+  { roman: "V", bg: "bg-tone-5", desc: "morena oscura, rara vez se quema" },
+  { roman: "VI", bg: "bg-tone-6", desc: "muy oscura, no se quema" },
 ];
 
 interface Props {
-  /** Muestra los numerales dentro de cada chip. */
+  /** Muestra los numerales bajo la banda. */
   labelled?: boolean;
   /** Alto de la banda. */
   size?: "sm" | "md" | "lg";
@@ -35,9 +35,9 @@ interface Props {
 
 export default function ToneScale({ labelled = true, size = "md", className = "" }: Props) {
   const heights = {
-    sm: "h-6",
-    md: "h-11",
-    lg: "h-16",
+    sm: "h-5",
+    md: "h-10",
+    lg: "h-14",
   };
 
   return (
@@ -50,21 +50,32 @@ export default function ToneScale({ labelled = true, size = "md", className = ""
         {PHOTOTYPES.map((p, i) => (
           <li
             key={p.roman}
-            className={`relative flex flex-1 items-center justify-center ${p.bg} ${
-              i > 0 ? "border-l border-rule/60" : ""
-            }`}
+            className={`relative flex-1 ${p.bg} ${i > 0 ? "border-l border-rule/60" : ""}`}
           >
-            {labelled && size !== "sm" && (
-              <span className={`mono roman text-[0.625rem] font-medium ${p.ink}`}>
-                {p.roman}
-              </span>
-            )}
             <span className="sr-only">
               Fototipo {p.roman}: piel {p.desc}
             </span>
           </li>
         ))}
       </ul>
+
+      {/* Los numerales van FUERA de la banda, sobre el papel.
+          Medido: encima del chip V (#A2714E) ni el pino (3.31:1) ni el papel
+          (3.92:1) alcanzan AA para texto de 10px. Cualquier numeral dentro de
+          la banda sería ilegible en ese tramo. Abajo, sobre papel, quedan todos
+          a 13:1 — y además se lee como eje de gráfico, que es lo que es. */}
+      {labelled && size !== "sm" && (
+        <div className="mt-1.5 flex w-full" aria-hidden="true">
+          {PHOTOTYPES.map((p) => (
+            <span
+              key={p.roman}
+              className="mono roman flex-1 text-center text-[0.625rem] font-medium text-ink"
+            >
+              {p.roman}
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

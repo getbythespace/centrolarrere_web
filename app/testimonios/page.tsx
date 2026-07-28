@@ -85,13 +85,13 @@ export default function TestimoniosPage() {
               <article className="mt-3 rounded-lg border border-dashed border-rule bg-paper p-6">
                 <div className="flex gap-0.5" role="img" aria-label="5 de 5 estrellas">
                   {[0, 1, 2, 3, 4].map((i) => (
-                    <Star key={i} className="h-4 w-4 fill-plum text-plum" aria-hidden="true" />
+                    <Star key={i} className="h-4 w-4 fill-olive text-olive" aria-hidden="true" />
                   ))}
                 </div>
                 <p className="mt-3 text-[0.9375rem] leading-relaxed text-ink">
                   Texto de la reseña tal como la escribió la paciente en Google.
                 </p>
-                <p className="mt-3 text-[0.875rem] font-medium text-espresso">
+                <p className="mt-3 text-[0.875rem] font-medium text-pine">
                   Nombre · Tratamiento · Mes y año
                 </p>
               </article>
@@ -101,7 +101,7 @@ export default function TestimoniosPage() {
 
         <section className="section-tight border-t border-rule/50 bg-paper">
           <div className="shell-narrow text-center">
-            <h2 className="text-display-sm text-espresso">
+            <h2 className="text-display-sm text-pine">
               Mientras tanto, mira los casos
             </h2>
             <p className="mx-auto mt-3 max-w-prose text-[1.0625rem] leading-relaxed text-ink">
@@ -111,7 +111,7 @@ export default function TestimoniosPage() {
             <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link
                 href="/resultados"
-                className="inline-flex min-h-[44px] items-center justify-center rounded-md border border-rule px-6 py-3.5 text-base font-semibold text-espresso transition-colors hover:bg-sand"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-md border border-rule px-6 py-3.5 text-base font-semibold text-pine transition-colors hover:bg-sand"
               >
                 Ver resultados
               </Link>

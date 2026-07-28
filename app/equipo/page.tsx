@@ -99,15 +99,15 @@ export default function EquipoPage() {
                     </div>
 
                     {m.badge && (
-                      <span className="mt-4 inline-flex w-fit items-center rounded-sm bg-sand px-2 py-1 text-[0.6875rem] font-semibold text-espresso">
+                      <span className="mt-4 inline-flex w-fit items-center rounded-sm bg-sand px-2 py-1 text-[0.6875rem] font-semibold text-pine">
                         {m.badge}
                       </span>
                     )}
 
-                    <h3 className="mt-4 text-[1.125rem] font-semibold text-espresso">
+                    <h3 className="mt-4 text-[1.125rem] font-semibold text-pine">
                       {m.name}
                     </h3>
-                    <p className="mt-0.5 text-[0.875rem] font-medium text-plum">{m.role}</p>
+                    <p className="mt-0.5 text-[0.875rem] font-medium text-olive">{m.role}</p>
                     <p className="mt-3 flex-1 text-[0.9375rem] leading-relaxed text-ink">
                       {m.body}
                     </p>
@@ -126,7 +126,7 @@ export default function EquipoPage() {
           <div className="shell">
             <div className="max-w-prose">
               <p className="field">Credenciales y estándares</p>
-              <h2 className="mt-5 text-display-md text-espresso">
+              <h2 className="mt-5 text-display-md text-pine">
                 <span className="text-ink">Con qué respaldo</span> trabajamos
               </h2>
             </div>
@@ -134,7 +134,7 @@ export default function EquipoPage() {
             <ul className="mt-8 grid gap-5 sm:grid-cols-2">
               {standards.map((s) => (
                 <li key={s.title} className="rec p-5 reveal">
-                  <h3 className="text-[1.0625rem] font-semibold text-espresso">{s.title}</h3>
+                  <h3 className="text-[1.0625rem] font-semibold text-pine">{s.title}</h3>
                   <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-ink">
                     {s.body}
                   </p>

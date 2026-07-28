@@ -72,7 +72,7 @@ export default function ServiciosPage() {
 
         <TreatmentCatalog />
 
-        <section className="section-tight border-t border-rule/50 bg-espresso text-paper">
+        <section className="section-tight border-t border-rule/50 bg-pine text-paper">
           <div className="shell-narrow text-center">
             <h2 className="text-display-sm">¿No sabes cuál te corresponde?</h2>
             <p className="mx-auto mt-3 max-w-prose text-[1.0625rem] leading-relaxed text-sand">

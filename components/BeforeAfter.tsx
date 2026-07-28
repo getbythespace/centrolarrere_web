@@ -70,8 +70,12 @@ export default function BeforeAfter({ data, ratio = "4 / 5", onDark = false }: P
 
   return (
     <figure className="m-0">
+      {/* `wipe` descubre el marco de abajo hacia arriba al entrar en pantalla.
+          Parte recortado sólo un 14%: si la línea de tiempo del scroll nunca
+          avanza, la peor consecuencia es un recorte que nadie nota, no un caso
+          invisible. */}
       <div
-        className="group relative w-full select-none overflow-hidden border border-rule bg-sand"
+        className="wipe group relative w-full select-none overflow-hidden border border-rule bg-sand"
         style={{ aspectRatio: ratio, ["--pos" as string]: `${pos}%` }}
       >
         {/* ---- ANTES (capa de fondo) ---- */}

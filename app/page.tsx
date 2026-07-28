@@ -6,6 +6,7 @@ import WhatsAppCTA from "@/components/WhatsAppCTA";
 import StickyContactBar, { StickyCTASentinel } from "@/components/StickyContactBar";
 import BeforeAfter from "@/components/BeforeAfter";
 import ToneScale, { ToneRule } from "@/components/ToneScale";
+import TrustMarquee from "@/components/TrustMarquee";
 import { clinic } from "@/lib/clinic";
 import { treatments } from "@/lib/treatments";
 import { showcaseCases } from "@/lib/cases";
@@ -50,17 +51,23 @@ export default function HomePage() {
                 {/* Escala arriba del titular: es la tesis del sitio. */}
                 <ToneScale size="md" className="max-w-md" />
 
+                {/* Revelado línea por línea al cargar: cada una sube desde
+                    detrás de su máscara con 90ms de retardo entre sí. Es el
+                    efecto SplitText, resuelto en CSS y sin bajar una librería.
+                    El acento va en oliva —pino 13.00:1 contra oliva 5.70:1 da
+                    salto suficiente— en vez de meter un tercer color. */}
                 <h1 className="mt-8 text-display-2xl text-pine">
-                  Cada piel
-                  <br />
-                  tiene un
-                  <br />
-                  {/* El acento del titular se resuelve dentro del verde, no
-                      con un tercer color: las referencias son sistemas de dos
-                      tonos, y meter un ciruela acá diluiría eso. Pino 13.00:1
-                      contra oliva 5.70:1 da un salto de luminancia suficiente
-                      para que se lea como acento. */}
-                  <span className="text-olive">protocolo.</span>
+                  <span className="line-mask">
+                    <span style={{ ["--i" as string]: 0 }}>Cada piel</span>
+                  </span>
+                  <span className="line-mask">
+                    <span style={{ ["--i" as string]: 1 }}>tiene un</span>
+                  </span>
+                  <span className="line-mask">
+                    <span className="text-olive" style={{ ["--i" as string]: 2 }}>
+                      protocolo.
+                    </span>
+                  </span>
                 </h1>
 
                 <div className="mt-8 max-w-prose">
@@ -118,6 +125,10 @@ export default function HomePage() {
         </section>
 
         <StickyCTASentinel />
+
+        {/* Cinta de confianza: la única pieza que se mueve sola, acotada a una
+            franja. Separa el hero del argumento y le da pulso a la página. */}
+        <TrustMarquee />
 
         {/* ================= DIFERENCIAL ================= */}
         <section className="surface-ink grain section">

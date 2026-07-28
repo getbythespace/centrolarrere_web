@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import StickyContactBar, { StickyCTASentinel } from "@/components/StickyContactBar";
-import BeforeAfter from "@/components/BeforeAfter";
+import StackedCases from "@/components/StackedCases";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
 import { showcaseCases } from "@/lib/cases";
 
@@ -64,16 +64,12 @@ export default function ResultadosPage() {
 
         <StickyCTASentinel />
 
-        <section className="bg-paper section">
+        <section className="bg-paper pb-24 pt-14">
           <div className="shell">
             <h2 className="sr-only">Galería de casos</h2>
-            <ul className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-              {showcaseCases.map((c) => (
-                <li key={c.id}>
-                  <BeforeAfter data={c} />
-                </li>
-              ))}
-            </ul>
+            {/* Baraja: cada caso se sostiene arriba mientras entra el
+                siguiente. En mobile el apilado se desactiva y fluyen normal. */}
+            <StackedCases cases={showcaseCases} />
           </div>
         </section>
 

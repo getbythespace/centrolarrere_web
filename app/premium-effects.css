@@ -173,6 +173,101 @@
   }
 }
 
+/* ==========================================================================
+   TARJETAS APILADAS
+   --------------------------------------------------------------------------
+   Cada caso se queda pegado arriba mientras el siguiente sube por debajo, y la
+   que queda atrás se encoge. El efecto de baraja.
+
+   El apilado lo hace `position: sticky`, que es CSS de siempre y no puede
+   fallar. La escala es un extra por scroll-timeline: si el navegador no la
+   soporta o la línea de tiempo no avanza, las tarjetas igual se apilan bien.
+   Nunca depende de la animación para que se vea el contenido.
+   ========================================================================== */
+/* El hueco NO lleva altura fija. Con `height: 78vh` la tarjeta terminaba
+   siendo más alta que su contenedor y entonces no le quedaba recorrido para
+   fijarse: sticky necesita que el elemento sea más bajo que su bloque
+   contenedor. Con altura automática más relleno inferior, el recorrido existe
+   siempre, mida lo que mida la tarjeta. */
+.stack__slot {
+  padding-bottom: 32vh;
+}
+
+/* La última no necesita recorrido extra: nada la empuja. */
+.stack__slot:last-child {
+  padding-bottom: 0;
+}
+
+.stack__card {
+  position: sticky;
+  /* Deja aire para el nav sticky de 4rem. */
+  top: 5.5rem;
+  transform-origin: 50% 0%;
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .stack__card {
+      animation: stack-recede linear both;
+      animation-timeline: view();
+      /* Sólo mientras la tarjeta sale por arriba. */
+      animation-range: exit 0% exit 92%;
+    }
+  }
+}
+
+@keyframes stack-recede {
+  to {
+    transform: scale(0.9);
+    opacity: 0.55;
+  }
+}
+
+/* En pantallas chicas el apilado se siente atrapado: se desactiva y las
+   tarjetas fluyen una tras otra. */
+@media (max-width: 767px) {
+  .stack__slot {
+    padding-bottom: 1.25rem;
+  }
+  .stack__card {
+    position: static;
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   REVELADO DE TEXTO PALABRA POR PALABRA
+   --------------------------------------------------------------------------
+   Cada palabra pasa de apagada a plena según avanza el scroll.
+
+   Va por COLOR, no por opacidad. El spec original usaba opacity 0.2, que en el
+   estado sin revelar deja el texto bajo cualquier umbral de contraste. Acá el
+   estado de partida es oliva (5.70:1, AA) y el de llegada pino (13.00:1), así
+   que incluso congelado a mitad de camino todo se lee.
+   ========================================================================== */
+.reveal-words {
+  color: var(--olive);
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal-words > span {
+      animation: word-ink linear both;
+      animation-timeline: view();
+      /* El retardo escalonado se simula desplazando el rango de cada palabra
+         según su índice sobre el total. */
+      animation-range: entry 20% cover 55%;
+      animation-delay: calc(var(--w) * -0.001s);
+    }
+  }
+}
+
+@keyframes word-ink {
+  to {
+    color: var(--pine);
+  }
+}
+
 /* --- Entrada de página -------------------------------------------------- */
 @media (prefers-reduced-motion: no-preference) {
   .page-enter > * {

@@ -105,7 +105,11 @@
   }
 
   html {
-    overflow-x: hidden;
+    /* `clip` y no `hidden`: `overflow-x: hidden` convierte al elemento en un
+       contenedor de scroll y eso ROMPE `position: sticky` en los descendientes
+       —las tarjetas apiladas de /resultados dejaban de fijarse—. `clip` corta
+       el desborde horizontal igual, sin crear contenedor de scroll. */
+    overflow-x: clip;
     -webkit-text-size-adjust: 100%;
   }
 

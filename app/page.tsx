@@ -7,6 +7,7 @@ import StickyContactBar, { StickyCTASentinel } from "@/components/StickyContactB
 import BeforeAfter from "@/components/BeforeAfter";
 import ToneScale, { ToneRule } from "@/components/ToneScale";
 import TrustMarquee from "@/components/TrustMarquee";
+import RevealText from "@/components/RevealText";
 import { clinic } from "@/lib/clinic";
 import { treatments } from "@/lib/treatments";
 import { showcaseCases } from "@/lib/cases";
@@ -250,10 +251,11 @@ export default function HomePage() {
                 <h2 className="mt-6 text-display-md text-pine">
                   Casos tratados acá
                 </h2>
-                <p className="mt-5 text-[1.0625rem] leading-relaxed text-ink">
+                {/* Se entinta palabra por palabra al entrar en pantalla. */}
+                <RevealText className="mt-5 text-[1.0625rem] leading-relaxed">
                   Sólo casos propios, con consentimiento firmado y sin retoque.
                   Cada uno indica tratamiento, fototipo y número de sesiones.
-                </p>
+                </RevealText>
               </div>
               <Link
                 href="/resultados"

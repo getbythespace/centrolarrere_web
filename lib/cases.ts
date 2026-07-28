@@ -3,61 +3,65 @@ import type { BeforeAfterCase } from "@/components/BeforeAfter";
 /**
  * Casos de antes/después.
  *
- * TODOS son placeholders. No se inventan resultados de una clínica real ni se
- * usan fotos de stock: sin `beforeSrc`/`afterSrc` el componente dibuja un marco
- * rotulado que deja claro que falta contenido.
+ * ── POR QUÉ SON SÓLO DOS ─────────────────────────────────────────────────
  *
- * Para publicar un caso real hacen falta tres cosas:
- *   1. Consentimiento informado firmado por el paciente para uso de imagen.
- *   2. Fotos tomadas en condiciones comparables — misma luz, mismo ángulo,
- *      misma distancia, sin maquillaje ni filtro. Si el "después" está mejor
- *      iluminado, la comparación no vale.
- *   3. El número real de sesiones y el tiempo transcurrido.
+ * La clínica reporta que el SEREMI es riguroso con la confidencialidad de los
+ * pacientes y sus tratamientos. La lectura correcta de eso no es «no se pueden
+ * publicar fotos»: es que se publican SÓLO con consentimiento informado escrito
+ * y específico para uso publicitario, y que el riesgo sube con la
+ * identificabilidad de la persona.
  *
- * Los textos de `treatment` y `note` de abajo describen qué DEBERÍA ir en cada
- * espacio. Reemplázalos junto con las fotos.
+ * De ahí el criterio que se aplicó acá:
+ *
+ *   SÍ  → zonas anatómicas no identificables: uñas, dorso de manos, pies.
+ *         Con consentimiento firmado igual, pero el riesgo es bajo y el
+ *         paciente no queda expuesto.
+ *
+ *   NO  → rostro, cuero cabelludo, cualquier encuadre donde se reconozca a la
+ *         persona. Se retiraron los casos de rosácea, acné, telangiectasias y
+ *         capilar que había antes: esos tratamientos ahora se explican, no se
+ *         ilustran con un resultado.
+ *
+ * ── SOBRE GENERAR LAS IMÁGENES CON IA ────────────────────────────────────
+ *
+ * No se hace, y no es una objeción estética. Un antes/después generado y
+ * presentado como resultado de un tratamiento es evidencia clínica fabricada:
+ * publicidad engañosa bajo la Ley del Consumidor y exactamente el tipo de
+ * material que fiscaliza la autoridad sanitaria. El daño de que se descubra es
+ * mucho mayor que el beneficio de tener la foto antes.
+ *
+ * Lo que sí es legítimo, y está resuelto en otra parte del sitio, es una
+ * ILUSTRACIÓN de la condición —qué es una onicomicosis— rotulada como
+ * ilustración y sin afirmar ningún resultado.
  */
 export const showcaseCases: BeforeAfterCase[] = [
   {
-    id: "rosacea-01",
-    label: "[REEMPLAZAR] Caso de rosácea",
-    treatment: "Láser control de rosácea",
-    note: "[REEMPLAZAR con nº real de sesiones y tiempo transcurrido]",
-    alt: "rostro con enrojecimiento facial por rosácea",
-  },
-  {
-    id: "acne-01",
-    label: "[REEMPLAZAR] Caso de acné",
-    treatment: "Tratamiento de acné",
-    note: "[REEMPLAZAR con nº real de sesiones y tiempo transcurrido]",
-    alt: "rostro con lesiones de acné",
-  },
-  {
-    id: "telangiectasia-01",
-    label: "[REEMPLAZAR] Caso de telangiectasias",
-    treatment: "Eliminación de telangiectasias",
-    note: "[REEMPLAZAR con nº real de sesiones y tiempo transcurrido]",
-    alt: "capilares visibles en la mejilla",
-  },
-  {
-    id: "capilar-01",
-    label: "[REEMPLAZAR] Caso capilar",
-    treatment: "PRP capilar",
-    note: "[REEMPLAZAR con nº real de sesiones y tiempo transcurrido]",
-    alt: "zona del cuero cabelludo con baja densidad",
+    id: "onicomicosis-01",
+    label: "Onicomicosis plantar",
+    treatment: "Tratamiento láser de onicomicosis",
+    note: "Ilustra la renovación progresiva de la uña a lo largo del tratamiento",
+    alt: "uña del pie afectada por onicomicosis y su aspecto una vez renovada",
+    kind: "referencial",
   },
   {
     id: "manos-01",
-    label: "[REEMPLAZAR] Caso de manos",
-    treatment: "Rejuvenecimiento de manos",
-    note: "[REEMPLAZAR con nº real de sesiones y tiempo transcurrido]",
-    alt: "dorso de la mano con manchas",
-  },
-  {
-    id: "onicomicosis-01",
-    label: "[REEMPLAZAR] Caso de onicomicosis",
-    treatment: "Tratamiento de onicomicosis",
-    note: "[REEMPLAZAR con nº real de sesiones y tiempo transcurrido]",
-    alt: "uña afectada por onicomicosis",
+    label: "Rejuvenecimiento de manos",
+    treatment: "Tratamiento de manchas y textura",
+    note: "Ilustra el trabajo sobre manchas y tono en el dorso de la mano",
+    alt: "dorso de la mano con manchas y su aspecto tras el tratamiento",
+    kind: "referencial",
   },
 ];
+
+/**
+ * Tratamientos que NO llevan antes/después por identificabilidad del paciente.
+ * Se explican con texto y con la ilustración de la condición.
+ */
+export const sinFotoDeCaso = [
+  "Láser vascular para rosácea",
+  "Tratamiento de acné",
+  "Eliminación de telangiectasias",
+  "PRP facial y capilar",
+  "Micropigmentación capilar",
+  "Pigmentación de vitíligo",
+] as const;

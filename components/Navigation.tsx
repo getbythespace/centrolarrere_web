@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import WhatsAppCTA from "./WhatsAppCTA";
+import CampaignBar from "./CampaignBar";
 
 const LINKS = [
   { href: "/servicios", label: "Tratamientos" },
@@ -44,6 +45,7 @@ export default function Navigation() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-rule bg-paper/95 backdrop-blur-sm">
+      <CampaignBar />
       <nav className="shell flex h-16 items-center justify-between" aria-label="Principal">
         <Link
           href="/"

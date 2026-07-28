@@ -9,6 +9,8 @@ import BeforeAfter from "@/components/BeforeAfter";
 import ToneScale, { ToneRule } from "@/components/ToneScale";
 import TrustMarquee from "@/components/TrustMarquee";
 import RevealText from "@/components/RevealText";
+import CampaignPacks from "@/components/CampaignPacks";
+import Autorizacion from "@/components/Autorizacion";
 import { clinic } from "@/lib/clinic";
 import { treatments } from "@/lib/treatments";
 import { showcaseCases } from "@/lib/cases";
@@ -158,6 +160,10 @@ export default function HomePage() {
         {/* Cinta de confianza: la única pieza que se mueve sola, acotada a una
             franja. Separa el hero del argumento y le da pulso a la página. */}
         <TrustMarquee />
+
+        {/* Los dos focos comerciales del mes, arriba del argumento de marca:
+            el tráfico de la pauta llega buscando eso. */}
+        <CampaignPacks />
 
         {/* ================= DIFERENCIAL ================= */}
         <section className="surface-ink grain section">
@@ -337,6 +343,10 @@ export default function HomePage() {
             </ul>
           </div>
         </section>
+
+        {/* Respaldo verificable, antes del cierre: es lo último que decide a
+            alguien que llegó desde un anuncio. */}
+        <Autorizacion />
 
         {/* ================= CIERRE ================= */}
         <section className="surface-ink grain section">

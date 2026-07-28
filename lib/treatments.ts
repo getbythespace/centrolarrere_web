@@ -1,23 +1,25 @@
 /**
  * Catálogo de tratamientos.
  *
- * Sobre precios: sólo la evaluación médica tiene precio confirmado ($40.000).
- * El resto lleva `price: null` a propósito — no inventamos tarifas de una
- * clínica real. Cuando lleguen los valores, se rellena `price` y `listPrice`
- * y la tarjeta muestra sola el precio tachado + oferta.
+ * Precios tomados del catálogo interno entregado por la clínica.
+ * `price` es el precio de oferta vigente y `listPrice` el precio normal; la
+ * tarjeta dibuja sola el tachado cuando hay diferencia real entre ambos.
  *
- * Los emoji que había antes como "icono" se eliminaron: en una clínica leen
- * como cartilla infantil y además no son accesibles. La jerarquía la da la
- * categoría y la tipografía.
+ * Los tratamientos con `price: null` estaban en el sitio anterior pero NO
+ * aparecen en la planilla de precios. Se mantienen visibles porque la clínica
+ * los presta, pero sin cifra inventada: la tarjeta muestra «valor según
+ * evaluación» y empuja a WhatsApp.
  */
 
 export type Category =
   | "Láser"
   | "Médico"
   | "Facial"
-  | "Rejuvenecimiento"
-  | "Regenerativo"
-  | "Capilar";
+  | "Corporal"
+  | "Capilar"
+  | "Uñas"
+  | "Alergias"
+  | "Estético";
 
 export interface Treatment {
   id: string;
@@ -32,35 +34,102 @@ export interface Treatment {
   needsEvaluation: boolean;
   /** Sólo lo realiza el médico (miércoles desde 17:30). */
   doctorOnly?: boolean;
-  /** Precio de oferta en CLP. null = pendiente de confirmar. */
+  /** Precio de oferta vigente, en CLP. null = pendiente de confirmar. */
   price: number | null;
-  /** Precio normal, para tachar. Sólo si hay oferta real. */
+  /** Precio normal. Sólo se muestra tachado si es mayor al de oferta. */
   listPrice: number | null;
+  /** Número de sesiones que cubre el precio. */
+  sessions?: number;
+  /** Texto libre para casos como «sin límite de sesiones». */
+  sessionsNote?: string;
+  /** Marca el tratamiento como parte de la campaña del mes. */
+  featured?: boolean;
 }
 
 export const treatments: Treatment[] = [
+  // ---------- CAMPAÑA DE AGOSTO ----------
   {
-    id: "evaluacion-medica",
-    name: "Evaluación médica",
-    summary: "El punto de partida de todo tratamiento.",
+    id: "onicomicosis-plantar",
+    name: "Onicomicosis plantar",
+    subtitle: "Hongos en uñas de los pies",
+    summary: "Sin límite de sesiones hasta completar el tratamiento.",
     description:
-      "Primera consulta con el médico para revisar tu caso y definir qué procedimiento corresponde según tu tipo de piel, tu condición y tus antecedentes de salud.",
-    category: "Médico",
-    needsEvaluation: false,
-    doctorOnly: true,
-    price: 40000,
-    listPrice: null,
+      "La energía láser atraviesa la lámina de la uña y actúa sobre el hongo sin dañar el tejido sano. La uña sana crece desde la matriz, así que el resultado se ve a medida que la uña se renueva: por eso el tratamiento no se cobra por sesión sino completo.",
+    category: "Uñas",
+    needsEvaluation: true,
+    price: 499990,
+    listPrice: 750000,
+    sessionsNote: "Sin límite de sesiones",
+    featured: true,
   },
   {
-    id: "laser-rosacea",
-    name: "Láser control de rosácea",
+    id: "onicomicosis-palmar",
+    name: "Onicomicosis palmar",
+    subtitle: "Hongos en uñas de las manos",
+    summary: "Sin límite de sesiones hasta completar el tratamiento.",
+    description:
+      "Mismo protocolo láser que el tratamiento plantar, aplicado a las uñas de las manos. Incluye todas las sesiones necesarias hasta completar el ciclo de renovación de la uña.",
+    category: "Uñas",
+    needsEvaluation: true,
+    price: 559990,
+    listPrice: 650000,
+    sessionsNote: "Sin límite de sesiones",
+    featured: true,
+  },
+  {
+    id: "higiene-facial",
+    name: "Higiene facial",
+    summary: "Limpieza profunda con criterio clínico.",
+    description:
+      "Limpieza profunda del rostro con extracción y desinfección. Es la base del acompañamiento en pieles con acné, especialmente durante los primeros meses de tratamiento con medicación.",
+    category: "Facial",
+    needsEvaluation: false,
+    price: 40000,
+    listPrice: null,
+    sessions: 1,
+    featured: true,
+  },
+  {
+    id: "higiene-corporal",
+    name: "Higiene corporal",
+    subtitle: "Dorso anterior o posterior",
+    summary: "Limpieza profunda de espalda o pecho.",
+    description:
+      "Limpieza profunda del dorso, anterior o posterior. Zona frecuente de brotes durante el tratamiento del acné y difícil de manejar en casa.",
+    category: "Corporal",
+    needsEvaluation: false,
+    price: 45000,
+    listPrice: null,
+    sessions: 1,
+    featured: true,
+  },
+
+  // ---------- LÁSER Y VASCULAR ----------
+  {
+    id: "laser-rosacea-4",
+    name: "Láser vascular para rosácea",
+    subtitle: "Programa de 4 sesiones",
     summary: "Reduce el enrojecimiento y controla los brotes.",
     description:
-      "Tratamiento dirigido a disminuir el enrojecimiento facial persistente y a controlar los brotes de rosácea, mejorando la apariencia de la piel afectada por esta condición crónica.",
+      "Tratamiento dirigido a disminuir el enrojecimiento facial persistente y a controlar los brotes de rosácea. El láser actúa de forma selectiva sobre el componente vascular.",
     category: "Láser",
     needsEvaluation: true,
-    price: null,
-    listPrice: null,
+    price: 150000,
+    listPrice: 200000,
+    sessions: 4,
+  },
+  {
+    id: "laser-rosacea-6",
+    name: "Láser vascular para rosácea",
+    subtitle: "Programa de 6 sesiones",
+    summary: "Programa extendido para casos más marcados.",
+    description:
+      "Mismo protocolo que el programa de 4 sesiones, extendido para cuadros más persistentes. El número de sesiones se define en la evaluación médica.",
+    category: "Láser",
+    needsEvaluation: true,
+    price: 225000,
+    listPrice: 300000,
+    sessions: 6,
   },
   {
     id: "telangiectasia",
@@ -76,15 +145,56 @@ export const treatments: Treatment[] = [
   },
   {
     id: "laser-vascular",
-    name: "Láser vascular",
-    summary: "Lesiones vasculares que necesitan seguimiento médico.",
+    name: "Láser vascular complejo",
+    summary: "Lesiones que necesitan seguimiento médico.",
     description:
-      "Procedimiento para lesiones vasculares complejas: hemangiomas, manchas en vino de oporto, rosácea severa y otras malformaciones. Requiere evaluación y control médico.",
+      "Procedimiento para lesiones vasculares complejas: hemangiomas, manchas en vino de oporto y rosácea severa. Requiere evaluación y control médico.",
     category: "Médico",
     needsEvaluation: true,
     doctorOnly: true,
     price: null,
     listPrice: null,
+  },
+
+  // ---------- DERMATOLOGÍA ----------
+  {
+    id: "acrocordones",
+    name: "Extracción de acrocordones",
+    subtitle: "Más de 20 acrocordones",
+    summary: "Retiro de lesiones cutáneas benignas.",
+    description:
+      "Extracción de acrocordones —pequeñas lesiones cutáneas benignas y pediculadas— en procedimiento realizado en consulta. El valor cubre más de 20 lesiones.",
+    category: "Médico",
+    needsEvaluation: true,
+    price: 120000,
+    listPrice: 150000,
+    sessions: 1,
+  },
+  {
+    id: "vitiligo-4",
+    name: "Pigmentación de vitíligo",
+    subtitle: "Programa de 4 sesiones",
+    summary: "Reduce el contraste en zonas despigmentadas.",
+    description:
+      "Micropigmentación orientada a disminuir el contraste visible entre la piel despigmentada y la piel circundante. El número de sesiones depende de la extensión.",
+    category: "Médico",
+    needsEvaluation: true,
+    price: 149990,
+    listPrice: 200000,
+    sessions: 4,
+  },
+  {
+    id: "vitiligo-6",
+    name: "Pigmentación de vitíligo",
+    subtitle: "Programa de 6 sesiones",
+    summary: "Programa extendido para mayor extensión.",
+    description:
+      "Mismo procedimiento que el programa de 4 sesiones, para zonas de mayor extensión. La cobertura se define en la evaluación.",
+    category: "Médico",
+    needsEvaluation: true,
+    price: 399990,
+    listPrice: 500000,
+    sessions: 6,
   },
   {
     id: "acne",
@@ -92,24 +202,14 @@ export const treatments: Treatment[] = [
     subtitle: "Clínica de acné y rosácea",
     summary: "Plan clínico, no una limpieza de rutina.",
     description:
-      "Limpieza profunda y protocolo específico para pieles con acné o rosácea, combinando extracción, desinfección y tratamiento según la condición de cada piel.",
+      "Protocolo específico para pieles con acné, combinando limpieza profunda, extracción y acompañamiento durante el tratamiento médico.",
     category: "Facial",
     needsEvaluation: true,
     price: null,
     listPrice: null,
   },
-  {
-    id: "laser-co2",
-    name: "Láser CO₂ fraccionado",
-    summary: "Cicatrices de acné, textura y arrugas marcadas.",
-    description:
-      "Rejuvenecimiento profundo para cicatrices de acné, arrugas pronunciadas, manchas y textura irregular. Estimula la producción de colágeno desde las capas profundas de la piel.",
-    category: "Láser",
-    needsEvaluation: true,
-    doctorOnly: true,
-    price: null,
-    listPrice: null,
-  },
+
+  // ---------- REGENERATIVO Y CAPILAR ----------
   {
     id: "prp-facial",
     name: "PRP facial",
@@ -117,136 +217,143 @@ export const treatments: Treatment[] = [
     summary: "Regeneración con tu propio plasma.",
     description:
       "Usa los factores de crecimiento de tu propia sangre para estimular colágeno y mejorar la textura y firmeza de la piel.",
-    category: "Regenerativo",
+    category: "Facial",
     needsEvaluation: true,
-    price: null,
-    listPrice: null,
+    price: 49990,
+    listPrice: 85000,
+    sessions: 1,
   },
   {
-    id: "prp-capilar",
+    id: "prp-capilar-1",
     name: "PRP capilar",
+    subtitle: "Sesión individual",
     summary: "Estímulo del folículo en zonas de baja densidad.",
     description:
-      "Aplicación de plasma rico en plaquetas en el cuero cabelludo para estimular el folículo piloso en casos de pérdida de densidad capilar.",
+      "Aplicación de plasma rico en plaquetas en el cuero cabelludo para estimular el folículo piloso en casos de pérdida de densidad.",
     category: "Capilar",
     needsEvaluation: true,
-    price: null,
-    listPrice: null,
+    price: 80000,
+    listPrice: 95000,
+    sessions: 1,
+  },
+  {
+    id: "prp-capilar-4",
+    name: "PRP capilar",
+    subtitle: "Programa de 4 sesiones",
+    summary: "El plan habitual para ver cambios sostenidos.",
+    description:
+      "Cuatro sesiones espaciadas según el protocolo definido en la evaluación. Es el esquema con el que se trabaja la mayoría de los casos.",
+    category: "Capilar",
+    needsEvaluation: true,
+    price: 310000,
+    listPrice: 330000,
+    sessions: 4,
+  },
+  {
+    id: "prp-capilar-6",
+    name: "PRP capilar",
+    subtitle: "Programa de 6 sesiones",
+    summary: "Programa extendido, mejor valor por sesión.",
+    description:
+      "Seis sesiones para casos que requieren un ciclo más largo. Es la opción con menor valor por sesión.",
+    category: "Capilar",
+    needsEvaluation: true,
+    price: 420000,
+    listPrice: 465000,
+    sessions: 6,
   },
   {
     id: "micropigmentacion-capilar",
     name: "Micropigmentación capilar",
-    subtitle: "Camuflaje capilar",
+    subtitle: "Programa de 3 sesiones",
     summary: "Simula densidad en zonas de alopecia.",
     description:
-      "Técnica de micropigmentación que replica la apariencia de folículos para disimular áreas de alopecia o baja densidad.",
+      "Técnica de micropigmentación que replica la apariencia de folículos para disimular áreas de alopecia o baja densidad capilar.",
     category: "Capilar",
     needsEvaluation: true,
-    price: null,
-    listPrice: null,
+    price: 399990,
+    listPrice: 490000,
+    sessions: 3,
   },
-  {
-    id: "acrocordones",
-    name: "Extracción de acrocordones",
-    summary: "Retiro de lesiones cutáneas benignas.",
-    description:
-      "Extracción de acrocordones (pequeñas lesiones cutáneas benignas y pediculadas) mediante procedimiento realizado en consulta.",
-    category: "Médico",
-    needsEvaluation: true,
-    price: null,
-    listPrice: null,
-  },
-  {
-    id: "vitiligo",
-    name: "Pigmentación de vitíligo",
-    summary: "Camuflaje del contraste en zonas despigmentadas.",
-    description:
-      "Micropigmentación orientada a reducir el contraste visible entre la piel despigmentada y la piel circundante.",
-    category: "Médico",
-    needsEvaluation: true,
-    price: null,
-    listPrice: null,
-  },
-  {
-    id: "onicomicosis",
-    name: "Tratamiento de onicomicosis",
-    summary: "Hongos en la uña, tratados con láser.",
-    description:
-      "La energía láser atraviesa la lámina de la uña para actuar sobre el hongo sin dañar el tejido sano, permitiendo que la uña crezca sana.",
-    category: "Médico",
-    needsEvaluation: true,
-    price: null,
-    listPrice: null,
-  },
+
+  // ---------- ESTÉTICO ----------
   {
     id: "rejuvenecimiento-manos",
     name: "Rejuvenecimiento de manos",
     summary: "Manchas y textura en el dorso de la mano.",
     description:
-      "Tratamiento sobre las manos para trabajar manchas, tono y textura, una zona que suele quedar fuera de los planes faciales.",
-    category: "Rejuvenecimiento",
+      "Tratamiento sobre el dorso de las manos para trabajar manchas, tono y textura. Es una zona que suele quedar fuera de los planes faciales y delata la edad.",
+    category: "Estético",
     needsEvaluation: true,
-    price: null,
+    price: 149990,
+    listPrice: 189990,
+    sessions: 1,
+  },
+
+  // ---------- ALERGIAS ----------
+  {
+    id: "test-prick-completo",
+    name: "Test Prick completo",
+    subtitle: "Inhalantes y alimentos",
+    summary: "Estudio de alergias en una sola sesión.",
+    description:
+      "Test cutáneo que evalúa reacción frente a inhalantes y alimentos en el mismo procedimiento. Resultado en la misma consulta.",
+    category: "Alergias",
+    needsEvaluation: false,
+    price: 60000,
     listPrice: null,
+    sessions: 1,
   },
   {
-    id: "rejuvenecimiento-facial",
-    name: "Rejuvenecimiento facial",
-    summary: "Tono, textura y luminosidad.",
+    id: "test-prick-inhalantes",
+    name: "Test Prick — inhalantes",
+    summary: "Polen, ácaros, epitelios y hongos ambientales.",
     description:
-      "Combina tecnologías láser para trabajar textura, tono y signos de envejecimiento, estimulando colágeno de forma progresiva.",
-    category: "Rejuvenecimiento",
-    needsEvaluation: true,
-    price: null,
+      "Test cutáneo para identificar sensibilización a alérgenos que se inhalan.",
+    category: "Alergias",
+    needsEvaluation: false,
+    price: 35000,
     listPrice: null,
+    sessions: 1,
   },
   {
-    id: "depilacion-laser",
-    name: "Depilación láser",
-    subtitle: "Dama y varón",
-    summary: "Reducción progresiva y duradera del vello.",
+    id: "test-prick-alimentos",
+    name: "Test Prick — alimentos",
+    summary: "Identifica sensibilización alimentaria.",
     description:
-      "El láser actúa sobre el folículo piloso e inhibe su crecimiento de forma progresiva. Los resultados se acumulan sesión a sesión.",
-    category: "Láser",
-    needsEvaluation: true,
-    price: null,
+      "Test cutáneo para identificar sensibilización frente a alérgenos alimentarios.",
+    category: "Alergias",
+    needsEvaluation: false,
+    price: 35000,
     listPrice: null,
-  },
-  {
-    id: "hirsutismo",
-    name: "Hirsutismo facial",
-    summary: "Vello facial con causa hormonal.",
-    description:
-      "Abordaje del crecimiento excesivo de vello facial en mujeres: se revisan las posibles causas hormonales y se aplica tratamiento láser específico.",
-    category: "Médico",
-    needsEvaluation: true,
-    price: null,
-    listPrice: null,
-  },
-  {
-    id: "foliculitis",
-    name: "Foliculitis corporal y facial",
-    summary: "Inflamación del folículo, con protocolo médico.",
-    description:
-      "Combina terapia láser con protocolo médico para tratar la inflamación e infección del folículo piloso y prevenir nuevos brotes.",
-    category: "Médico",
-    needsEvaluation: true,
-    price: null,
-    listPrice: null,
+    sessions: 1,
   },
 ];
 
 export const categories: Array<Category | "Todos"> = [
   "Todos",
-  "Láser",
-  "Médico",
   "Facial",
-  "Regenerativo",
-  "Rejuvenecimiento",
+  "Corporal",
+  "Láser",
+  "Uñas",
   "Capilar",
+  "Médico",
+  "Estético",
+  "Alergias",
 ];
 
-/** Cuántos tratamientos ya tienen precio confirmado. */
+/** Tratamientos destacados de la campaña del mes. */
+export function featuredTreatments(): Treatment[] {
+  return treatments.filter((t) => t.featured);
+}
+
+/** Cuántos tratamientos tienen precio publicado. */
 export function pricedCount(): number {
   return treatments.filter((t) => t.price !== null).length;
+}
+
+/** Valor por sesión, cuando el precio cubre un programa de varias. */
+export function pricePerSession(t: Treatment): number | null {
+  if (t.price === null || !t.sessions || t.sessions < 2) return null;
+  return Math.round(t.price / t.sessions);
 }

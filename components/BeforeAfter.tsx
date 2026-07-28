@@ -37,6 +37,17 @@ export interface BeforeAfterCase {
   afterSrc?: string;
   /** Descripción para lectores de pantalla. */
   alt?: string;
+  /**
+   * Naturaleza de la imagen. Determina el rótulo, que NO es opcional.
+   *
+   * - `paciente`: caso real, con consentimiento informado firmado.
+   * - `referencial`: ilustración de un resultado posible, no de un paciente.
+   *
+   * El rótulo se dibuja siempre, encima de la imagen y no en letra chica: si
+   * una simulación se puede confundir con un caso real, deja de ser una
+   * referencia y pasa a ser publicidad engañosa.
+   */
+  kind: "paciente" | "referencial";
 }
 
 interface Props {
@@ -125,6 +136,13 @@ export default function BeforeAfter({ data, ratio = "4 / 5", onDark = false }: P
           Después
         </span>
 
+        {/* ---- Rótulo de naturaleza: obligatorio, sobre la imagen ---- */}
+        {data.kind === "referencial" && (
+          <span className="mono pointer-events-none absolute bottom-0 left-0 right-0 bg-plum px-2 py-1.5 text-center text-[0.625rem] uppercase tracking-wider text-paper">
+            Imagen referencial · no es un paciente
+          </span>
+        )}
+
         {/* ---- Input real: transparente, cubre todo, aporta el teclado ---- */}
         <input
           type="range"
@@ -164,8 +182,24 @@ export default function BeforeAfter({ data, ratio = "4 / 5", onDark = false }: P
             [REEMPLAZAR con fotos reales — requiere consentimiento firmado]
           </p>
         )}
-        <p className={`mono mt-2.5 text-[0.625rem] uppercase leading-relaxed ${cap.hint}`}>
-          Arrastra o usa las flechas · Los resultados varían según cada persona
+        {/* La bajada cambia según la naturaleza de la imagen. Nunca se omite. */}
+        <p className={`mt-2.5 text-[0.75rem] leading-relaxed ${cap.hint}`}>
+          {data.kind === "referencial" ? (
+            <>
+              <strong className="font-semibold">Imagen referencial.</strong> Ilustra
+              un resultado posible del tratamiento; no corresponde a un paciente
+              de la clínica. Los resultados reales varían según cada persona, su
+              condición y su adherencia al tratamiento.
+            </>
+          ) : (
+            <>
+              Caso real de la clínica, publicado con consentimiento informado del
+              paciente. Los resultados varían según cada persona.
+            </>
+          )}
+        </p>
+        <p className={`mono mt-1.5 text-[0.625rem] uppercase ${cap.hint}`}>
+          Arrastra o usa las flechas para comparar
         </p>
       </figcaption>
     </figure>

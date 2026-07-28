@@ -15,7 +15,16 @@ import { clinic } from "@/lib/clinic";
  * es un problema legal, no un detalle de copy.
  */
 
-/** Cambiar a `true` cuando estén la foto y el número reales. */
+/**
+ * Cambiar a `true` cuando llegue la foto del documento real de Ñuble, con su
+ * número legible, en `public/clinica/resolucion-seremi.jpg`.
+ *
+ * Mientras tanto se muestra el logotipo institucional que la clínica facilitó.
+ * Queda anotado que corresponde a la SEREMI de Región Metropolitana y la
+ * clínica opera en Ñuble: el logo sirve de referencia visual, pero el respaldo
+ * verificable es la resolución con su número, que es lo que va acá cuando
+ * llegue.
+ */
 const TIENE_DOCUMENTO = false;
 
 export default function Autorizacion() {
@@ -86,22 +95,33 @@ export default function Autorizacion() {
                 />
               </div>
             ) : (
-              <div className="todo-flag flex aspect-[4/5] w-full flex-col items-center justify-center gap-3 p-8 text-center">
-                <ShieldCheck className="h-7 w-7" aria-hidden="true" strokeWidth={1.5} />
-                <p className="text-[0.8125rem] font-semibold uppercase tracking-wider">
-                  Espacio para la resolución SEREMI
-                </p>
-                <p className="max-w-[42ch] leading-relaxed">
-                  [Sube la foto del documento como
-                  public/clinica/resolucion-seremi.jpg y cambia TIENE_DOCUMENTO
-                  a true en components/Autorizacion.tsx. Foto derecha, bien
-                  iluminada, con el número de resolución legible.]
-                </p>
+              /* Logotipo institucional mientras no esté la resolución. Va
+                 centrado sobre papel y en tamaño contenido: es una referencia
+                 visual, no un sello de respaldo, y agrandarlo sugeriría lo
+                 segundo. */
+              <div className="flex aspect-[4/5] w-full flex-col items-center justify-center gap-6 border border-sand/30 bg-paper p-8 text-center">
+                <Image
+                  src="/clinica/SEREMISALUDMET.png"
+                  alt="SEREMI de Salud · Ministerio de Salud de Chile"
+                  width={220}
+                  height={204}
+                  sizes="(min-width: 1024px) 220px, 40vw"
+                  className="h-auto w-[clamp(9rem,18vw,13.75rem)]"
+                  quality={88}
+                />
+                <div className="max-w-[34ch]">
+                  <p className="text-[0.9375rem] font-semibold leading-snug text-pine">
+                    Establecimiento con autorización sanitaria
+                  </p>
+                  <p className="mono mt-2.5 text-label-sm uppercase leading-relaxed text-olive-deep">
+                    Resolución exhibida en el local
+                  </p>
+                </div>
               </div>
             )}
-            <figcaption className="mono mt-3 text-[0.625rem] uppercase leading-relaxed text-sand/70">
-              El documento se exhibe también en el local, como exige la
-              normativa
+            <figcaption className="mt-3 text-[0.8125rem] leading-relaxed text-sand">
+              [PENDIENTE: foto de la resolución de Ñuble con su número legible,
+              como public/clinica/resolucion-seremi.jpg]
             </figcaption>
           </figure>
         </div>

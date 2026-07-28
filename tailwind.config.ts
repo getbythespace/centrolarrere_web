@@ -43,6 +43,10 @@ const config: Config = {
         // Rojo pastel para el sello de gratuidad. Lleva tinta pino (6.35:1);
         // con papel encima da 2.05 y falla.
         oferta: "#E0A090",
+        // Amarillo de atención para la barra y la cinta de campaña. Sale de la
+        // paleta a propósito: es lo único con fecha de vencimiento y tiene que
+        // verse desde el otro lado de la pantalla. Tinta pino encima: 7.77:1.
+        alerta: "#F2B92B",
         // Escala de fototipos Fitzpatrick I–VI. Es el sistema de color del
         // sitio, usado como dato. Los tonos 1–4 llevan texto espresso encima;
         // los 5–6, texto papel.
@@ -122,9 +126,12 @@ const config: Config = {
         lead: ["clamp(1.1875rem, 2.1vw, 1.5rem)", { lineHeight: "1.45", letterSpacing: "-0.008em" }],
         // Cuerpo de texto, un escalón sobre el default.
         body: ["clamp(1rem, 1.15vw, 1.0625rem)", { lineHeight: "1.6" }],
-        // Etiquetas de ficha.
-        label: ["0.75rem", { lineHeight: "1.4", letterSpacing: "0.13em" }],
-        "label-lg": ["0.8125rem", { lineHeight: "1.4", letterSpacing: "0.11em" }],
+        // Etiquetas de ficha. Subidas de 12px a 14px: a tamaño anterior las
+        // etiquetas de categoría y de campo se perdían en la página.
+        label: ["0.875rem", { lineHeight: "1.35", letterSpacing: "0.1em" }],
+        "label-lg": ["0.9375rem", { lineHeight: "1.35", letterSpacing: "0.09em" }],
+        // Etiqueta chica, sólo para datos secundarios dentro de una tarjeta.
+        "label-sm": ["0.8125rem", { lineHeight: "1.35", letterSpacing: "0.1em" }],
       },
 
       // Radio cero en todo el sistema. Es la decisión que más separa este

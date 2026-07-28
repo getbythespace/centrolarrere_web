@@ -3,6 +3,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import StickyContactBar, { StickyCTASentinel } from "@/components/StickyContactBar";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
+import HeroMedia from "@/components/HeroMedia";
 import { clinic } from "@/lib/clinic";
 
 export const metadata: Metadata = {
@@ -66,8 +67,13 @@ export default function EquipoPage() {
       <Navigation />
 
       <main id="contenido">
-        <section className="surface-ink grain pb-12 pt-12 md:pb-16 md:pt-16">
-          <div className="shell">
+        <section className="surface-ink relative overflow-hidden pb-14 pt-14 md:pb-20 md:pt-20">
+          <HeroMedia
+            video="preparacion"
+            alt="Enfermera de la clínica preparándose antes de un procedimiento"
+            veil="fuerte"
+          />
+          <div className="shell relative z-10">
             <div className="page-enter max-w-[48ch]">
               <p className="field">Equipo</p>
               <h1 className="mt-6 text-display-lg">

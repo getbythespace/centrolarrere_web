@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Check, X } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
@@ -99,13 +99,10 @@ export default function HomePage() {
               </Link>
             </div>
 
-            {/* La escala de fototipos cierra el hero: es la tesis del sitio y
-                acá funciona como pie de página del pantallazo. */}
-            <div className="mt-12 max-w-md">
+            {/* La escala de fototipos cierra el hero, sin pie: el texto que
+                llevaba explicaba lo que la banda ya comunica. */}
+            <div className="mt-12 max-w-sm">
               <ToneScale size="sm" labelled={false} />
-              <p className="mono mt-2.5 text-[0.75rem] uppercase tracking-[0.13em] text-sand">
-                Fototipos I–VI · el láser se calibra distinto para cada uno
-              </p>
             </div>
           </div>
         </section>
@@ -116,7 +113,7 @@ export default function HomePage() {
             que queda es el dato duro, en una sola línea. */}
         <section className="border-b border-rule bg-paper">
           <div className="shell">
-            <dl className="grid divide-y divide-rule/50 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+            <dl className="grid divide-y divide-rule/50 sm:grid-cols-2 sm:divide-x sm:divide-y-0">
               {/* Evaluación: el precio va tachado y la gratuidad en una banda
                   de rojo pastel con tinta pino (6.35:1). Se dice sólo
                   «Evaluación» — no es una evaluación médica propiamente tal. */}
@@ -134,14 +131,6 @@ export default function HomePage() {
                 </dd>
               </div>
 
-              <div className="py-6 sm:px-8">
-                <dt className="mono text-label uppercase text-ink">Atención médica</dt>
-                <dd className="mt-2.5 text-[clamp(1.5rem,2.6vw,2rem)] font-semibold leading-none text-pine">
-                  Miércoles
-                </dd>
-                <dd className="mono mt-2 text-[0.75rem] uppercase text-ink">desde 17:30</dd>
-              </div>
-
               <div className="py-6 sm:pl-8">
                 <dt className="mono text-label uppercase text-ink">Autorización sanitaria</dt>
                 <dd className="mt-3 flex items-center gap-3">
@@ -156,9 +145,6 @@ export default function HomePage() {
                   <span className="text-[0.9375rem] font-semibold leading-tight text-pine">
                     SEREMI de Salud
                   </span>
-                </dd>
-                <dd className="mono mt-2.5 text-[0.75rem] uppercase text-ink">
-                  Con enfermería titulada
                 </dd>
               </div>
             </dl>
@@ -188,90 +174,100 @@ export default function HomePage() {
             veilOpacity={0.82}
           />
           <div className="shell relative z-10">
-            <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
-              <div>
-                <p className="field">El diferencial</p>
-                <h2 className="mt-6 text-display-lg text-paper">
-                  No es un centro estético.
-                </h2>
-                <p className="mt-6 max-w-prose text-lead text-sand">
-                  La diferencia con la competencia informal no está en el equipo
-                  que se usa. Está en quién decide que ese equipo es el adecuado
-                  para tu piel.
-                </p>
-              </div>
-
-              {/* Lista numerada como protocolo. Acá el orden sí es secuencia:
-                  es lo que pasa, en orden, cuando llegas. */}
-              <ol className="border-t border-sand/30">
-                {[
-                  {
-                    n: "01",
-                    title: "Evaluación médica",
-                    body: "El médico revisa tu tipo de piel, tu condición y tus antecedentes. Determina el fototipo y con eso la calibración del equipo.",
-                  },
-                  {
-                    n: "02",
-                    title: "Procedimiento con respaldo",
-                    body: "Los procedimientos invasivos menores y el control posterior los realiza personal de enfermería titulado.",
-                  },
-                  {
-                    n: "03",
-                    title: "Derivación si corresponde",
-                    body: "Si tu caso necesita otra especialidad, lo decimos. Hay condiciones de la piel que no se resuelven con láser.",
-                  },
-                ].map((s) => (
-                  <li
-                    key={s.n}
-                    className="grid grid-cols-[3rem_1fr] gap-4 border-b border-sand/30 py-7 sm:grid-cols-[4.5rem_1fr] sm:gap-6"
-                  >
-                    <span className="mono text-label text-sand/80">{s.n}</span>
-                    <div>
-                      <h3 className="text-[1.1875rem] font-semibold text-paper">
-                        {s.title}
-                      </h3>
-                      <p className="mt-2 max-w-prose text-[0.9375rem] leading-relaxed text-sand">
-                        {s.body}
-                      </p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
+            <div className="max-w-[54ch]">
+              <p className="field">Lo que otros no tratan</p>
+              <h2 className="mt-7 text-display-lg text-paper">
+                Un centro de estética te dice que no.
+              </h2>
+              <p className="mt-7 text-lead text-sand">
+                No por mala voluntad: son condiciones que necesitan diagnóstico
+                médico antes de tocarlas. Acá se tratan, y por eso la consulta
+                empieza con una evaluación y no con un presupuesto.
+              </p>
             </div>
+
+            {/* Tabla comparativa. Es el argumento concreto y verificable, no
+                «nos preocupamos por tu salud» —que es lo que dice todo el
+                rubro y por eso no diferencia nada—. Cada fila es una condición
+                que un centro estético deriva o rechaza. */}
+            <ul className="mt-12 border-t border-sand/25">
+              {[
+                {
+                  cond: "Onicomicosis",
+                  otros: "Derivan a dermatología",
+                  aqui: "Láser, sin límite de sesiones",
+                },
+                {
+                  cond: "Rosácea y lesiones vasculares",
+                  otros: "No tienen láser vascular",
+                  aqui: "Láser vascular con control médico",
+                },
+                {
+                  cond: "Vitíligo",
+                  otros: "No lo abordan",
+                  aqui: "Micropigmentación de la zona",
+                },
+                {
+                  cond: "Acrocordones y lesiones benignas",
+                  otros: "Requiere procedimiento médico",
+                  aqui: "Extracción en consulta",
+                },
+                {
+                  cond: "Acné en tratamiento con medicación",
+                  otros: "Evitan la piel medicada",
+                  aqui: "Acompañamiento durante el brote",
+                },
+                {
+                  cond: "Alergias cutáneas sin diagnóstico",
+                  otros: "No las estudian",
+                  aqui: "Test Prick en la misma consulta",
+                },
+              ].map((r) => (
+                <li
+                  key={r.cond}
+                  className="grid gap-x-8 gap-y-3 border-b border-sand/25 py-6 md:grid-cols-[1.1fr_0.95fr_1.05fr] md:items-baseline"
+                >
+                  <h3 className="text-[1.125rem] font-semibold leading-snug text-paper">
+                    {r.cond}
+                  </h3>
+                  <p className="flex items-baseline gap-2.5 text-[0.9375rem] leading-relaxed text-sand">
+                    <X
+                      className="mt-1 h-3.5 w-3.5 shrink-0 text-sand/80"
+                      aria-hidden="true"
+                      strokeWidth={3}
+                    />
+                    <span>
+                      <span className="mono mr-1.5 text-label-sm uppercase text-sand/85">
+                        Otros:
+                      </span>
+                      {r.otros}
+                    </span>
+                  </p>
+                  <p className="flex items-baseline gap-2.5 text-[0.9375rem] font-medium leading-relaxed text-paper">
+                    <Check
+                      className="mt-1 h-3.5 w-3.5 shrink-0 text-alerta"
+                      aria-hidden="true"
+                      strokeWidth={3}
+                    />
+                    <span>
+                      <span className="mono mr-1.5 text-label-sm uppercase text-alerta">
+                        Acá:
+                      </span>
+                      {r.aqui}
+                    </span>
+                  </p>
+                </li>
+              ))}
+            </ul>
+
+            <p className="mono mt-7 max-w-prose text-label-sm uppercase leading-relaxed text-sand">
+              Todo procedimiento parte con evaluación médica y se realiza con
+              respaldo de enfermería titulada
+            </p>
           </div>
         </section>
 
         <ToneRule />
-
-        {/* Banda a sangre completa: rompe la sucesión de bloques de color, que
-            es lo que hacía que la página se leyera plana.
-
-            Va la textura de piedra y no el macro de piel: el macro es
-            uniforme, y estirado a 1440px con un velo encima quedaba como una
-            plancha gris. Además medía 900px de ancho y se escalaba hacia
-            arriba. La piedra tiene veta y 1400px reales. */}
-        <section
-          aria-hidden="true"
-          className="ken-burns relative h-[34vh] min-h-[13rem] w-full overflow-hidden md:h-[42vh]"
-        >
-          <Image
-            src="/clinica/textura-piedra.jpg"
-            alt=""
-            fill
-            sizes="100vw"
-            className="object-cover"
-            quality={68}
-          />
-          {/* Velo muy leve, sólo para amarrarla a la paleta. Al 35% tapaba la
-              veta, que es justo lo que hace que valga la pena la imagen. */}
-          <div className="absolute inset-0 bg-pine/12 mix-blend-multiply" />
-          <div className="grain absolute inset-0" />
-          {/* Dato clínico sobre la banda: la convierte en contenido y no en
-              relleno decorativo. */}
-          <p className="mono absolute bottom-4 left-0 right-0 px-[clamp(1rem,4vw,2.25rem)] text-center text-[0.625rem] uppercase tracking-[0.2em] text-pine">
-            La calibración del láser cambia con cada fototipo
-          </p>
-        </section>
 
         {/* ================= TRATAMIENTOS ================= */}
         <section className="section bg-paper">

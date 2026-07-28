@@ -19,24 +19,24 @@ export default function CampaignBar() {
     // encogía 18px después de cargar y empujaba la página entera hacia arriba:
     // 0.339 de CLS, casi todo el presupuesto en un solo salto. Con alto fijo y
     // `nowrap`, el cambio de fuente no puede mover nada.
-    // Fondo PINO, no ámbar. El bloque entero de ámbar se despegaba de la
-    // paleta; acá el color de campaña vuelve a ser un acento de texto sobre el
-    // verde de la marca. Ámbar sobre pino da 5.03:1 y papel 13.00:1.
-    <div className="h-9 overflow-hidden bg-pine text-paper">
+    // Fondo AMARILLO de atención. Es lo único del sitio que se sale de la
+    // paleta a propósito: la evaluación gratis tiene fecha de vencimiento y
+    // tiene que verse de inmediato. Tinta pino encima da 7.77:1.
+    <div className="h-10 overflow-hidden bg-alerta text-pine">
       <Link
         href="/servicios"
-        className="shell group flex h-9 items-center justify-center gap-x-2.5 whitespace-nowrap text-center"
+        className="shell group flex h-10 items-center justify-center gap-x-2.5 whitespace-nowrap text-center"
       >
-        <span className="mono text-[0.75rem] font-bold uppercase tracking-[0.12em] text-ambar">
+        <span className="mono text-label font-bold uppercase text-pine">
           {campaign.banner.highlight}
         </span>
-        <span className="mono text-[0.75rem] uppercase tracking-[0.12em] text-paper/90">
+        <span className="mono text-label uppercase text-pine">
           {campaign.banner.text}
         </span>
-        <span aria-hidden="true" className="hidden text-paper/40 sm:inline">
+        <span aria-hidden="true" className="hidden text-pine/50 sm:inline">
           ·
         </span>
-        <span className="mono hidden text-[0.75rem] uppercase tracking-[0.12em] text-paper/90 underline decoration-paper/30 underline-offset-4 transition-colors group-hover:decoration-paper sm:inline">
+        <span className="mono hidden text-label uppercase text-pine underline decoration-pine/40 underline-offset-4 transition-colors group-hover:decoration-pine sm:inline">
           {campaign.banner.detail}
         </span>
       </Link>

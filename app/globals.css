@@ -211,14 +211,16 @@
      clínico: código mono + regla que se extiende. Es el patrón que se repite
      en todo el sitio y le da identidad.
      ====================================================================== */
+  /* Subida de 11px a 15px y de peso 500 a 700. A 11px la etiqueta se perdía
+     —era el reclamo— y es justamente la que nombra cada sección. */
   .field {
     display: flex;
     align-items: center;
-    gap: 0.875rem;
+    gap: 1rem;
     font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 0.6875rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
+    font-size: clamp(0.8125rem, 1.05vw, 0.9375rem);
+    font-weight: 700;
+    letter-spacing: 0.11em;
     text-transform: uppercase;
     color: var(--olive-deep);
   }

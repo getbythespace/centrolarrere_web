@@ -153,8 +153,8 @@ export default function BeforeAfter({
 
         {/* ---- Rótulo de naturaleza: obligatorio, sobre la imagen ---- */}
         {data.kind === "referencial" && (
-          <span className="mono pointer-events-none absolute bottom-0 left-0 right-0 bg-plum px-2 py-1.5 text-center text-[0.625rem] uppercase tracking-wider text-paper">
-            Imagen referencial · no es un paciente
+          <span className="mono pointer-events-none absolute bottom-0 left-0 right-0 bg-plum px-2 py-1.5 text-center text-label-sm uppercase text-paper">
+            Imagen referencial
           </span>
         )}
 
@@ -197,24 +197,15 @@ export default function BeforeAfter({
             [REEMPLAZAR con fotos reales — requiere consentimiento firmado]
           </p>
         )}
-        {/* La bajada cambia según la naturaleza de la imagen. Nunca se omite. */}
-        <p className={`mt-2.5 text-[0.75rem] leading-relaxed ${cap.hint}`}>
-          {data.kind === "referencial" ? (
-            <>
-              <strong className="font-semibold">Imagen referencial.</strong> Ilustra
-              un resultado posible del tratamiento; no corresponde a un paciente
-              de la clínica. Los resultados reales varían según cada persona, su
-              condición y su adherencia al tratamiento.
-            </>
-          ) : (
-            <>
-              Caso real de la clínica, publicado con consentimiento informado del
-              paciente. Los resultados varían según cada persona.
-            </>
-          )}
+        {/* La bajada cambia según la naturaleza de la imagen. Nunca se omite —
+            pero se dice corto: el rótulo sobre la imagen ya hace el trabajo. */}
+        <p className={`mt-2.5 text-[0.8125rem] leading-relaxed ${cap.hint}`}>
+          {data.kind === "referencial"
+            ? "Ilustra un resultado posible; no corresponde a un paciente de la clínica. Los resultados varían según cada persona."
+            : "Caso real de la clínica, con consentimiento del paciente. Los resultados varían según cada persona."}
         </p>
-        <p className={`mono mt-1.5 text-[0.625rem] uppercase ${cap.hint}`}>
-          Arrastra o usa las flechas para comparar
+        <p className={`mono mt-1.5 text-label-sm uppercase ${cap.hint}`}>
+          Arrastra para comparar
         </p>
       </figcaption>
     </figure>

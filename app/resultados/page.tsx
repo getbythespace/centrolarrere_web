@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import StickyContactBar, { StickyCTASentinel } from "@/components/StickyContactBar";
 import Image from "next/image";
 import StackedCases from "@/components/StackedCases";
+import HeroMedia from "@/components/HeroMedia";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
 import { showcaseCases } from "@/lib/cases";
 import { treatments } from "@/lib/treatments";
@@ -24,8 +25,13 @@ export default function ResultadosPage() {
       <Navigation />
 
       <main id="contenido">
-        <section className="surface-ink grain pb-12 pt-12 md:pb-16 md:pt-16">
-          <div className="shell">
+        <section className="surface-ink relative overflow-hidden pb-14 pt-14 md:pb-20 md:pt-20">
+          <HeroMedia
+            video="procedimiento"
+            alt="Procedimiento con láser realizado en la clínica"
+            veil="fuerte"
+          />
+          <div className="shell relative z-10">
             <div className="grid gap-10 lg:grid-cols-[1fr_0.9fr] lg:gap-16">
               <div className="page-enter">
                 <p className="field">Resultados</p>

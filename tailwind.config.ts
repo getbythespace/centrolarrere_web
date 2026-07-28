@@ -107,16 +107,22 @@ const config: Config = {
       // Salto de escala deliberadamente extremo: la mono de etiqueta vive en
       // 11–12px y el display llega a 8rem. Lo que mata a un diseño beige es
       // que todo quede en el rango medio.
+      // Escala subida en todos los niveles. La versión anterior era correcta y
+      // se leía distante: el cuerpo vivía en 15px y las etiquetas en 11px, así
+      // que la página entera quedaba en un susurro. Acá el cuerpo parte en 17px
+      // y las etiquetas en 12px.
       fontSize: {
-        "display-2xl": ["clamp(3.25rem, 13vw, 8rem)", { lineHeight: "0.88", letterSpacing: "-0.045em" }],
-        "display-xl": ["clamp(2.625rem, 8.5vw, 5.5rem)", { lineHeight: "0.9", letterSpacing: "-0.038em" }],
-        "display-lg": ["clamp(2.125rem, 6vw, 3.75rem)", { lineHeight: "0.95", letterSpacing: "-0.03em" }],
-        "display-md": ["clamp(1.625rem, 4vw, 2.5rem)", { lineHeight: "1.02", letterSpacing: "-0.022em" }],
-        "display-sm": ["clamp(1.25rem, 2.6vw, 1.625rem)", { lineHeight: "1.12", letterSpacing: "-0.014em" }],
-        lead: ["clamp(1.0625rem, 1.9vw, 1.3125rem)", { lineHeight: "1.5" }],
+        "display-2xl": ["clamp(3.5rem, 13.5vw, 9rem)", { lineHeight: "0.86", letterSpacing: "-0.048em" }],
+        "display-xl": ["clamp(2.875rem, 9vw, 6rem)", { lineHeight: "0.9", letterSpacing: "-0.04em" }],
+        "display-lg": ["clamp(2.375rem, 6.5vw, 4.25rem)", { lineHeight: "0.94", letterSpacing: "-0.032em" }],
+        "display-md": ["clamp(1.875rem, 4.4vw, 2.875rem)", { lineHeight: "1.0", letterSpacing: "-0.024em" }],
+        "display-sm": ["clamp(1.375rem, 2.8vw, 1.875rem)", { lineHeight: "1.1", letterSpacing: "-0.016em" }],
+        lead: ["clamp(1.1875rem, 2.1vw, 1.5rem)", { lineHeight: "1.45", letterSpacing: "-0.008em" }],
+        // Cuerpo de texto, un escalón sobre el default.
+        body: ["clamp(1rem, 1.15vw, 1.0625rem)", { lineHeight: "1.6" }],
         // Etiquetas de ficha.
-        label: ["0.6875rem", { lineHeight: "1.4", letterSpacing: "0.14em" }],
-        "label-lg": ["0.75rem", { lineHeight: "1.4", letterSpacing: "0.12em" }],
+        label: ["0.75rem", { lineHeight: "1.4", letterSpacing: "0.13em" }],
+        "label-lg": ["0.8125rem", { lineHeight: "1.4", letterSpacing: "0.11em" }],
       },
 
       // Radio cero en todo el sistema. Es la decisión que más separa este

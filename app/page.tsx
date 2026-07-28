@@ -7,13 +7,15 @@ import WhatsAppCTA from "@/components/WhatsAppCTA";
 import StickyContactBar, { StickyCTASentinel } from "@/components/StickyContactBar";
 import BeforeAfter from "@/components/BeforeAfter";
 import ToneScale, { ToneRule } from "@/components/ToneScale";
+import HeroMedia from "@/components/HeroMedia";
+import LazyVideo from "@/components/LazyVideo";
 import TrustMarquee from "@/components/TrustMarquee";
 import RevealText from "@/components/RevealText";
 import CampaignPacks from "@/components/CampaignPacks";
 import Autorizacion from "@/components/Autorizacion";
 import { clinic } from "@/lib/clinic";
 import { treatments } from "@/lib/treatments";
-import { showcaseCases, ambiente } from "@/lib/cases";
+import { showcaseCases } from "@/lib/cases";
 
 /**
  * La home está compuesta como una ficha clínica: campos con etiqueta mono,
@@ -44,147 +46,90 @@ export default function HomePage() {
       <Navigation />
 
       <main id="contenido">
-        {/* ================= HERO ================= */}
-        <section className="grain bg-paper">
+        {/* ================= HERO =================
+            A sangre completa, con el video de preparación detrás y el titular
+            encima. La versión anterior tenía la foto en un marco al costado del
+            texto: correcta como composición editorial, y plana como landing.
+            Esto es lo que la separa de una ficha impresa. */}
+        <section className="relative flex min-h-[92svh] items-end overflow-hidden">
+          <HeroMedia
+            video="preparacion"
+            alt="Enfermera de la clínica preparándose antes de un procedimiento"
+            priority
+          />
+
+          <div className="shell relative z-10 pb-12 pt-28 md:pb-16">
+            <p className="field w-full max-w-xs text-sand">Chillán · Ñuble</p>
+
+            <h1 className="mt-7 max-w-[16ch] text-display-2xl text-paper">
+              <span className="line-mask">
+                <span style={{ ["--i" as string]: 0 }}>Cada piel</span>
+              </span>
+              <span className="line-mask">
+                <span style={{ ["--i" as string]: 1 }}>tiene un</span>
+              </span>
+              <span className="line-mask">
+                <span className="text-ambar" style={{ ["--i" as string]: 2 }}>
+                  protocolo.
+                </span>
+              </span>
+            </h1>
+
+            <p className="mt-8 max-w-[52ch] text-lead text-paper/90">
+              Rosácea, acné, onicomicosis y alopecia.{" "}
+              <strong className="font-semibold text-paper">
+                Cada tratamiento parte con evaluación médica
+              </strong>
+              , con respaldo de enfermería titulada y bajo autorización
+              sanitaria.
+            </p>
+
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <WhatsAppCTA context={{ kind: "evaluation" }} size="lg" />
+              <Link
+                href="/servicios"
+                className="group inline-flex min-h-[48px] items-center justify-center gap-2.5 border border-paper/40 px-7 py-4 text-body font-semibold text-paper backdrop-blur-sm transition-colors hover:bg-paper hover:text-pine"
+              >
+                Ver {treatments.length} tratamientos
+                <ArrowRight
+                  className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5"
+                  aria-hidden="true"
+                />
+              </Link>
+            </div>
+
+            {/* La escala de fototipos cierra el hero: es la tesis del sitio y
+                acá funciona como pie de página del pantallazo. */}
+            <div className="mt-12 max-w-md">
+              <ToneScale size="sm" labelled={false} />
+              <p className="mono mt-2.5 text-[0.75rem] uppercase tracking-[0.13em] text-sand">
+                Fototipos I–VI · el láser se calibra distinto para cada uno
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* ================= FRANJA DE DATOS =================
+            Reemplaza al hero-ficha que había acá: su titular, su escala y sus
+            CTA ahora viven sobre el video, y tenerlos dos veces era ruido. Lo
+            que queda es el dato duro, en una sola línea. */}
+        <section className="border-b border-rule bg-paper">
           <div className="shell">
-            {/* Cabecera de ficha: dos campos mono en una fila, con filete
-                abajo. Antes de cualquier titular, para que el primer gesto de
-                la página sea el del instrumento. */}
-            <div className="hair-soft grid gap-x-8 gap-y-3 border-b border-rule py-4 text-label sm:grid-cols-3">
-              <p className="mono uppercase text-ink">
-                Estética clínica · Chillán
-              </p>
-              <p className="mono uppercase text-ink sm:text-center">
-                Fototipos I–VI
-              </p>
-              <p className="mono uppercase text-ink sm:text-right">
-                {clinic.hours.display}
-              </p>
-            </div>
-
-            <div className="grid gap-10 pb-12 pt-10 lg:grid-cols-[1.25fr_0.75fr] lg:gap-12 lg:pb-16 lg:pt-14">
-              <div>
-                {/* Escala arriba del titular: es la tesis del sitio. */}
-                <ToneScale size="md" className="max-w-md" />
-
-                {/* Revelado línea por línea al cargar: cada una sube desde
-                    detrás de su máscara con 90ms de retardo entre sí. Es el
-                    efecto SplitText, resuelto en CSS y sin bajar una librería.
-                    El acento va en oliva —pino 13.00:1 contra oliva 5.70:1 da
-                    salto suficiente— en vez de meter un tercer color. */}
-                <h1 className="mt-8 text-display-2xl text-pine">
-                  <span className="line-mask">
-                    <span style={{ ["--i" as string]: 0 }}>Cada piel</span>
-                  </span>
-                  <span className="line-mask">
-                    <span style={{ ["--i" as string]: 1 }}>tiene un</span>
-                  </span>
-                  <span className="line-mask">
-                    <span className="text-olive" style={{ ["--i" as string]: 2 }}>
-                      protocolo.
-                    </span>
-                  </span>
-                </h1>
-
-                <div className="mt-8 max-w-prose">
-                  <p className="text-lead text-ink">
-                    Rosácea, lesiones vasculares, acné, onicomicosis y alopecia.
-                    El láser no se calibra igual para un fototipo II que para un
-                    V — por eso acá{" "}
-                    <strong className="font-semibold text-pine">
-                      cada tratamiento parte con evaluación médica
-                    </strong>
-                    , se realiza con respaldo de enfermería titulada y bajo
-                    autorización sanitaria.
-                  </p>
+            <dl className="grid divide-y divide-rule/50 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+              {[
+                ["Evaluación médica", clinic.evaluation.priceDisplay, "Gratis durante agosto"],
+                ["Atención médica", "Miércoles", "desde 17:30"],
+                ["Autorización", "SEREMI de Salud", "Con enfermería titulada"],
+              ].map(([label, value, note], i) => (
+                <div key={label} className={`py-6 ${i > 0 ? "sm:pl-8" : ""} ${i < 2 ? "sm:pr-8" : ""}`}>
+                  <dt className="mono text-label uppercase text-ink">{label}</dt>
+                  <dd className="mt-2.5 text-[clamp(1.5rem,2.6vw,2rem)] font-semibold leading-none text-pine">
+                    {value}
+                  </dd>
+                  <dd className="mono mt-2 text-[0.75rem] uppercase text-ink">{note}</dd>
                 </div>
-
-                <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-                  <WhatsAppCTA context={{ kind: "evaluation" }} size="lg" />
-                  <Link
-                    href="/servicios"
-                    className="group inline-flex min-h-[48px] items-center justify-center gap-2.5 border border-pine px-6 py-3.5 text-[0.9375rem] font-semibold text-pine transition-colors hover:bg-pine hover:text-paper"
-                  >
-                    Ver {treatments.length} tratamientos
-                    <ArrowRight
-                      className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5"
-                      aria-hidden="true"
-                    />
-                  </Link>
-                </div>
-
-                {/* Datos como campos de ficha, no como «stats» decorativas. */}
-                <dl className="mt-12 grid grid-cols-2 border-t border-rule sm:grid-cols-3">
-                  {[
-                    ["Evaluación", clinic.evaluation.priceDisplay, clinic.evaluation.note],
-                    ["Atención médica", "Miércoles", "desde 17:30"],
-                    ["Respaldo", "Enfermería", "titulada"],
-                  ].map(([label, value, note]) => (
-                    <div
-                      key={label}
-                      className="border-b border-rule/50 py-4 pr-6 sm:border-b-0"
-                    >
-                      <dt className="mono text-label uppercase text-ink">{label}</dt>
-                      <dd className="mt-2 text-[1.375rem] font-semibold leading-none text-pine">
-                        {value}
-                      </dd>
-                      <dd className="mono mt-1.5 text-[0.6875rem] uppercase text-ink">
-                        {note}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
-
-              {/* Columna derecha: fotografía primero, comparador debajo.
-                  La foto es lo que da profundidad a la página; el comparador
-                  es la prueba. */}
-              <div className="flex flex-col gap-6 lg:pt-2">
-                {/* Foto propia de la clínica. El encuadre original es
-                    apaisado y el hueco es vertical, así que se recorta con
-                    object-cover y foco al centro. */}
-                <figure className="m-0">
-                  <div className="relative aspect-[4/5] w-full overflow-hidden border border-rule bg-pine">
-                    <Image
-                      src={ambiente.manos.src}
-                      alt={ambiente.manos.alt}
-                      fill
-                      // Ocupa ~38% del ancho en desktop y casi todo en mobile.
-                      // Sin esto Next sirve la versión completa al celular.
-                      sizes="(min-width: 1024px) 38vw, 100vw"
-                      className="object-cover object-center"
-                      priority
-                      quality={74}
-                    />
-                  </div>
-                  <figcaption className="mono mt-2.5 text-[0.625rem] uppercase leading-relaxed text-ink">
-                    Atención en consulta · Clínica LARRÈRE
-                  </figcaption>
-                </figure>
-
-                {/* El comparador de onicomicosis NO va acá: vive en el pack de
-                    campaña, justo debajo. Tenerlo dos veces en la misma página
-                    duplicaba la descarga y restaba fuerza al hero, que gana
-                    siendo una sola imagen grande. */}
-                <dl className="border-t border-rule">
-                  {[
-                    ["Autorización", "SEREMI de Salud"],
-                    ["Evaluación", "Médica, previa a todo"],
-                    ["Procedimientos", "Con enfermería titulada"],
-                  ].map(([k, v]) => (
-                    <div
-                      key={k}
-                      className="flex items-baseline justify-between gap-4 border-b border-rule/50 py-2.5"
-                    >
-                      <dt className="mono text-[0.625rem] uppercase tracking-wider text-ink">
-                        {k}
-                      </dt>
-                      <dd className="text-[0.8125rem] font-medium text-pine">{v}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
-            </div>
+              ))}
+            </dl>
           </div>
         </section>
 
@@ -198,9 +143,19 @@ export default function HomePage() {
             el tráfico de la pauta llega buscando eso. */}
         <CampaignPacks />
 
-        {/* ================= DIFERENCIAL ================= */}
-        <section className="surface-ink grain section">
-          <div className="shell">
+        {/* ================= DIFERENCIAL =================
+            El video del procedimiento va de fondo: es la prueba visual de lo
+            que el texto afirma. Carga diferida — está a mitad de página y la
+            mayoría del tráfico de anuncios no llega hasta acá. */}
+        {/* Conserva `surface-ink` aunque el video tape el fondo: esa clase es
+            la que da color claro al `.field` y al resto de descendientes. */}
+        <section className="surface-ink section relative overflow-hidden">
+          <LazyVideo
+            video="procedimiento"
+            alt="Procedimiento con láser realizado en la clínica"
+            veilOpacity={0.82}
+          />
+          <div className="shell relative z-10">
             <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
               <div>
                 <p className="field">El diferencial</p>

@@ -59,6 +59,11 @@ export default function HeroMedia({
 
     // En el primer hueco libre después de pintar. `requestIdleCallback` no
     // existe en Safari, de ahí el respaldo por timeout.
+    //
+    // Se probó atarlo al evento `load` para sacar el video por completo de la
+    // ventana del LCP: midió peor (81 contra 85) y la diferencia cae dentro de
+    // la varianza de ±4 puntos entre corridas, así que no había señal. Queda la
+    // versión simple.
     const idle =
       (window as Window & { requestIdleCallback?: (cb: () => void) => number })
         .requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 700));

@@ -58,8 +58,7 @@ export default function WhatsAppCTA({
       onClick={() => trackWhatsAppClick(waEventLabel(context))}
       className={cn(
         // Radio cero, como todo el sistema.
-        "inline-flex items-center justify-center font-semibold",
-        "transition-colors duration-200",
+        "btn-lift inline-flex items-center justify-center font-semibold",
         sizes[size],
         VARIANTS[variant],
         block && "w-full",

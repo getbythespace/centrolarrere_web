@@ -67,7 +67,7 @@ export default function TreatmentCatalog() {
         <ul className="mt-6 grid border-l border-t border-rule md:grid-cols-2 lg:grid-cols-3">
           {shown.map((t, i) => (
             <li key={t.id} className="border-b border-r border-rule">
-              <article className="rec rec-hover flex h-full flex-col border-0 p-6">
+              <article className="rec rec-hover card-rise flex h-full flex-col border-0 p-6">
                 <div className="flex items-start justify-between gap-3">
                   <p className="mono text-label uppercase text-ink">
                     {String(i + 1).padStart(2, "0")} · {t.category}
@@ -84,7 +84,7 @@ export default function TreatmentCatalog() {
                     se ve el problema, que es lo que necesita quien no sabe si
                     lo suyo es tratable acá. */}
                 {t.conditionImage && (
-                  <div className="relative mt-4 aspect-[16/10] w-full overflow-hidden border border-rule bg-sand">
+                  <div className="card-zoom relative mt-4 aspect-[16/10] w-full border border-rule bg-sand">
                     <Image
                       src={t.conditionImage.src}
                       alt={t.conditionImage.alt}

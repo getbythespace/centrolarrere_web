@@ -109,11 +109,15 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mono mt-12 border-t border-sand/25 pt-6 text-[0.6875rem] uppercase leading-relaxed text-sand/70">
-          <p>
+        {/* El aviso legal sale de la mono: en caja alta y con tracking ancho
+            costaba leerlo, y es justo el texto que tiene que entenderse. Queda
+            en Inter, caja normal y a 14px. La mono se reserva al © y a los
+            datos, que es donde aporta. */}
+        <div className="mt-12 border-t border-sand/25 pt-6">
+          <p className="mono text-[0.6875rem] uppercase tracking-wider text-sand/70">
             © {new Date().getFullYear()} {clinic.legalName}
           </p>
-          <p className="mt-2 max-w-prose normal-case tracking-normal">
+          <p className="mt-3 max-w-prose text-[0.875rem] leading-relaxed text-sand/80">
             La información de este sitio es referencial y no reemplaza una
             consulta médica. Los resultados de cada tratamiento varían según la
             persona.

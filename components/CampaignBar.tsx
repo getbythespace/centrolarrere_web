@@ -19,23 +19,24 @@ export default function CampaignBar() {
     // encogía 18px después de cargar y empujaba la página entera hacia arriba:
     // 0.339 de CLS, casi todo el presupuesto en un solo salto. Con alto fijo y
     // `nowrap`, el cambio de fuente no puede mover nada.
-    <div className="h-9 overflow-hidden bg-ambar text-pine">
+    // Fondo PINO, no ámbar. El bloque entero de ámbar se despegaba de la
+    // paleta; acá el color de campaña vuelve a ser un acento de texto sobre el
+    // verde de la marca. Ámbar sobre pino da 5.03:1 y papel 13.00:1.
+    <div className="h-9 overflow-hidden bg-pine text-paper">
       <Link
         href="/servicios"
-        className="shell flex h-9 items-center justify-center gap-x-2.5 whitespace-nowrap text-center transition-opacity hover:opacity-85"
+        className="shell group flex h-9 items-center justify-center gap-x-2.5 whitespace-nowrap text-center"
       >
-        {/* Tinta pino sólida en todo: sobre ámbar, `text-pine/75` cae a
-            3.47:1 y falla AA en 11px. La jerarquía va por peso. */}
-        <span className="mono text-[0.6875rem] font-bold uppercase tracking-[0.12em]">
+        <span className="mono text-[0.75rem] font-bold uppercase tracking-[0.12em] text-ambar">
           {campaign.banner.highlight}
         </span>
-        <span className="mono text-[0.6875rem] uppercase tracking-[0.12em]">
+        <span className="mono text-[0.75rem] uppercase tracking-[0.12em] text-paper/90">
           {campaign.banner.text}
         </span>
-        <span aria-hidden="true" className="hidden sm:inline">
+        <span aria-hidden="true" className="hidden text-paper/40 sm:inline">
           ·
         </span>
-        <span className="mono hidden text-[0.6875rem] uppercase tracking-[0.12em] underline decoration-pine/50 underline-offset-4 sm:inline">
+        <span className="mono hidden text-[0.75rem] uppercase tracking-[0.12em] text-paper/90 underline decoration-paper/30 underline-offset-4 transition-colors group-hover:decoration-paper sm:inline">
           {campaign.banner.detail}
         </span>
       </Link>

@@ -3,6 +3,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import StickyContactBar, { StickyCTASentinel } from "@/components/StickyContactBar";
 import TreatmentCatalog from "@/components/TreatmentCatalog";
+import HeroMedia from "@/components/HeroMedia";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
 import { clinic } from "@/lib/clinic";
 import { treatments } from "@/lib/treatments";
@@ -20,8 +21,19 @@ export default function ServiciosPage() {
       <Navigation />
 
       <main id="contenido">
-        <section className="surface-ink grain pb-12 pt-12 md:pb-16 md:pt-16">
-          <div className="shell">
+        {/* El video de preparación de fondo: es la respuesta visual a «¿esto es
+            serio?», que es la pregunta con la que llega alguien al catálogo. */}
+        <section className="surface-ink relative overflow-hidden pb-12 pt-12 md:pb-16 md:pt-16">
+          {/* HeroMedia y no LazyVideo: esto está arriba de todo, así que el
+              observador de LazyVideo dispararía de inmediato y el video
+              competiría con el LCP. HeroMedia espera a que la página esté
+              hidratada. */}
+          <HeroMedia
+            video="preparacion"
+            alt="Enfermera de la clínica preparándose antes de un procedimiento"
+            veil="fuerte"
+          />
+          <div className="shell relative z-10">
             <div className="page-enter max-w-[52ch]">
               <p className="field">Tratamientos</p>
               <h1 className="mt-6 text-display-lg">

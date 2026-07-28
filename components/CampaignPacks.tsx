@@ -18,17 +18,17 @@ import { clp } from "@/lib/clinic";
  * oferta y un problema.
  */
 
+// Cabeceras dentro de la paleta: pino y oliva, no ámbar y ladrillo. El ámbar
+// queda como acento de texto sobre el pino (5.03:1), que es donde funciona sin
+// romper el sistema. Papel sobre oliva: 5.70:1.
 const TONES = {
   ambar: {
-    // Ámbar con tinta pino: 5.03:1. Sin opacidades — `text-pine/70` cae a
-    // 3.2:1 y falla AA en la etiqueta de 11px.
-    head: "bg-ambar text-pine",
-    headMuted: "text-pine",
-    check: "text-ladrillo",
+    head: "bg-pine text-paper",
+    headMuted: "text-ambar",
+    check: "text-olive",
   },
   ladrillo: {
-    // Ladrillo con tinta papel: 5.13:1.
-    head: "bg-ladrillo text-paper",
+    head: "bg-olive text-paper",
     headMuted: "text-paper",
     check: "text-olive",
   },
@@ -59,7 +59,7 @@ export default function CampaignPacks() {
               "caseId" in pack ? showcaseCases.find((c) => c.id === pack.caseId) : undefined;
 
             return (
-              <article key={pack.id} className="flex flex-col border border-pine">
+              <article key={pack.id} className="card-rise flex flex-col border border-pine">
                 {/* Cabecera en color pleno. */}
                 <div className={`${tone.head} px-6 py-5 md:px-8 md:py-6`}>
                   <p className={`mono text-label uppercase ${tone.headMuted}`}>

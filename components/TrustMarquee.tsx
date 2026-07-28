@@ -28,15 +28,17 @@ function Track({ hidden = false }: { hidden?: boolean }) {
           key={p.titulo}
           className="flex shrink-0 items-baseline gap-2.5 whitespace-nowrap px-6 py-0.5 text-pine"
         >
-          <span aria-hidden="true">／</span>
-          <span className="mono text-[0.6875rem] font-semibold uppercase tracking-[0.12em]">
+          <span aria-hidden="true" className="text-olive">
+            ／
+          </span>
+          <span className="mono text-[0.75rem] font-semibold uppercase tracking-[0.12em]">
             {p.titulo}
           </span>
           {p.antes && (
-            <span className="mono text-[0.6875rem] line-through">{p.antes}</span>
+            <span className="mono text-[0.75rem] text-ink line-through">{p.antes}</span>
           )}
-          <span className="mono text-[0.8125rem] font-bold">{p.precio}</span>
-          {p.nota && <span className="mono text-[0.625rem] uppercase">{p.nota}</span>}
+          <span className="mono text-[0.875rem] font-bold">{p.precio}</span>
+          {p.nota && <span className="mono text-[0.6875rem] uppercase text-ink">{p.nota}</span>}
         </li>
       ))}
     </ul>
@@ -47,9 +49,12 @@ export default function TrustMarquee() {
   if (!campaign.active) return null;
 
   return (
+    // Fondo ARENA, no ámbar: es el beige profundo de la propia paleta, así que
+    // la cinta destaca del papel sin salirse del sistema. Pino encima da
+    // 11.71:1.
     <Link
       href="/servicios"
-      className="block border-y-2 border-pine bg-ambar py-3 transition-opacity hover:opacity-90"
+      className="block border-y border-rule bg-sand py-3 transition-colors hover:bg-sand-deep"
     >
       {/* Sin `aria-label`: el texto visible ya describe el enlace, y un rótulo
           que no contiene ese texto rompe la correspondencia entre lo que se ve

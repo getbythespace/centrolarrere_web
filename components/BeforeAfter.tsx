@@ -119,9 +119,15 @@ export default function BeforeAfter({
         </div>
 
         {/* ---- DESPUÉS (recortada según --pos) ---- */}
+        {/* El recorte deja ver el «después» desde --pos HACIA LA DERECHA.
+            Antes era al revés —`inset(0 calc(100% - var(--pos)) 0 0)` mostraba
+            el después a la izquierda— y con los rótulos fijos en Antes/Después
+            el resultado quedaba invertido: la uña sana aparecía rotulada como
+            «antes» y la enferma como «después». En un antes/después clínico eso
+            es el mensaje exactamente al revés. */}
         <div
           className="absolute inset-0"
-          style={{ clipPath: "inset(0 calc(100% - var(--pos)) 0 0)" }}
+          style={{ clipPath: "inset(0 0 0 var(--pos))" }}
         >
           {hasImages ? (
             <Image
@@ -161,7 +167,7 @@ export default function BeforeAfter({
           value={pos}
           onChange={(e) => handleChange(Number(e.target.value))}
           aria-labelledby={labelId}
-          aria-valuetext={`${Math.round(pos)}% del después visible`}
+          aria-valuetext={`${Math.round(100 - pos)}% del después visible`}
           className="ba-range peer absolute inset-0 z-20 h-full w-full cursor-ew-resize appearance-none bg-transparent opacity-0"
         />
 

@@ -34,13 +34,15 @@ const config: Config = {
           deep: "#5E3547",
         },
         // --- Colores de campaña -------------------------------------------
-        // Sólo para las promociones del mes. Tienen que cantar contra el verde
-        // sin caer en el rojo de retail, que en una clínica destruye la
-        // credibilidad que el resto del sitio construye.
-        // Medidos: ámbar lleva tinta pino (5.03:1) y ladrillo tinta papel
-        // (5.13:1). Ninguno de los dos admite el color contrario.
-        ambar: "#D98A15", // 5.03:1 con pino encima · 5.03:1 sobre pino
-        ladrillo: "#B5451B", // 5.13:1 con papel encima
+        // Se replegaron hacia la paleta. La versión anterior usaba bloques
+        // enteros de ámbar y ladrillo, que se despegaban del verde y beige del
+        // resto del sitio. Ahora los fondos de campaña son pino, oliva y arena
+        // —todos de la familia— y el ámbar queda como ACENTO de texto, no como
+        // superficie.
+        ambar: "#D98A15", // 5.03:1 sobre pino — sólo texto de acento
+        // Rojo pastel para el sello de gratuidad. Lleva tinta pino (6.35:1);
+        // con papel encima da 2.05 y falla.
+        oferta: "#E0A090",
         // Escala de fototipos Fitzpatrick I–VI. Es el sistema de color del
         // sitio, usado como dato. Los tonos 1–4 llevan texto espresso encima;
         // los 5–6, texto papel.

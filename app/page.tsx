@@ -53,8 +53,9 @@ export default function HomePage() {
             Esto es lo que la separa de una ficha impresa. */}
         <section className="relative flex min-h-[92svh] items-end overflow-hidden">
           <HeroMedia
-            video="preparacion"
-            alt="Enfermera de la clínica preparándose antes de un procedimiento"
+            video="procedimiento"
+            alt="Procedimiento con láser realizado en la clínica"
+            veil="medio"
             priority
           />
 
@@ -88,7 +89,7 @@ export default function HomePage() {
               <WhatsAppCTA context={{ kind: "evaluation" }} size="lg" />
               <Link
                 href="/servicios"
-                className="group inline-flex min-h-[48px] items-center justify-center gap-2.5 border border-paper/40 px-7 py-4 text-body font-semibold text-paper backdrop-blur-sm transition-colors hover:bg-paper hover:text-pine"
+                className="btn-lift group inline-flex min-h-[48px] items-center justify-center gap-2.5 border border-paper/40 px-7 py-4 text-body font-semibold text-paper backdrop-blur-sm hover:bg-paper hover:text-pine"
               >
                 Ver {treatments.length} tratamientos
                 <ArrowRight
@@ -116,19 +117,50 @@ export default function HomePage() {
         <section className="border-b border-rule bg-paper">
           <div className="shell">
             <dl className="grid divide-y divide-rule/50 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
-              {[
-                ["Evaluación médica", clinic.evaluation.priceDisplay, "Gratis durante agosto"],
-                ["Atención médica", "Miércoles", "desde 17:30"],
-                ["Autorización", "SEREMI de Salud", "Con enfermería titulada"],
-              ].map(([label, value, note], i) => (
-                <div key={label} className={`py-6 ${i > 0 ? "sm:pl-8" : ""} ${i < 2 ? "sm:pr-8" : ""}`}>
-                  <dt className="mono text-label uppercase text-ink">{label}</dt>
-                  <dd className="mt-2.5 text-[clamp(1.5rem,2.6vw,2rem)] font-semibold leading-none text-pine">
-                    {value}
-                  </dd>
-                  <dd className="mono mt-2 text-[0.75rem] uppercase text-ink">{note}</dd>
-                </div>
-              ))}
+              {/* Evaluación: el precio va tachado y la gratuidad en una banda
+                  de rojo pastel con tinta pino (6.35:1). Se dice sólo
+                  «Evaluación» — no es una evaluación médica propiamente tal. */}
+              <div className="py-6 sm:pr-8">
+                <dt className="mono text-label uppercase text-ink">Evaluación</dt>
+                <dd className="mt-2.5 flex items-baseline gap-3">
+                  <span className="mono text-[1.375rem] text-ink line-through decoration-2">
+                    {clinic.evaluation.priceDisplay}
+                  </span>
+                </dd>
+                <dd className="mt-2.5">
+                  <span className="mono inline-block bg-oferta px-3 py-1.5 text-[0.8125rem] font-bold uppercase tracking-[0.1em] text-pine">
+                    Gratis durante agosto
+                  </span>
+                </dd>
+              </div>
+
+              <div className="py-6 sm:px-8">
+                <dt className="mono text-label uppercase text-ink">Atención médica</dt>
+                <dd className="mt-2.5 text-[clamp(1.5rem,2.6vw,2rem)] font-semibold leading-none text-pine">
+                  Miércoles
+                </dd>
+                <dd className="mono mt-2 text-[0.75rem] uppercase text-ink">desde 17:30</dd>
+              </div>
+
+              <div className="py-6 sm:pl-8">
+                <dt className="mono text-label uppercase text-ink">Autorización sanitaria</dt>
+                <dd className="mt-3 flex items-center gap-3">
+                  <Image
+                    src="/clinica/SEREMISALUDMET.png"
+                    alt="SEREMI de Salud · Ministerio de Salud"
+                    width={52}
+                    height={48}
+                    className="h-11 w-auto border border-rule"
+                    quality={85}
+                  />
+                  <span className="text-[0.9375rem] font-semibold leading-tight text-pine">
+                    SEREMI de Salud
+                  </span>
+                </dd>
+                <dd className="mono mt-2.5 text-[0.75rem] uppercase text-ink">
+                  Con enfermería titulada
+                </dd>
+              </div>
             </dl>
           </div>
         </section>
@@ -151,8 +183,8 @@ export default function HomePage() {
             la que da color claro al `.field` y al resto de descendientes. */}
         <section className="surface-ink section relative overflow-hidden">
           <LazyVideo
-            video="procedimiento"
-            alt="Procedimiento con láser realizado en la clínica"
+            video="preparacion"
+            alt="Enfermera de la clínica preparándose antes de un procedimiento"
             veilOpacity={0.82}
           />
           <div className="shell relative z-10">
@@ -220,7 +252,7 @@ export default function HomePage() {
             arriba. La piedra tiene veta y 1400px reales. */}
         <section
           aria-hidden="true"
-          className="relative h-[34vh] min-h-[13rem] w-full overflow-hidden md:h-[42vh]"
+          className="ken-burns relative h-[34vh] min-h-[13rem] w-full overflow-hidden md:h-[42vh]"
         >
           <Image
             src="/clinica/textura-piedra.jpg"
@@ -253,7 +285,7 @@ export default function HomePage() {
               </div>
               <Link
                 href="/servicios"
-                className="mono group inline-flex items-center gap-2 border-b border-pine pb-1 text-label uppercase text-pine"
+                className="mono link-grow group inline-flex items-center gap-2 pb-1 text-label uppercase text-pine"
               >
                 Catálogo completo
                 <ArrowRight
@@ -265,10 +297,10 @@ export default function HomePage() {
 
             {/* Grilla sin gap: las tarjetas comparten filete, como celdas de una
                 tabla. Es lo que separa esto de cuatro cajas flotando. */}
-            <ul className="mt-10 grid border-l border-t border-rule sm:grid-cols-2 lg:grid-cols-4">
+            <ul className="rise-stagger mt-10 grid border-l border-t border-rule sm:grid-cols-2 lg:grid-cols-4">
               {featured.map((t, i) => (
                 <li key={t.id} className="border-b border-r border-rule">
-                  <article className="rec rec-hover flex h-full flex-col border-0 p-6">
+                  <article className="rec rec-hover card-rise flex h-full flex-col border-0 p-6">
                     <p className="mono text-label uppercase text-ink">
                       {String(i + 1).padStart(2, "0")} · {t.category}
                     </p>
@@ -277,7 +309,7 @@ export default function HomePage() {
                         ese tratamiento, la tarjeta simplemente no la dibuja en
                         vez de dejar un hueco. */}
                     {t.conditionImage && (
-                      <div className="relative mt-4 aspect-[16/10] w-full overflow-hidden border border-rule bg-sand">
+                      <div className="card-zoom relative mt-4 aspect-[16/10] w-full border border-rule bg-sand">
                         <Image
                           src={t.conditionImage.src}
                           alt={t.conditionImage.alt}
@@ -328,7 +360,7 @@ export default function HomePage() {
               </div>
               <Link
                 href="/resultados"
-                className="mono group inline-flex items-center gap-2 border-b border-pine pb-1 text-label uppercase text-pine"
+                className="mono link-grow group inline-flex items-center gap-2 pb-1 text-label uppercase text-pine"
               >
                 Todos los casos
                 <ArrowRight
@@ -395,7 +427,7 @@ export default function HomePage() {
                 <WhatsAppCTA context={{ kind: "evaluation" }} size="lg" block />
                 <Link
                   href="/agendar"
-                  className="inline-flex min-h-[48px] items-center justify-center border border-sand/40 px-6 py-3.5 text-[0.9375rem] font-semibold text-paper transition-colors hover:bg-paper hover:text-pine"
+                  className="btn-lift inline-flex min-h-[48px] items-center justify-center border border-sand/40 px-6 py-3.5 text-body font-semibold text-paper hover:bg-paper hover:text-pine"
                 >
                   Agendar online
                 </Link>

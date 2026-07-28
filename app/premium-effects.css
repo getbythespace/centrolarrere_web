@@ -268,6 +268,146 @@
   }
 }
 
+/* ==========================================================================
+   CAPA DE INTERACCIÓN
+   --------------------------------------------------------------------------
+   Todo lo de acá anima sólo `transform`, `opacity`, `clip-path` o color: son
+   las propiedades que el compositor resuelve sin recalcular layout. Animar
+   `width`, `height` o `top` en hover es lo que hace que un sitio se sienta
+   pesado en gama media.
+
+   Todo respeta `prefers-reduced-motion` — el bloque global del final del
+   archivo lo desactiva entero.
+   ========================================================================== */
+
+/* --- Botones ------------------------------------------------------------ */
+/* Levantan un pelo y se hunden al presionar. 1px y 2px: suficiente para que se
+   sienta táctil, no tanto como para parecer un globo. */
+.btn-lift {
+  transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.3, 1),
+    background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease,
+    box-shadow 0.2s ease;
+  will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 0 -1px rgba(13, 51, 32, 0.28);
+  }
+}
+
+.btn-lift:active {
+  transform: translateY(1px);
+  box-shadow: none;
+  transition-duration: 0.06s;
+}
+
+/* --- Tarjetas ----------------------------------------------------------- */
+/* La tarjeta sube y su imagen hace zoom por dentro. El zoom vive en la imagen
+   y el recorte en el contenedor, así el marco no se mueve. */
+.card-rise {
+  transition: transform 0.32s cubic-bezier(0.2, 0.8, 0.3, 1),
+    background-color 0.25s ease, border-color 0.25s ease,
+    box-shadow 0.32s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+.card-zoom {
+  overflow: hidden;
+}
+
+.card-zoom img {
+  transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.3, 1);
+  will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card-rise:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 0 -4px rgba(13, 51, 32, 0.2);
+  }
+  .card-rise:hover .card-zoom img,
+  .card-zoom:hover img {
+    transform: scale(1.06);
+  }
+}
+
+/* --- Enlaces con subrayado que crece ------------------------------------ */
+.link-grow {
+  position: relative;
+}
+
+.link-grow::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.32s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+.link-grow:hover::after,
+.link-grow:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* --- Entrada de secciones por scroll ------------------------------------ */
+/* Igual que el resto de reveals del sitio: NUNCA parte en opacidad 0. Anima
+   posición y una escala mínima, así que si la línea de tiempo no avanza el
+   contenido está ahí, apenas 16px más abajo y un 2% más chico. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .rise-in {
+      animation: rise-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 42%;
+    }
+
+    /* Variante escalonada para grillas: cada hijo entra con su propio retardo
+       dentro del mismo rango. */
+    .rise-stagger > * {
+      animation: rise-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 48%;
+    }
+  }
+}
+
+@keyframes rise-in {
+  from {
+    transform: translateY(18px) scale(0.985);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* --- Zoom lento de fondo ------------------------------------------------ */
+/* Para imágenes de sección grandes: se acercan mientras pasan por pantalla.
+   Sutil a propósito — 4% en todo el recorrido. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .ken-burns img {
+      animation: ken-burns linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+  }
+}
+
+@keyframes ken-burns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.04);
+  }
+}
+
 /* --- Entrada de página -------------------------------------------------- */
 @media (prefers-reduced-motion: no-preference) {
   .page-enter > * {

@@ -1,36 +1,42 @@
+import Link from "next/link";
+import { campaign } from "@/lib/campaign";
+
 /**
- * Cinta de puntos de confianza.
+ * Cinta de promociones del mes.
  *
- * Es lo único que se mueve solo en todo el sitio, y está acotado a una franja
- * de 3rem entre dos secciones. Cero JS: la lista se duplica en el marcado y el
- * CSS desplaza el track.
+ * Antes decía cosas genéricas —«enfermería titulada», «fototipos I–VI»— que ya
+ * están dichas en otras partes del sitio y no empujaban a nada. Ahora lleva los
+ * dos focos del mes con su precio, y todo el bloque es un enlace al catálogo.
  *
- * Sobre el contenido: son afirmaciones verificables sobre cómo trabaja la
- * clínica, no claims de resultado. Nada acá promete curar nada.
+ * Sobre el color: ámbar con tinta PINO SÓLIDA. Las opacidades de pino sobre
+ * ámbar (75%, 65%, 60%) daban 2.68–3.47:1 y fallaban AA en texto de 10–11px;
+ * el pino pleno da 5.03:1. En un fondo saturado no hay margen para atenuar
+ * texto: la jerarquía se hace con peso y tamaño, no con opacidad.
  */
 
-const POINTS = [
-  "Evaluación médica previa",
-  "Enfermería titulada",
-  "Fototipos I–VI",
-  "Derivación cuando corresponde",
-  "Protocolos de bioseguridad",
-  "Seguimiento post-tratamiento",
+const PROMOS = [
+  { titulo: "Onicomicosis plantar", precio: "$499.990", antes: "$750.000", nota: "Sin límite de sesiones" },
+  { titulo: "Pack acné · 6 meses", precio: "$169.990", antes: null, nota: "Una limpieza por semana" },
+  { titulo: "Evaluación médica", precio: "Gratis en agosto", antes: "$40.000", nota: null },
 ];
 
 function Track({ hidden = false }: { hidden?: boolean }) {
   return (
     <ul className="marquee__track" aria-hidden={hidden || undefined}>
-      {POINTS.map((p) => (
+      {PROMOS.map((p) => (
         <li
-          key={p}
-          className="mono flex shrink-0 items-center gap-3 whitespace-nowrap px-6 text-label uppercase text-sand"
+          key={p.titulo}
+          className="flex shrink-0 items-baseline gap-2.5 whitespace-nowrap px-6 py-0.5 text-pine"
         >
-          {/* Separador. Decorativo, así que no se anuncia. */}
-          <span aria-hidden="true" className="text-sage">
-            ／
+          <span aria-hidden="true">／</span>
+          <span className="mono text-[0.6875rem] font-semibold uppercase tracking-[0.12em]">
+            {p.titulo}
           </span>
-          {p}
+          {p.antes && (
+            <span className="mono text-[0.6875rem] line-through">{p.antes}</span>
+          )}
+          <span className="mono text-[0.8125rem] font-bold">{p.precio}</span>
+          {p.nota && <span className="mono text-[0.625rem] uppercase">{p.nota}</span>}
         </li>
       ))}
     </ul>
@@ -38,14 +44,21 @@ function Track({ hidden = false }: { hidden?: boolean }) {
 }
 
 export default function TrustMarquee() {
+  if (!campaign.active) return null;
+
   return (
-    <div className="surface-ink border-y border-rule/40 py-3.5">
-      <div className="marquee">
+    <Link
+      href="/servicios"
+      className="block border-y-2 border-pine bg-ambar py-3 transition-opacity hover:opacity-90"
+    >
+      {/* Sin `aria-label`: el texto visible ya describe el enlace, y un rótulo
+          que no contiene ese texto rompe la correspondencia entre lo que se ve
+          y lo que se anuncia (label-content-name-mismatch). */}
+      <span className="sr-only">Ver promociones del mes en el catálogo</span>
+      <div className="marquee" aria-hidden="true">
         <Track />
-        {/* Segunda copia para que el bucle no tenga costura. Va oculta a
-            lectores de pantalla: es la misma lista repetida. */}
         <Track hidden />
       </div>
-    </div>
+    </Link>
   );
 }

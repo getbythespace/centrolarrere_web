@@ -39,6 +39,10 @@ export const campaign = {
       ],
       treatmentIds: ["onicomicosis-plantar", "onicomicosis-palmar"],
       ctaTreatment: "el tratamiento de onicomicosis",
+      /** Color del bloque: ámbar con tinta pino (5.03:1). */
+      tone: "ambar" as const,
+      /** Par antes/después referencial que ilustra el tratamiento. */
+      caseId: "onicomicosis-01",
       /** Nota honesta que acompaña la promesa de temporada. */
       disclaimer:
         "El tiempo de renovación varía según la persona, la uña afectada y la adherencia al tratamiento. La evaluación confirma si el caso es tratable con láser.",
@@ -57,8 +61,11 @@ export const campaign = {
       ],
       treatmentIds: ["higiene-facial", "higiene-corporal"],
       ctaTreatment: "el pack de acompañamiento para acné",
-      // El valor del pack todavía no está definido por la clínica.
-      priceNote: "[REEMPLAZAR con el valor del pack]",
+      /** Color del bloque: ladrillo con tinta papel (5.13:1). */
+      tone: "ladrillo" as const,
+      /** Valor del pack completo. */
+      packPrice: 169990,
+      packLabel: "Pack completo · hasta 6 meses",
       disclaimer:
         "El pack acompaña un tratamiento médico indicado por tu dermatólogo o por nuestro médico; no lo reemplaza.",
     },

@@ -44,6 +44,12 @@ export interface Treatment {
   sessionsNote?: string;
   /** Marca el tratamiento como parte de la campaña del mes. */
   featured?: boolean;
+  /**
+   * Ilustración de la CONDICIÓN que se trata — no de un resultado.
+   * Muestra cómo se ve el problema, que es información útil para quien no sabe
+   * si lo que tiene es tratable acá. No afirma nada sobre el después.
+   */
+  conditionImage?: { src: string; alt: string };
 }
 
 export const treatments: Treatment[] = [
@@ -61,6 +67,10 @@ export const treatments: Treatment[] = [
     listPrice: 750000,
     sessionsNote: "Sin límite de sesiones",
     featured: true,
+    conditionImage: {
+      src: "/casos/ominomicosis.webp",
+      alt: "Uña del pie afectada por onicomicosis",
+    },
   },
   {
     id: "onicomicosis-palmar",
@@ -117,6 +127,10 @@ export const treatments: Treatment[] = [
     price: 150000,
     listPrice: 200000,
     sessions: 4,
+    conditionImage: {
+      src: "/tratamientos/Tratamiento_laser_para_la_rosacea_En_que_consiste_553x.webp",
+      alt: "Rostro con enrojecimiento facial por rosácea",
+    },
   },
   {
     id: "laser-rosacea-6",
@@ -142,6 +156,10 @@ export const treatments: Treatment[] = [
     needsEvaluation: true,
     price: null,
     listPrice: null,
+    conditionImage: {
+      src: "/tratamientos/Telangiectasia-in-Bellaire-TX.webp",
+      alt: "Telangiectasias visibles en la piel del rostro",
+    },
   },
   {
     id: "laser-vascular",
@@ -169,6 +187,10 @@ export const treatments: Treatment[] = [
     price: 120000,
     listPrice: 150000,
     sessions: 1,
+    conditionImage: {
+      src: "/tratamientos/acrocordones.jpg",
+      alt: "Acrocordones en la piel del cuello",
+    },
   },
   {
     id: "vitiligo-4",
@@ -182,6 +204,10 @@ export const treatments: Treatment[] = [
     price: 149990,
     listPrice: 200000,
     sessions: 4,
+    conditionImage: {
+      src: "/tratamientos/vitiligo-imagem2-733x414.webp",
+      alt: "Zona de piel despigmentada por vitíligo",
+    },
   },
   {
     id: "vitiligo-6",
@@ -207,6 +233,10 @@ export const treatments: Treatment[] = [
     needsEvaluation: true,
     price: null,
     listPrice: null,
+    conditionImage: {
+      src: "/tratamientos/acne.jpg",
+      alt: "Piel con lesiones de acné inflamatorio",
+    },
   },
 
   // ---------- REGENERATIVO Y CAPILAR ----------
@@ -235,6 +265,10 @@ export const treatments: Treatment[] = [
     price: 80000,
     listPrice: 95000,
     sessions: 1,
+    conditionImage: {
+      src: "/tratamientos/alopecia.jpg",
+      alt: "Cuero cabelludo con densidad capilar reducida",
+    },
   },
   {
     id: "prp-capilar-4",

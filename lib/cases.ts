@@ -42,16 +42,31 @@ export const showcaseCases: BeforeAfterCase[] = [
     note: "Ilustra la renovación progresiva de la uña a lo largo del tratamiento",
     alt: "uña del pie afectada por onicomicosis y su aspecto una vez renovada",
     kind: "referencial",
-  },
-  {
-    id: "manos-01",
-    label: "Rejuvenecimiento de manos",
-    treatment: "Tratamiento de manchas y textura",
-    note: "Ilustra el trabajo sobre manchas y tono en el dorso de la mano",
-    alt: "dorso de la mano con manchas y su aspecto tras el tratamiento",
-    kind: "referencial",
+    beforeSrc: "/casos/ominomicosis.webp",
+    afterSrc: "/casos/ominomicosisdespues.png",
   },
 ];
+
+/**
+ * Fotografía de ambiente: material propio de la clínica que NO afirma un
+ * resultado. Va en el hero y en los cortes entre secciones.
+ *
+ * Las dos tomas de manos que se recibieron son fotogramas del mismo video, sin
+ * diferencia visible entre una y otra, así que no sirven como antes/después.
+ * Como retrato de detalle sí funcionan muy bien: se usan acá.
+ */
+export const ambiente = {
+  manos: {
+    // Recorte vertical 4:5 hecho en origen (753×941, 107 KB) desde el
+    // fotograma apaisado original de 1672×941 y 1,9 MB. El marco del hero es
+    // vertical, así que servir el apaisado completo descargaba más del doble
+    // de píxeles de los que se ven.
+    src: "/hero/manos-consulta.jpg",
+    alt: "Manos entrelazadas en primer plano durante la atención en consulta",
+    width: 753,
+    height: 941,
+  },
+} as const;
 
 /**
  * Tratamientos que NO llevan antes/después por identificabilidad del paciente.

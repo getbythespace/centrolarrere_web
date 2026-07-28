@@ -13,7 +13,7 @@ import CampaignPacks from "@/components/CampaignPacks";
 import Autorizacion from "@/components/Autorizacion";
 import { clinic } from "@/lib/clinic";
 import { treatments } from "@/lib/treatments";
-import { showcaseCases } from "@/lib/cases";
+import { showcaseCases, ambiente } from "@/lib/cases";
 
 /**
  * La home está compuesta como una ficha clínica: campos con etiqueta mono,
@@ -22,10 +22,22 @@ import { showcaseCases } from "@/lib/cases";
  * paleta y anuncia de qué se trata la consulta.
  */
 
-const DESTACADOS = ["laser-rosacea", "acne", "telangiectasia", "prp-capilar"];
+// IDs del catálogo con precios reales. Se filtra por si alguno se renombra:
+// antes esta lista apuntaba a IDs viejos y la grilla se quedaba a medias sin
+// avisar.
+const DESTACADOS = [
+  "laser-rosacea-4",
+  "acne",
+  "telangiectasia",
+  "prp-capilar-1",
+  "acrocordones",
+  "rejuvenecimiento-manos",
+];
 
 export default function HomePage() {
-  const featured = DESTACADOS.map((id) => treatments.find((t) => t.id === id)!).filter(Boolean);
+  const featured = DESTACADOS.map((id) => treatments.find((t) => t.id === id)).filter(
+    (t): t is NonNullable<typeof t> => Boolean(t)
+  );
 
   return (
     <>
@@ -76,9 +88,14 @@ export default function HomePage() {
 
                 <div className="mt-8 max-w-prose">
                   <p className="text-lead text-ink">
-                    Rosácea, lesiones vasculares, acné y alopecia. El láser no se
-                    calibra igual para un fototipo II que para un V — por eso acá
-                    se parte por el diagnóstico y no por el equipo.
+                    Rosácea, lesiones vasculares, acné, onicomicosis y alopecia.
+                    El láser no se calibra igual para un fototipo II que para un
+                    V — por eso acá{" "}
+                    <strong className="font-semibold text-pine">
+                      cada tratamiento parte con evaluación médica
+                    </strong>
+                    , se realiza con respaldo de enfermería titulada y bajo
+                    autorización sanitaria.
                   </p>
                 </div>
 
@@ -123,33 +140,49 @@ export default function HomePage() {
                   La foto es lo que da profundidad a la página; el comparador
                   es la prueba. */}
               <div className="flex flex-col gap-6 lg:pt-2">
+                {/* Foto propia de la clínica. El encuadre original es
+                    apaisado y el hueco es vertical, así que se recorta con
+                    object-cover y foco al centro. */}
                 <figure className="m-0">
-                  <div className="relative aspect-[4/5] w-full overflow-hidden border border-rule bg-sand">
+                  <div className="relative aspect-[4/5] w-full overflow-hidden border border-rule bg-pine">
                     <Image
-                      src="/hero/piel-hombro.jpg"
-                      alt="Detalle de piel con pecas y pigmentación en el hombro"
+                      src={ambiente.manos.src}
+                      alt={ambiente.manos.alt}
                       fill
                       // Ocupa ~38% del ancho en desktop y casi todo en mobile.
-                      // Sin esto Next sirve la versión de 1600px al celular.
+                      // Sin esto Next sirve la versión completa al celular.
                       sizes="(min-width: 1024px) 38vw, 100vw"
-                      className="object-cover"
+                      className="object-cover object-center"
                       priority
-                      quality={72}
+                      quality={74}
                     />
-                    <span className="mono absolute bottom-0 left-0 bg-pine px-2.5 py-1.5 text-[0.625rem] uppercase tracking-widest text-paper">
-                      Fototipo II
-                    </span>
                   </div>
-                  <figcaption className="todo-flag mt-2.5 px-2.5 py-1.5">
-                    [REEMPLAZAR con foto propia de la clínica — ver
-                    public/LEEME.md]
+                  <figcaption className="mono mt-2.5 text-[0.625rem] uppercase leading-relaxed text-ink">
+                    Atención en consulta · Clínica LARRÈRE
                   </figcaption>
                 </figure>
 
-                <div>
-                  <p className="field mb-3">Caso 01</p>
-                  <BeforeAfter data={showcaseCases[0]} />
-                </div>
+                {/* El comparador de onicomicosis NO va acá: vive en el pack de
+                    campaña, justo debajo. Tenerlo dos veces en la misma página
+                    duplicaba la descarga y restaba fuerza al hero, que gana
+                    siendo una sola imagen grande. */}
+                <dl className="border-t border-rule">
+                  {[
+                    ["Autorización", "SEREMI de Salud"],
+                    ["Evaluación", "Médica, previa a todo"],
+                    ["Procedimientos", "Con enfermería titulada"],
+                  ].map(([k, v]) => (
+                    <div
+                      key={k}
+                      className="flex items-baseline justify-between gap-4 border-b border-rule/50 py-2.5"
+                    >
+                      <dt className="mono text-[0.625rem] uppercase tracking-wider text-ink">
+                        {k}
+                      </dt>
+                      <dd className="text-[0.8125rem] font-medium text-pine">{v}</dd>
+                    </div>
+                  ))}
+                </dl>
               </div>
             </div>
           </div>
@@ -284,6 +317,23 @@ export default function HomePage() {
                     <p className="mono text-label uppercase text-ink">
                       {String(i + 1).padStart(2, "0")} · {t.category}
                     </p>
+
+                    {/* Ilustración de la condición. Cuando no hay imagen para
+                        ese tratamiento, la tarjeta simplemente no la dibuja en
+                        vez de dejar un hueco. */}
+                    {t.conditionImage && (
+                      <div className="relative mt-4 aspect-[16/10] w-full overflow-hidden border border-rule bg-sand">
+                        <Image
+                          src={t.conditionImage.src}
+                          alt={t.conditionImage.alt}
+                          fill
+                          sizes="(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 90vw"
+                          className="object-cover"
+                          quality={70}
+                        />
+                      </div>
+                    )}
+
                     <h3 className="mt-5 text-[1.25rem] font-semibold leading-tight text-pine">
                       {t.name}
                     </h3>
@@ -333,14 +383,35 @@ export default function HomePage() {
               </Link>
             </div>
 
-            <ul className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {showcaseCases.slice(1, 4).map((c, i) => (
-                <li key={c.id}>
-                  <p className="field mb-3">Caso {String(i + 2).padStart(2, "0")}</p>
-                  <BeforeAfter data={c} />
-                </li>
+            {/* Por qué hay pocos casos, dicho de frente. Es un argumento a
+                favor, no una excusa: la confidencialidad del paciente es
+                exactamente lo que alguien quiere de una clínica. */}
+            <div className="mt-10 grid gap-6 border border-rule md:grid-cols-3">
+              {[
+                {
+                  t: "Consentimiento firmado",
+                  d: "Sólo se publica lo que el paciente autorizó por escrito para uso publicitario.",
+                },
+                {
+                  t: "Zonas no identificables",
+                  d: "Uñas, manos y pies. No publicamos rostros ni cuero cabelludo, aunque haya autorización.",
+                },
+                {
+                  t: "Sin retoque",
+                  d: "Misma luz, mismo ángulo, misma distancia. Si el «después» está mejor iluminado, la comparación no vale.",
+                },
+              ].map((x, i) => (
+                <div
+                  key={x.t}
+                  className={`p-6 ${i > 0 ? "border-rule md:border-l" : ""} ${
+                    i > 0 ? "border-t md:border-t-0" : ""
+                  }`}
+                >
+                  <h3 className="text-[1.0625rem] font-semibold text-pine">{x.t}</h3>
+                  <p className="mt-2 text-[0.9375rem] leading-relaxed text-ink">{x.d}</p>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
         </section>
 

@@ -27,12 +27,20 @@ const config: Config = {
         olive: "#4D694E", //  5.70:1 AA — terciario, no bajar de acá
         // Salvia: el acento SOBRE pino. El oliva ahí da 2.28:1 y no sirve.
         sage: "#A9C0A4", //  7.12:1 sobre pino (AAA)
-        // Ciruela: sólo rótulos de contenido pendiente. Tiene que cantar
-        // contra el verde, y se va cuando llegue el contenido real.
+        // Ciruela: sólo rótulos de contenido pendiente y de imagen
+        // referencial. Se va cuando llegue el contenido real.
         plum: {
           DEFAULT: "#7A4A5C", // 6.63:1 AA
           deep: "#5E3547",
         },
+        // --- Colores de campaña -------------------------------------------
+        // Sólo para las promociones del mes. Tienen que cantar contra el verde
+        // sin caer en el rojo de retail, que en una clínica destruye la
+        // credibilidad que el resto del sitio construye.
+        // Medidos: ámbar lleva tinta pino (5.03:1) y ladrillo tinta papel
+        // (5.13:1). Ninguno de los dos admite el color contrario.
+        ambar: "#D98A15", // 5.03:1 con pino encima · 5.03:1 sobre pino
+        ladrillo: "#B5451B", // 5.13:1 con papel encima
         // Escala de fototipos Fitzpatrick I–VI. Es el sistema de color del
         // sitio, usado como dato. Los tonos 1–4 llevan texto espresso encima;
         // los 5–6, texto papel.

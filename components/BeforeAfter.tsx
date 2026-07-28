@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useRef, useState } from "react";
+import Image from "next/image";
 import { trackBeforeAfter } from "@/lib/analytics";
 
 /**
@@ -56,9 +57,19 @@ interface Props {
   ratio?: string;
   /** Invierte el color del pie para fondos oscuros. */
   onDark?: boolean;
+  /**
+   * Ancho que ocupa el comparador, para que Next elija la variante correcta.
+   * Por defecto asume media columna en desktop.
+   */
+  sizes?: string;
 }
 
-export default function BeforeAfter({ data, ratio = "4 / 5", onDark = false }: Props) {
+export default function BeforeAfter({
+  data,
+  ratio = "4 / 5",
+  onDark = false,
+  sizes = "(min-width: 1024px) 40vw, (min-width: 640px) 50vw, 92vw",
+}: Props) {
   // Colores del pie según el fondo. Medidos: porcelain sobre drape-deep da
   // 10.61:1, y porcelain/70 sigue sobre 6:1.
   const cap = onDark
@@ -92,15 +103,15 @@ export default function BeforeAfter({ data, ratio = "4 / 5", onDark = false }: P
         {/* ---- ANTES (capa de fondo) ---- */}
         <div className="absolute inset-0">
           {hasImages ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={data.beforeSrc}
+            // next/image y no <img>: los archivos de caso son PNG de 1,7 MB y
+            // servidos crudos se llevaban solos el presupuesto de la página.
+            <Image
+              src={data.beforeSrc!}
               alt={data.alt ? `Antes: ${data.alt}` : `Antes del tratamiento de ${data.treatment}`}
-              width={800}
-              height={1000}
-              loading="lazy"
-              decoding="async"
-              className="h-full w-full object-cover"
+              fill
+              sizes={sizes}
+              className="object-cover"
+              quality={70}
             />
           ) : (
             <PlaceholderPane side="antes" />
@@ -113,15 +124,13 @@ export default function BeforeAfter({ data, ratio = "4 / 5", onDark = false }: P
           style={{ clipPath: "inset(0 calc(100% - var(--pos)) 0 0)" }}
         >
           {hasImages ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={data.afterSrc}
+            <Image
+              src={data.afterSrc!}
               alt={data.alt ? `Después: ${data.alt}` : `Después del tratamiento de ${data.treatment}`}
-              width={800}
-              height={1000}
-              loading="lazy"
-              decoding="async"
-              className="h-full w-full object-cover"
+              fill
+              sizes={sizes}
+              className="object-cover"
+              quality={70}
             />
           ) : (
             <PlaceholderPane side="después" />

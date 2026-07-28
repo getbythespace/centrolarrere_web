@@ -2,9 +2,14 @@ import type { Metadata } from "next";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import StickyContactBar, { StickyCTASentinel } from "@/components/StickyContactBar";
+import Image from "next/image";
 import StackedCases from "@/components/StackedCases";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
 import { showcaseCases } from "@/lib/cases";
+import { treatments } from "@/lib/treatments";
+
+/** Tratamientos con ilustración de la condición cargada. */
+const conditions = treatments.filter((t) => t.conditionImage);
 
 export const metadata: Metadata = {
   title: "Resultados",
@@ -64,12 +69,75 @@ export default function ResultadosPage() {
 
         <StickyCTASentinel />
 
-        <section className="bg-paper pb-24 pt-14">
+        <section className="bg-paper pb-20 pt-14">
           <div className="shell">
-            <h2 className="sr-only">Galería de casos</h2>
-            {/* Baraja: cada caso se sostiene arriba mientras entra el
-                siguiente. En mobile el apilado se desactiva y fluyen normal. */}
+            <h2 className="sr-only">Casos publicados</h2>
+            {/* Con un solo caso la baraja no tiene sentido —se apila contra
+                nada—, así que se muestra en grande. Cuando haya tres o más,
+                StackedCases vuelve a ser la opción. */}
             <StackedCases cases={showcaseCases} />
+          </div>
+        </section>
+
+        {/* Qué tratamos, con la condición ilustrada. Reemplaza a los casos que
+            no se pueden publicar: en vez de mostrar un resultado ajeno, se
+            muestra el problema, que es lo que la persona está buscando
+            reconocer. */}
+        <section className="surface-sand section">
+          <div className="shell">
+            <div className="max-w-prose">
+              <p className="field w-44">Qué tratamos</p>
+              <h2 className="mt-6 text-display-md text-pine">
+                Reconoce tu caso
+              </h2>
+              <p className="mt-5 text-[1.0625rem] leading-relaxed text-ink">
+                Estas imágenes muestran la condición, no un resultado. Si te
+                reconoces en alguna, escríbenos con una foto y te decimos si es
+                tratable acá o si conviene derivarte.
+              </p>
+            </div>
+
+            <ul className="mt-10 grid gap-px border border-rule bg-rule sm:grid-cols-2 lg:grid-cols-3">
+              {conditions.map((t) => (
+                <li key={t.id} className="bg-paper">
+                  <article className="flex h-full flex-col">
+                    <div className="relative aspect-[16/10] w-full overflow-hidden bg-sand">
+                      <Image
+                        src={t.conditionImage!.src}
+                        alt={t.conditionImage!.alt}
+                        fill
+                        sizes="(min-width: 1024px) 32vw, (min-width: 640px) 48vw, 92vw"
+                        className="object-cover"
+                        quality={70}
+                      />
+                    </div>
+                    <div className="flex flex-1 flex-col p-5">
+                      <p className="mono text-label uppercase text-ink">{t.category}</p>
+                      <h3 className="mt-2.5 text-[1.0625rem] font-semibold leading-tight text-pine">
+                        {t.name}
+                      </h3>
+                      <p className="mt-2 flex-1 text-[0.875rem] leading-relaxed text-ink">
+                        {t.summary}
+                      </p>
+                      <WhatsAppCTA
+                        context={{ kind: "treatment", treatment: t.name }}
+                        variant="quiet"
+                        size="sm"
+                        block
+                        className="mt-4"
+                      >
+                        Consultar
+                      </WhatsAppCTA>
+                    </div>
+                  </article>
+                </li>
+              ))}
+            </ul>
+
+            <p className="mt-6 max-w-prose text-[0.8125rem] leading-relaxed text-ink">
+              Imágenes ilustrativas de cada condición. No corresponden a
+              pacientes de la clínica ni representan un resultado de tratamiento.
+            </p>
           </div>
         </section>
 

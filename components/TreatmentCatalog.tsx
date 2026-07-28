@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Image from "next/image";
 import { AlertCircle, CalendarClock } from "lucide-react";
 import WhatsAppCTA from "./WhatsAppCTA";
 import { categories, treatments, type Category } from "@/lib/treatments";
@@ -78,6 +79,22 @@ export default function TreatmentCatalog() {
                     </span>
                   )}
                 </div>
+
+                {/* Ilustración de la condición, no del resultado: muestra cómo
+                    se ve el problema, que es lo que necesita quien no sabe si
+                    lo suyo es tratable acá. */}
+                {t.conditionImage && (
+                  <div className="relative mt-4 aspect-[16/10] w-full overflow-hidden border border-rule bg-sand">
+                    <Image
+                      src={t.conditionImage.src}
+                      alt={t.conditionImage.alt}
+                      fill
+                      sizes="(min-width: 1024px) 30vw, (min-width: 768px) 45vw, 90vw"
+                      className="object-cover"
+                      quality={70}
+                    />
+                  </div>
+                )}
 
                 <h3 className="mt-5 text-[1.25rem] font-semibold leading-tight text-pine">
                   {t.name}

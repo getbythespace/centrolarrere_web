@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -116,10 +117,37 @@ export default function HomePage() {
                 </dl>
               </div>
 
-              {/* El comparador, encuadrado como pieza de expediente. */}
-              <div className="lg:pt-2">
-                <p className="field mb-3">Caso 01</p>
-                <BeforeAfter data={showcaseCases[0]} />
+              {/* Columna derecha: fotografía primero, comparador debajo.
+                  La foto es lo que da profundidad a la página; el comparador
+                  es la prueba. */}
+              <div className="flex flex-col gap-6 lg:pt-2">
+                <figure className="m-0">
+                  <div className="relative aspect-[4/5] w-full overflow-hidden border border-rule bg-sand">
+                    <Image
+                      src="/hero/piel-hombro.jpg"
+                      alt="Detalle de piel con pecas y pigmentación en el hombro"
+                      fill
+                      // Ocupa ~38% del ancho en desktop y casi todo en mobile.
+                      // Sin esto Next sirve la versión de 1600px al celular.
+                      sizes="(min-width: 1024px) 38vw, 100vw"
+                      className="object-cover"
+                      priority
+                      quality={72}
+                    />
+                    <span className="mono absolute bottom-0 left-0 bg-pine px-2.5 py-1.5 text-[0.625rem] uppercase tracking-widest text-paper">
+                      Fototipo II
+                    </span>
+                  </div>
+                  <figcaption className="todo-flag mt-2.5 px-2.5 py-1.5">
+                    [REEMPLAZAR con foto propia de la clínica — ver
+                    public/LEEME.md]
+                  </figcaption>
+                </figure>
+
+                <div>
+                  <p className="field mb-3">Caso 01</p>
+                  <BeforeAfter data={showcaseCases[0]} />
+                </div>
               </div>
             </div>
           </div>
@@ -188,6 +216,36 @@ export default function HomePage() {
         </section>
 
         <ToneRule />
+
+        {/* Banda a sangre completa: rompe la sucesión de bloques de color, que
+            es lo que hacía que la página se leyera plana.
+
+            Va la textura de piedra y no el macro de piel: el macro es
+            uniforme, y estirado a 1440px con un velo encima quedaba como una
+            plancha gris. Además medía 900px de ancho y se escalaba hacia
+            arriba. La piedra tiene veta y 1400px reales. */}
+        <section
+          aria-hidden="true"
+          className="relative h-[34vh] min-h-[13rem] w-full overflow-hidden md:h-[42vh]"
+        >
+          <Image
+            src="/clinica/textura-piedra.jpg"
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover"
+            quality={68}
+          />
+          {/* Velo muy leve, sólo para amarrarla a la paleta. Al 35% tapaba la
+              veta, que es justo lo que hace que valga la pena la imagen. */}
+          <div className="absolute inset-0 bg-pine/12 mix-blend-multiply" />
+          <div className="grain absolute inset-0" />
+          {/* Dato clínico sobre la banda: la convierte en contenido y no en
+              relleno decorativo. */}
+          <p className="mono absolute bottom-4 left-0 right-0 px-[clamp(1rem,4vw,2.25rem)] text-center text-[0.625rem] uppercase tracking-[0.2em] text-pine">
+            La calibración del láser cambia con cada fototipo
+          </p>
+        </section>
 
         {/* ================= TRATAMIENTOS ================= */}
         <section className="section bg-paper">

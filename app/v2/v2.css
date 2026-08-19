@@ -1,0 +1,230 @@
+/* ==========================================================================
+   LARRÈRE v2 — «Escala viva»
+   --------------------------------------------------------------------------
+   La página ES la escala de fototipos. El fondo recorre los tonos I → IV a
+   medida que bajas, y las secciones invertidas usan el VI. No es decoración:
+   el sitio trata sobre piel y la superficie del sitio es piel.
+
+   Restricción medida que define todo el sistema: NINGUNA tinta única funciona
+   sobre los seis tonos. La oscura (#14100D) da 15.93 sobre el I y cae a 2.34
+   sobre el VI. Por eso los tonos I–IV son superficies de página —con un mínimo
+   de 7.54:1— y los tonos V–VI quedan como bloques invertidos con tinta clara.
+   ========================================================================== */
+
+.v2 {
+  /* --- Fototipos como superficie --- */
+  --t1: #f7e9df;
+  --t2: #f0d9c6;
+  --t3: #e3bfa3;
+  --t4: #c99a76;
+  --t5: #a2734f;
+  --t6: #6b4831;
+
+  /* --- Tinta --- */
+  --ink: #14100d;      /* 7.54:1 sobre el tono IV, el más oscuro que se usa */
+  --ink-70: #4a423b;
+  --paper: #f7e9df;    /* 6.81:1 sobre el tono VI */
+
+  background: var(--t1);
+  color: var(--ink);
+  font-family: var(--font-v2-sans), system-ui, sans-serif;
+  /* Ninguna esquina redondeada, ninguna sombra. La jerarquía es puro tamaño. */
+}
+
+/* --- Transición de superficie ------------------------------------------- */
+/* Cada sección declara su tono y el cambio se hace por transición larga, no
+   por corte: bajando se siente como un degradado continuo de piel. */
+.v2-surface {
+  background-color: var(--surface, var(--t1));
+  transition: background-color 1.1s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  isolation: isolate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-surface {
+    transition: none;
+  }
+}
+
+/* --- Grano -------------------------------------------------------------- */
+.v2-grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.v2-grain > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Contenedor y filetes ----------------------------------------------- */
+.v2-shell {
+  width: 100%;
+  padding-inline: clamp(1rem, 3.5vw, 2.5rem);
+}
+
+/* Filete a sangre completa, de borde a borde. Es el elemento estructural del
+   sistema: divide sin encerrar. */
+.v2-rule {
+  height: 1px;
+  background: currentColor;
+  opacity: 0.28;
+}
+
+/* --- Wordmark ----------------------------------------------------------- */
+/* Ocupa el ancho del viewport. No es un logo dentro de una composición: es la
+   composición. */
+.v2-wordmark {
+  font-family: var(--font-v2-display), "Arial Black", sans-serif;
+  font-weight: 900;
+  font-size: clamp(3.5rem, 15.5vw, 15rem);
+  line-height: 0.8;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* La cursiva delicada que corta el peso del wordmark. */
+.v2-serif {
+  font-family: var(--font-v2-serif), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  text-transform: none;
+}
+
+/* --- Escala tipográfica ------------------------------------------------- */
+.v2-display {
+  font-family: var(--font-v2-display), "Arial Black", sans-serif;
+  font-weight: 900;
+  font-size: clamp(2.5rem, 7.5vw, 6.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+}
+
+.v2-label {
+  font-size: clamp(0.8125rem, 1vw, 0.9375rem);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.v2-lead {
+  font-size: clamp(1.25rem, 2.1vw, 1.75rem);
+  line-height: 1.4;
+  letter-spacing: -0.014em;
+}
+
+.v2-body {
+  font-size: clamp(1.0625rem, 1.25vw, 1.1875rem);
+  line-height: 1.6;
+}
+
+/* --- Sección invertida (tono VI) ---------------------------------------- */
+.v2-invert {
+  background: var(--t6);
+  color: var(--paper);
+}
+
+/* --- Botón -------------------------------------------------------------- */
+.v2-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 3.5rem;
+  padding-inline: 2rem;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  border: 1.5px solid currentColor;
+  transition: background-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .v2-btn:hover {
+    background: var(--ink);
+    color: var(--t1);
+    transform: translateY(-2px);
+  }
+  .v2-invert .v2-btn:hover {
+    background: var(--paper);
+    color: var(--t6);
+  }
+}
+
+.v2-btn--solid {
+  background: var(--ink);
+  color: var(--t1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .v2-btn--solid:hover {
+    background: transparent;
+    color: var(--ink);
+  }
+}
+
+/* --- Revelado del wordmark --------------------------------------------- */
+/* Cada letra sube desde su máscara. Estado por defecto visible: si la
+   animación no corre, el wordmark está ahí igual. */
+/* El recorte tiene que dejar espacio ARRIBA además de abajo: el acento de la
+   È vive por encima de la altura de mayúscula y `overflow: hidden` se lo comía
+   —el wordmark se leía «LARRERE»—. El margen negativo compensa el relleno para
+   que la caja siga midiendo lo mismo. */
+.v2-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-top: 0.22em;
+  margin-top: -0.22em;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .v2-mask > span {
+    display: inline-block;
+    animation: v2-rise 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--i, 0) * 65ms);
+  }
+}
+
+@keyframes v2-rise {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+
+/* --- CTA dentro de la v2 ------------------------------------------------ */
+/* El verde de marca de WhatsApp funciona sobre el sistema verde/beige de la
+   v1, pero sobre esta superficie de piel es el único elemento saturado y se
+   lee como pegado encima. Acá el botón toma la tinta de la página: el glifo
+   sigue identificando el canal sin romper la superficie. */
+.v2 a[href*="wa.me"] {
+  background: var(--ink);
+  color: var(--t1);
+  border: 1.5px solid var(--ink);
+  min-height: 3.5rem;
+  padding-inline: 2rem;
+  font-size: 1.0625rem;
+  transition: background-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .v2 a[href*="wa.me"]:hover {
+    background: transparent;
+    color: var(--ink);
+    transform: translateY(-2px);
+  }
+}

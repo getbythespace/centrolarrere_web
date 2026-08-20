@@ -1,18 +1,33 @@
 /* ==========================================================================
-   LARRÈRE v2 — «Escala viva»
+   LARRÈRE v2 — «Cámara oscura»
    --------------------------------------------------------------------------
-   La página ES la escala de fototipos. El fondo recorre los tonos I → IV a
-   medida que bajas, y las secciones invertidas usan el VI. No es decoración:
-   el sitio trata sobre piel y la superficie del sitio es piel.
+   Corrección de rumbo. La versión anterior copió el vacío de Neue Montreal sin
+   copiar lo que lo sostiene: allá el vacío funciona porque un rojo saturado
+   hace todo el trabajo. Un beige apagado con 70% de aire no se lee como
+   confianza, se lee como sin terminar.
 
-   Restricción medida que define todo el sistema: NINGUNA tinta única funciona
-   sobre los seis tonos. La oscura (#14100D) da 15.93 sobre el I y cae a 2.34
-   sobre el VI. Por eso los tonos I–IV son superficies de página —con un mínimo
-   de 7.54:1— y los tonos V–VI quedan como bloques invertidos con tinta clara.
+   Tres de las cuatro referencias premiadas usan casi-negro (#0E0E0E, #1A1A1A,
+   #1C1C1C). No es casualidad: sobre negro, una sola imagen y un solo color
+   bastan para que la página se sienta compuesta.
+
+   Lo que cambia respecto de la v2 anterior:
+   - Superficie casi-negra comprometida en vez de beige timido.
+   - Imagen y video a sangre desde el primer pantallazo.
+   - Los fototipos pasan de ser el fondo a ser el ÚNICO color de la página.
+   - Coreografía de scroll real: pista horizontal, momentos fijados, escala.
    ========================================================================== */
 
 .v2 {
-  /* --- Fototipos como superficie --- */
+  /* --- Superficie --- */
+  --void: #0f0d0c;
+  --void-2: #171412;
+  --void-3: #211d1a;
+
+  /* --- Tinta --- */
+  --lume: #f7f2ec; /* 17.8:1 sobre --void */
+  --lume-60: #a39c94;
+
+  /* --- Fototipos: el único color del sitio --- */
   --t1: #f7e9df;
   --t2: #f0d9c6;
   --t3: #e3bfa3;
@@ -20,120 +35,289 @@
   --t5: #a2734f;
   --t6: #6b4831;
 
-  /* --- Tinta --- */
-  --ink: #14100d;      /* 7.54:1 sobre el tono IV, el más oscuro que se usa */
-  --ink-70: #4a423b;
-  --paper: #f7e9df;    /* 6.81:1 sobre el tono VI */
-
-  background: var(--t1);
-  color: var(--ink);
-  font-family: var(--font-v2-sans), system-ui, sans-serif;
-  /* Ninguna esquina redondeada, ninguna sombra. La jerarquía es puro tamaño. */
-}
-
-/* --- Transición de superficie ------------------------------------------- */
-/* Cada sección declara su tono y el cambio se hace por transición larga, no
-   por corte: bajando se siente como un degradado continuo de piel. */
-.v2-surface {
-  background-color: var(--surface, var(--t1));
-  transition: background-color 1.1s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  isolation: isolate;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .v2-surface {
-    transition: none;
-  }
+  background: var(--void);
+  color: var(--lume);
+  font-family: var(--font-v2-display), system-ui, sans-serif;
 }
 
 /* --- Grano -------------------------------------------------------------- */
+/* Sobre negro el grano va en `screen`: levanta el ruido en vez de ensuciarlo. */
 .v2-grain::before {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
-  z-index: 0;
-  opacity: 0.5;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-.v2-grain > * {
-  position: relative;
   z-index: 1;
+  opacity: 0.16;
+  mix-blend-mode: screen;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* --- Contenedor y filetes ----------------------------------------------- */
 .v2-shell {
   width: 100%;
   padding-inline: clamp(1rem, 3.5vw, 2.5rem);
 }
 
-/* Filete a sangre completa, de borde a borde. Es el elemento estructural del
-   sistema: divide sin encerrar. */
 .v2-rule {
   height: 1px;
   background: currentColor;
-  opacity: 0.28;
+  opacity: 0.22;
 }
 
-/* --- Wordmark ----------------------------------------------------------- */
-/* Ocupa el ancho del viewport. No es un logo dentro de una composición: es la
-   composición. */
+/* ==========================================================================
+   TIPOGRAFÍA
+   ========================================================================== */
+
+/* El wordmark como lockup, no como titular en negrita. Tracking negativo
+   fuerte y las letras casi tocándose: a este tamaño el espacio entre letras es
+   lo que separa un logotipo de un <h1>. */
 .v2-wordmark {
-  font-family: var(--font-v2-display), "Arial Black", sans-serif;
   font-weight: 900;
-  font-size: clamp(3.5rem, 15.5vw, 15rem);
-  line-height: 0.8;
-  letter-spacing: -0.045em;
+  font-size: clamp(3.75rem, 16.5vw, 17rem);
+  line-height: 0.76;
+  letter-spacing: -0.055em;
   text-transform: uppercase;
   white-space: nowrap;
 }
 
-/* La cursiva delicada que corta el peso del wordmark. */
 .v2-serif {
   font-family: var(--font-v2-serif), Georgia, serif;
   font-style: italic;
   font-weight: 400;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
   text-transform: none;
 }
 
-/* --- Escala tipográfica ------------------------------------------------- */
 .v2-display {
-  font-family: var(--font-v2-display), "Arial Black", sans-serif;
   font-weight: 900;
-  font-size: clamp(2.5rem, 7.5vw, 6.5rem);
-  line-height: 0.92;
-  letter-spacing: -0.035em;
+  font-size: clamp(2.5rem, 7.5vw, 7rem);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+
+/* Tipo enorme para la cinta: el titular ES el gráfico. */
+.v2-mega {
+  font-weight: 900;
+  font-size: clamp(4rem, 13vw, 13rem);
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .v2-label {
-  font-size: clamp(0.8125rem, 1vw, 0.9375rem);
+  font-size: clamp(0.8125rem, 0.95vw, 0.9375rem);
   font-weight: 500;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
 }
 
 .v2-lead {
-  font-size: clamp(1.25rem, 2.1vw, 1.75rem);
-  line-height: 1.4;
-  letter-spacing: -0.014em;
+  font-size: clamp(1.25rem, 2.2vw, 1.875rem);
+  line-height: 1.35;
+  letter-spacing: -0.018em;
 }
 
 .v2-body {
-  font-size: clamp(1.0625rem, 1.25vw, 1.1875rem);
+  font-size: clamp(1.0625rem, 1.2vw, 1.1875rem);
   line-height: 1.6;
 }
 
-/* --- Sección invertida (tono VI) ---------------------------------------- */
-.v2-invert {
-  background: var(--t6);
-  color: var(--paper);
+/* ==========================================================================
+   PISTA HORIZONTAL
+   --------------------------------------------------------------------------
+   El gesto que más aporta de las referencias premiadas y que sí cabe en el
+   presupuesto: una sección que se fija y su contenido corre de lado mientras
+   scrolleas.
+
+   Se hace con `position: sticky` para fijar y `animation-timeline: scroll()`
+   para mover. Si el navegador no soporta la línea de tiempo, la pista queda
+   como un carrusel con scroll horizontal nativo y snap — nunca inaccesible.
+   ========================================================================== */
+.v2-track-outer {
+  /* La altura define cuánto scroll dura el recorrido lateral. */
+  height: 320vh;
+  position: relative;
+  /* Línea de tiempo con nombre, anclada a ESTE elemento. Sin nombrarla había
+     que usar `scroll(nearest)`, que resolvía al propio track —porque el track
+     lleva `overflow-x: auto` como respaldo y eso lo convierte en contenedor de
+     scroll— y por eso nunca avanzaba. */
+  view-timeline-name: --pista;
+  view-timeline-axis: block;
 }
 
-/* --- Botón -------------------------------------------------------------- */
+.v2-track-pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.v2-track {
+  display: flex;
+  gap: clamp(1rem, 2vw, 2rem);
+  padding-inline: clamp(1rem, 3.5vw, 2.5rem);
+  /* Respaldo sin scroll-timeline: carrusel nativo. */
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.v2-track::-webkit-scrollbar {
+  display: none;
+}
+
+.v2-track > * {
+  scroll-snap-align: center;
+  flex: 0 0 auto;
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 768px) {
+    .v2-track {
+      overflow-x: visible;
+      scroll-snap-type: none;
+      /* Clave: sin esto el track mide 100vw —es un contenedor de bloque— y el
+         `-100%` del keyframe equivale a un viewport, así que la pista se movía
+         41px en vez de todo su largo. Con `max-content` el ancho es la suma de
+         las tarjetas y el cálculo del recorrido funciona. */
+      width: max-content;
+      animation: v2-slide linear both;
+      animation-timeline: --pista;
+      /* `contain` es el tramo en que un elemento MÁS ALTO que el viewport lo
+         cubre por completo — o sea, exactamente mientras está fijado. Antes
+         decía `cover`, que sólo existe para `view()` y dejaba la animación sin
+         avanzar nunca. */
+      animation-range: contain 0% contain 100%;
+    }
+  }
+}
+
+@keyframes v2-slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* Se mueve lo que sobra de la pista menos un viewport. */
+    transform: translateX(calc(-100% + 100vw - 4vw));
+  }
+}
+
+/* En móvil no se fija nada: la pista es un carrusel que se arrastra con el
+   dedo. Una sección de 320vh fijada en un celular es una trampa. */
+@media (max-width: 767px) {
+  .v2-track-outer {
+    height: auto;
+  }
+  .v2-track-pin {
+    position: static;
+    height: auto;
+    padding-block: clamp(3rem, 8vw, 5rem);
+  }
+}
+
+/* ==========================================================================
+   ESCALA DE FOTOTIPOS A PANTALLA COMPLETA
+   --------------------------------------------------------------------------
+   Los seis tonos como seis columnas de altura completa. Es el único momento en
+   que la página se llena de color, y por eso pesa.
+   ========================================================================== */
+.v2-scale {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  height: 100vh;
+}
+
+.v2-scale > div {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: clamp(1rem, 2vw, 2rem);
+  transition: flex 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Cada columna crece al pasar el puntero. En touch se quedan iguales. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .v2-scale > div {
+      animation: v2-col-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 70%;
+      animation-delay: calc(var(--c) * -0.06s);
+    }
+  }
+}
+
+@keyframes v2-col-rise {
+  from {
+    transform: translateY(9%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* ==========================================================================
+   CIFRA QUE CRECE AL ENTRAR
+   ========================================================================== */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .v2-zoom {
+      animation: v2-zoom linear both;
+      animation-timeline: view();
+      animation-range: entry 5% entry 60%;
+    }
+  }
+}
+
+@keyframes v2-zoom {
+  from {
+    transform: scale(0.88);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* ==========================================================================
+   CINTA DE TIPO ENORME
+   ========================================================================== */
+.v2-marquee {
+  display: flex;
+  overflow: hidden;
+  border-block: 1px solid rgba(247, 242, 236, 0.22);
+}
+
+.v2-marquee__track {
+  display: flex;
+  flex-shrink: 0;
+  gap: clamp(2rem, 5vw, 5rem);
+  padding-right: clamp(2rem, 5vw, 5rem);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .v2-marquee__track {
+    animation: v2-marquee 34s linear infinite;
+  }
+  .v2-marquee:hover .v2-marquee__track {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes v2-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* ==========================================================================
+   BOTONES
+   ========================================================================== */
 .v2-btn {
   display: inline-flex;
   align-items: center;
@@ -149,72 +333,19 @@
 
 @media (hover: hover) and (pointer: fine) {
   .v2-btn:hover {
-    background: var(--ink);
-    color: var(--t1);
+    background: var(--lume);
+    color: var(--void);
     transform: translateY(-2px);
   }
-  .v2-invert .v2-btn:hover {
-    background: var(--paper);
-    color: var(--t6);
-  }
 }
 
-.v2-btn--solid {
-  background: var(--ink);
-  color: var(--t1);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .v2-btn--solid:hover {
-    background: transparent;
-    color: var(--ink);
-  }
-}
-
-/* --- Revelado del wordmark --------------------------------------------- */
-/* Cada letra sube desde su máscara. Estado por defecto visible: si la
-   animación no corre, el wordmark está ahí igual. */
-/* El recorte tiene que dejar espacio ARRIBA además de abajo: el acento de la
-   È vive por encima de la altura de mayúscula y `overflow: hidden` se lo comía
-   —el wordmark se leía «LARRERE»—. El margen negativo compensa el relleno para
-   que la caja siga midiendo lo mismo. */
-.v2-mask {
-  display: inline-block;
-  overflow: hidden;
-  vertical-align: bottom;
-  padding-top: 0.22em;
-  margin-top: -0.22em;
-  padding-bottom: 0.1em;
-  margin-bottom: -0.1em;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .v2-mask > span {
-    display: inline-block;
-    animation: v2-rise 1s cubic-bezier(0.16, 1, 0.3, 1) both;
-    animation-delay: calc(var(--i, 0) * 65ms);
-  }
-}
-
-@keyframes v2-rise {
-  from {
-    transform: translateY(110%);
-  }
-  to {
-    transform: none;
-  }
-}
-
-
-/* --- CTA dentro de la v2 ------------------------------------------------ */
-/* El verde de marca de WhatsApp funciona sobre el sistema verde/beige de la
-   v1, pero sobre esta superficie de piel es el único elemento saturado y se
-   lee como pegado encima. Acá el botón toma la tinta de la página: el glifo
-   sigue identificando el canal sin romper la superficie. */
+/* El CTA de WhatsApp toma la luz de la página. El verde de marca es el único
+   elemento saturado posible acá y compite con el color de los fototipos, que
+   es lo que la página quiere que mires. */
 .v2 a[href*="wa.me"] {
-  background: var(--ink);
-  color: var(--t1);
-  border: 1.5px solid var(--ink);
+  background: var(--lume);
+  color: var(--void);
+  border: 1.5px solid var(--lume);
   min-height: 3.5rem;
   padding-inline: 2rem;
   font-size: 1.0625rem;
@@ -224,7 +355,39 @@
 @media (hover: hover) and (pointer: fine) {
   .v2 a[href*="wa.me"]:hover {
     background: transparent;
-    color: var(--ink);
+    color: var(--lume);
     transform: translateY(-2px);
+  }
+}
+
+/* ==========================================================================
+   REVELADO DEL WORDMARK
+   ========================================================================== */
+/* El recorte deja aire arriba: el acento de la È vive sobre la altura de
+   mayúscula y `overflow: hidden` se lo comía —se leía «LARRERE»—. */
+.v2-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-top: 0.24em;
+  margin-top: -0.24em;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .v2-mask > span {
+    display: inline-block;
+    animation: v2-rise 1.05s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--i, 0) * 60ms);
+  }
+}
+
+@keyframes v2-rise {
+  from {
+    transform: translateY(112%);
+  }
+  to {
+    transform: none;
   }
 }

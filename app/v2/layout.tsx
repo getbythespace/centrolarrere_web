@@ -39,10 +39,7 @@ export const metadata: Metadata = {
 
 export default function V2Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div
-      className={`v2 ${display.variable} ${serif.variable}`}
-      style={{ ["--font-v2-sans" as string]: "var(--font-v2-display)" }}
-    >
+    <div className={`v2 ${display.variable} ${serif.variable}`}>
       {children}
     </div>
   );

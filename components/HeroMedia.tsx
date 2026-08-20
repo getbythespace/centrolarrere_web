@@ -31,14 +31,27 @@ interface Props {
   alt: string;
   priority?: boolean;
   veil?: "medio" | "fuerte";
+  /** Familia de velo: verde de marca (v1) o neutro oscuro (v2). */
+  tone?: "pino" | "neutro";
 }
 
+/* Dos familias de velo: el verde pino de la v1 y el neutro casi-negro de la
+   v2. El velo tiñe toda la imagen, así que usar el verde en una página negra
+   dejaba el hero de otro color que el resto del sitio. */
 const VEILS = {
-  medio:
-    "linear-gradient(180deg, rgba(13,51,32,0.55) 0%, rgba(13,51,32,0.38) 40%, rgba(13,51,32,0.72) 100%)",
-  fuerte:
-    "linear-gradient(180deg, rgba(13,51,32,0.78) 0%, rgba(13,51,32,0.62) 38%, rgba(13,51,32,0.92) 100%)",
-};
+  pino: {
+    medio:
+      "linear-gradient(180deg, rgba(13,51,32,0.55) 0%, rgba(13,51,32,0.38) 40%, rgba(13,51,32,0.72) 100%)",
+    fuerte:
+      "linear-gradient(180deg, rgba(13,51,32,0.78) 0%, rgba(13,51,32,0.62) 38%, rgba(13,51,32,0.92) 100%)",
+  },
+  neutro: {
+    medio:
+      "linear-gradient(180deg, rgba(15,13,12,0.62) 0%, rgba(15,13,12,0.44) 40%, rgba(15,13,12,0.80) 100%)",
+    fuerte:
+      "linear-gradient(180deg, rgba(15,13,12,0.84) 0%, rgba(15,13,12,0.70) 38%, rgba(15,13,12,0.94) 100%)",
+  },
+} as const;
 
 export default function HeroMedia({
   video,
@@ -46,6 +59,7 @@ export default function HeroMedia({
   alt,
   priority = false,
   veil = "fuerte",
+  tone = "pino",
 }: Props) {
   const [showVideo, setShowVideo] = useState(false);
   const poster = video ? `/clinica/${video}-poster.jpg` : posterSrc!;
@@ -72,7 +86,7 @@ export default function HeroMedia({
   }, [video]);
 
   return (
-    <div className="absolute inset-0 overflow-hidden bg-pine">
+    <div className={`absolute inset-0 overflow-hidden ${tone === "neutro" ? "bg-[#0F0D0C]" : "bg-pine"}`}>
       <Image
         src={poster}
         alt={alt}
@@ -103,7 +117,7 @@ export default function HeroMedia({
       {/* El velo no es decorativo: sin él, el contraste del titular dependería
           del fotograma que esté pasando, que es lo único que no se puede
           garantizar en un video. */}
-      <div className="absolute inset-0" style={{ background: VEILS[veil] }} />
+      <div className="absolute inset-0" style={{ background: VEILS[tone][veil] }} />
       <div className="grain absolute inset-0" />
     </div>
   );

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { clinic } from "@/lib/clinic";
 import { waLink } from "@/lib/whatsapp";
+import { mostrarResultados } from "@/lib/flags";
 import { ToneRule } from "./ToneScale";
 
 /**
@@ -30,7 +31,9 @@ export default function Footer() {
             <ul className="mt-4 space-y-2.5 text-[0.9375rem]">
               {[
                 ["/servicios", "Tratamientos"],
-                ["/resultados", "Resultados"],
+                ...(mostrarResultados
+                  ? [["/resultados", "Resultados"]]
+                  : []),
                 ["/equipo", "Equipo"],
                 ["/agendar", "Agendar online"],
                 ["/contacto", "Contacto"],

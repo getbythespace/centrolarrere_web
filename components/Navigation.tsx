@@ -6,10 +6,13 @@ import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import WhatsAppCTA from "./WhatsAppCTA";
 import CampaignBar from "./CampaignBar";
+import { mostrarResultados } from "@/lib/flags";
 
 const LINKS = [
   { href: "/servicios", label: "Tratamientos" },
-  { href: "/resultados", label: "Resultados" },
+  ...(mostrarResultados
+    ? [{ href: "/resultados", label: "Resultados" }]
+    : []),
   { href: "/equipo", label: "Equipo" },
   { href: "/contacto", label: "Contacto" },
 ];

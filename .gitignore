@@ -53,3 +53,6 @@ logs
 # Temporary files
 *.tmp
 *.temp
+
+# directorios de compilación de un segundo `next dev` (ver distDir en next.config.mjs)
+/.next-*

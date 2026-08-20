@@ -380,14 +380,16 @@
   }
 }
 
-/* El indicador que viaja. Cuatro hijos, así que su ancho es 25% del interior. */
+/* El indicador que viaja. Su ancho sale de --n, el número de enlaces, que pone
+   el markup: cablearlo a cuatro significaba que ocultar un enlace —como
+   /resultados mientras no esté publicada— dejaba el indicador descuadrado. */
 .v2-pill::before {
   content: "";
   position: absolute;
   top: 0.3rem;
   bottom: 0.3rem;
   left: 0.3rem;
-  width: calc((100% - 0.6rem) / 4);
+  width: calc((100% - 0.6rem) / var(--n, 4));
   border-radius: 999px;
   background: var(--lume);
   opacity: 0;
@@ -411,6 +413,8 @@
 .v2-pill:has(> a:nth-child(2):hover)::before { opacity: 1; transform: translateX(100%); }
 .v2-pill:has(> a:nth-child(3):hover)::before { opacity: 1; transform: translateX(200%); }
 .v2-pill:has(> a:nth-child(4):hover)::before { opacity: 1; transform: translateX(300%); }
+.v2-pill:has(> a:nth-child(5):hover)::before { opacity: 1; transform: translateX(400%); }
+.v2-pill:has(> a:nth-child(6):hover)::before { opacity: 1; transform: translateX(500%); }
 
 .v2-pill > a:hover {
   color: var(--void);

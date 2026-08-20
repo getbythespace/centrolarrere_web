@@ -5,7 +5,6 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
 import StickyContactBar, { StickyCTASentinel } from "@/components/StickyContactBar";
-import BeforeAfter from "@/components/BeforeAfter";
 import ToneScale, { ToneRule } from "@/components/ToneScale";
 import HeroMedia from "@/components/HeroMedia";
 import LazyVideo from "@/components/LazyVideo";
@@ -15,7 +14,7 @@ import CampaignPacks from "@/components/CampaignPacks";
 import Autorizacion from "@/components/Autorizacion";
 import { clinic } from "@/lib/clinic";
 import { treatments } from "@/lib/treatments";
-import { showcaseCases } from "@/lib/cases";
+import { mostrarResultados } from "@/lib/flags";
 
 /**
  * La home está compuesta como una ficha clínica: campos con etiqueta mono,
@@ -339,64 +338,69 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ================= RESULTADOS ================= */}
-        <section className="surface-sand section">
-          <div className="shell">
-            <div className="flex flex-wrap items-end justify-between gap-6">
-              <div className="max-w-[46ch]">
-                <p className="field w-40">Resultados</p>
-                <h2 className="mt-6 text-display-md text-pine">
-                  Casos tratados acá
-                </h2>
-                {/* Se entinta palabra por palabra al entrar en pantalla. */}
-                <RevealText className="mt-5 text-[1.0625rem] leading-relaxed">
-                  Sólo casos propios, con consentimiento firmado y sin retoque.
-                  Cada uno indica tratamiento, fototipo y número de sesiones.
-                </RevealText>
-              </div>
-              <Link
-                href="/resultados"
-                className="mono link-grow group inline-flex items-center gap-2 pb-1 text-label uppercase text-pine"
-              >
-                Todos los casos
-                <ArrowRight
-                  className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
-                  aria-hidden="true"
-                />
-              </Link>
-            </div>
-
-            {/* Por qué hay pocos casos, dicho de frente. Es un argumento a
-                favor, no una excusa: la confidencialidad del paciente es
-                exactamente lo que alguien quiere de una clínica. */}
-            <div className="mt-10 grid gap-6 border border-rule md:grid-cols-3">
-              {[
-                {
-                  t: "Consentimiento firmado",
-                  d: "Sólo se publica lo que el paciente autorizó por escrito para uso publicitario.",
-                },
-                {
-                  t: "Zonas no identificables",
-                  d: "Uñas, manos y pies. No publicamos rostros ni cuero cabelludo, aunque haya autorización.",
-                },
-                {
-                  t: "Sin retoque",
-                  d: "Misma luz, mismo ángulo, misma distancia. Si el «después» está mejor iluminado, la comparación no vale.",
-                },
-              ].map((x, i) => (
-                <div
-                  key={x.t}
-                  className={`p-6 ${i > 0 ? "border-rule md:border-l" : ""} ${
-                    i > 0 ? "border-t md:border-t-0" : ""
-                  }`}
-                >
-                  <h3 className="text-[1.0625rem] font-semibold text-pine">{x.t}</h3>
-                  <p className="mt-2 text-[0.9375rem] leading-relaxed text-ink">{x.d}</p>
+        {/* ================= RESULTADOS =================
+            Va junto con /resultados: sin esa página, esto era un titular y una
+            política de confidencialidad cuyo único enlace daba 404. El
+            interruptor está en lib/flags.ts. */}
+        {mostrarResultados && (
+          <section className="surface-sand section">
+            <div className="shell">
+              <div className="flex flex-wrap items-end justify-between gap-6">
+                <div className="max-w-[46ch]">
+                  <p className="field w-40">Resultados</p>
+                  <h2 className="mt-6 text-display-md text-pine">
+                    Casos tratados acá
+                  </h2>
+                  {/* Se entinta palabra por palabra al entrar en pantalla. */}
+                  <RevealText className="mt-5 text-[1.0625rem] leading-relaxed">
+                    Sólo casos propios, con consentimiento firmado y sin retoque.
+                    Cada uno indica tratamiento, fototipo y número de sesiones.
+                  </RevealText>
                 </div>
-              ))}
+                <Link
+                  href="/resultados"
+                  className="mono link-grow group inline-flex items-center gap-2 pb-1 text-label uppercase text-pine"
+                >
+                  Todos los casos
+                  <ArrowRight
+                    className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </div>
+
+              {/* Por qué hay pocos casos, dicho de frente. Es un argumento a
+                  favor, no una excusa: la confidencialidad del paciente es
+                  exactamente lo que alguien quiere de una clínica. */}
+              <div className="mt-10 grid gap-6 border border-rule md:grid-cols-3">
+                {[
+                  {
+                    t: "Consentimiento firmado",
+                    d: "Sólo se publica lo que el paciente autorizó por escrito para uso publicitario.",
+                  },
+                  {
+                    t: "Zonas no identificables",
+                    d: "Uñas, manos y pies. No publicamos rostros ni cuero cabelludo, aunque haya autorización.",
+                  },
+                  {
+                    t: "Sin retoque",
+                    d: "Misma luz, mismo ángulo, misma distancia. Si el «después» está mejor iluminado, la comparación no vale.",
+                  },
+                ].map((x, i) => (
+                  <div
+                    key={x.t}
+                    className={`p-6 ${i > 0 ? "border-rule md:border-l" : ""} ${
+                      i > 0 ? "border-t md:border-t-0" : ""
+                    }`}
+                  >
+                    <h3 className="text-[1.0625rem] font-semibold text-pine">{x.t}</h3>
+                    <p className="mt-2 text-[0.9375rem] leading-relaxed text-ink">{x.d}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* Respaldo verificable, antes del cierre: es lo último que decide a
             alguien que llegó desde un anuncio. */}

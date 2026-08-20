@@ -1,5 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Dos `next dev` sobre el mismo proyecto se pisan: comparten .next y por lo
+  // tanto los manifiestos de rutas y las hojas compiladas. En la práctica una
+  // ruta que funcionaba empieza a responder 404 sola, o el servidor sirve un
+  // CSS de otra compilación. Con esto el segundo puerto arranca así:
+  //   NEXT_DIST_DIR=.next-v2 npx next dev -p 3001
+  distDir: process.env.NEXT_DIST_DIR || '.next',
+
   images: {
     remotePatterns: [
       {

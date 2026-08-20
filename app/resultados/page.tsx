@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import StickyContactBar, { StickyCTASentinel } from "@/components/StickyContactBar";
@@ -8,6 +9,7 @@ import HeroMedia from "@/components/HeroMedia";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
 import { showcaseCases } from "@/lib/cases";
 import { treatments } from "@/lib/treatments";
+import { mostrarResultados } from "@/lib/flags";
 
 /** Tratamientos con ilustración de la condición cargada. */
 const conditions = treatments.filter((t) => t.conditionImage);
@@ -17,9 +19,16 @@ export const metadata: Metadata = {
   description:
     "Casos tratados en la clínica: rosácea, acné, telangiectasias y tratamientos capilares. Fotos propias, con consentimiento y sin retoque.",
   alternates: { canonical: "/resultados" },
+  // Mientras no se publique, tampoco se indexa: si alguien llegara a la URL por
+  // un enlace viejo, no queremos que quede en el buscador.
+  robots: { index: false, follow: false },
 };
 
 export default function ResultadosPage() {
+  // Se puede revisar en local; en producción no existe hasta que haya casos
+  // reales. El interruptor vive en lib/flags.ts junto con su justificación.
+  if (!mostrarResultados) notFound();
+
   return (
     <>
       <Navigation />

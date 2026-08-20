@@ -5,6 +5,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import StickyContactBar, { StickyCTASentinel } from "@/components/StickyContactBar";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
+import { mostrarResultados } from "@/lib/flags";
 
 export const metadata: Metadata = {
   title: "Opiniones",
@@ -99,26 +100,30 @@ export default function TestimoniosPage() {
           </div>
         </section>
 
-        <section className="section-tight border-t border-rule/50 bg-paper">
-          <div className="shell-narrow text-center">
-            <h2 className="text-display-sm text-pine">
-              Mientras tanto, mira los casos
-            </h2>
-            <p className="mx-auto mt-3 max-w-prose text-[1.0625rem] leading-relaxed text-ink">
-              Los antes y después son de la clínica, con consentimiento y sin
-              retoque.
-            </p>
-            <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Link
-                href="/resultados"
-                className="inline-flex min-h-[44px] items-center justify-center rounded-md border border-rule px-6 py-3.5 text-base font-semibold text-pine transition-colors hover:bg-sand"
-              >
-                Ver resultados
-              </Link>
-              <WhatsAppCTA context={{ kind: "general" }} size="lg" />
+        {/* Apunta a /resultados, así que se apaga con ella. */}
+        {mostrarResultados && (
+          <section className="section-tight border-t border-rule/50 bg-paper">
+            <div className="shell-narrow text-center">
+              <h2 className="text-display-sm text-pine">
+                Mientras tanto, mira los casos
+              </h2>
+              <p className="mx-auto mt-3 max-w-prose text-[1.0625rem] leading-relaxed text-ink">
+                Los antes y después son de la clínica, con consentimiento y sin
+                retoque.
+              </p>
+              <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <Link
+                  href="/resultados"
+                  className="inline-flex min-h-[44px] items-center justify-center rounded-md border border-rule px-6 py-3.5 text-base font-semibold text-pine transition-colors hover:bg-sand"
+                >
+                  Ver resultados
+                </Link>
+                <WhatsAppCTA context={{ kind: "general" }} size="lg" />
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
+
       </main>
 
       <Footer />

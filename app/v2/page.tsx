@@ -6,6 +6,7 @@ import HeroMedia from "@/components/HeroMedia";
 import { clinic, clp } from "@/lib/clinic";
 import { treatments } from "@/lib/treatments";
 import { showcaseCases } from "@/lib/cases";
+import { mostrarResultados } from "@/lib/flags";
 
 /**
  * v2 — «Cámara oscura».
@@ -23,6 +24,15 @@ import { showcaseCases } from "@/lib/cases";
  *   único momento en que la página se llena, y por eso pesa.
  * - Cinta de tipo enorme, no de etiquetas chicas.
  */
+
+const ENLACES: Array<[string, string]> = [
+  ["/servicios", "Tratamientos"],
+  ...(mostrarResultados
+    ? ([["/resultados", "Resultados"]] as Array<[string, string]>)
+    : []),
+  ["/equipo", "Equipo"],
+  ["/contacto", "Contacto"],
+];
 
 const LETRAS = ["L", "A", "R", "R", "È", "R", "E"];
 
@@ -61,14 +71,14 @@ export default function V2Page() {
 
         <div className="v2-shell v2-scrim v2-scrim--fila relative z-10 flex items-center justify-between">
           <span className="v2-label v2-loc">Chillán · Ñuble</span>
-          {/* Píldora con indicador que se desliza al pasar el cursor. */}
-          <nav className="v2-pill" aria-label="Principal">
-            {[
-              ["/servicios", "Tratamientos"],
-              ["/resultados", "Resultados"],
-              ["/equipo", "Equipo"],
-              ["/contacto", "Contacto"],
-            ].map(([href, label]) => (
+          {/* Píldora con indicador que se desliza al pasar el cursor. --n le
+              dice al CSS cuántos enlaces hay para que el indicador mida bien. */}
+          <nav
+            className="v2-pill"
+            aria-label="Principal"
+            style={{ ["--n" as string]: ENLACES.length }}
+          >
+            {ENLACES.map(([href, label]) => (
               <Link key={href} href={href} className="v2-label">
                 {label}
               </Link>

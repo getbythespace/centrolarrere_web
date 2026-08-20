@@ -3,6 +3,7 @@ import Image from "next/image";
 import HeroMedia from "@/components/HeroMedia";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
 import V2Nav from "@/components/v2/V2Nav";
+import V2Volver from "@/components/v2/V2Volver";
 import V2Cierre from "@/components/v2/V2Cierre";
 import { clinic } from "@/lib/clinic";
 
@@ -64,6 +65,7 @@ export default function V2EquipoPage() {
           tone="neutro"
           priority
         />
+        <V2Volver />
         <V2Nav />
         <div className="v2-shell relative z-10">
           <p className="v2-label v2-dim">Equipo</p>

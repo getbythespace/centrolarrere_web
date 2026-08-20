@@ -808,3 +808,54 @@
 .v2-enlace:focus-visible::after {
   transform: scaleX(1);
 }
+
+/* ==========================================================================
+   VUELTA AL INICIO
+   --------------------------------------------------------------------------
+   Mismo fondo opaco y misma altura que el menú, para que los dos se lean como
+   un set flotando sobre las superficies. Opaco por lo mismo que la barra: con
+   fondo traslúcido los titulares claros se transparentan por dentro.
+   ========================================================================== */
+.v2-volver {
+  position: fixed;
+  top: 1.15rem;
+  left: clamp(1rem, 3.5vw, 2.5rem);
+  z-index: 60;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.35rem;
+  border-radius: 999px;
+  border: 1px solid rgba(236, 223, 205, 0.26);
+  background: var(--void-2);
+  color: var(--lume);
+  box-shadow: 0 0.75rem 2rem rgba(16, 13, 10, 0.45);
+  transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.24s ease, color 0.24s ease;
+}
+
+/* La flecha se corre al pasar el cursor: dice hacia dónde lleva sin agregar
+   texto. */
+.v2-volver > span:first-child {
+  transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .v2-volver:hover {
+    background: var(--lume);
+    color: var(--void);
+  }
+
+  .v2-volver:hover > span:first-child {
+    transform: translateX(-0.25rem);
+  }
+}
+
+/* Bajo 900px el menú se oculta y este queda como único camino de vuelta, así
+   que se aprieta en vez de desaparecer. */
+@media (max-width: 899px) {
+  .v2-volver {
+    padding: 0.7rem 1rem;
+    font-size: 0.8125rem;
+  }
+}

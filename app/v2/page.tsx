@@ -237,6 +237,41 @@ export default function V2Page() {
               </li>
             ))}
           </ul>
+
+          {/* ══ Sello del SEREMI ══
+              Chico y al pie de las ventajas, no como sección propia: acompaña a
+              «Autorización sanitaria», que es la primera fila de la lista.
+
+              OJO: el archivo que hay hoy dice «SEREMI Región Metropolitana» y la
+              clínica está en Ñuble. El texto de al lado no afirma nada sobre la
+              región por eso mismo. Cuando llegue la foto de la resolución de
+              Ñuble con su número, se cambia el src y la bajada pasa a decir el
+              número, que es el dato que de verdad se puede verificar. */}
+          <div className="mt-12 flex flex-wrap items-center gap-6">
+            <div
+              className="relative h-[4.5rem] w-[4.5rem] flex-none border"
+              style={{ borderColor: "var(--hair)" }}
+            >
+              <Image
+                src="/clinica/SEREMISALUDMET.png"
+                alt="Ministerio de Salud de Chile · SEREMI de Salud"
+                fill
+                className="object-contain p-1.5"
+                sizes="4.5rem"
+              />
+            </div>
+            <div className="max-w-[46ch]">
+              <p className="v2-label">Autorización sanitaria vigente</p>
+              <p className="v2-body v2-dim mt-1.5 text-[0.875rem] leading-relaxed">
+                La clínica opera bajo autorización de la SEREMI de Salud.
+                [PENDIENTE: nº de resolución y foto del documento de Ñuble.]{" "}
+                <Link href="/v2/equipo#credenciales" className="v2-enlace">
+                  Ver credenciales
+                </Link>
+              </p>
+            </div>
+          </div>
+
         </div>
       </section>
 

@@ -37,15 +37,6 @@ const PISTA = [
   "test-prick-completo",
 ];
 
-const FOTOTIPOS = [
-  { r: "I", v: "var(--t1)", ink: "var(--void)" },
-  { r: "II", v: "var(--t2)", ink: "var(--void)" },
-  { r: "III", v: "var(--t3)", ink: "var(--void)" },
-  { r: "IV", v: "var(--t4)", ink: "var(--void)" },
-  { r: "V", v: "var(--t5)", ink: "var(--lume)" },
-  { r: "VI", v: "var(--t6)", ink: "var(--lume)" },
-];
-
 export default function V2Page() {
   const foco = treatments.find((t) => t.id === "onicomicosis-plantar")!;
   const caso = showcaseCases[0];
@@ -63,51 +54,55 @@ export default function V2Page() {
         <HeroMedia
           video="procedimiento"
           alt="Procedimiento con láser realizado en la clínica"
-          veil="fuerte"
+          veil="medio"
           tone="neutro"
           priority
         />
 
-        <div className="v2-shell relative z-10 flex items-center justify-between">
-          <span className="v2-label">Chillán · Ñuble</span>
-          <nav className="hidden gap-7 sm:flex">
+        <div className="v2-shell v2-scrim v2-scrim--fila relative z-10 flex items-center justify-between">
+          <span className="v2-label v2-loc">Chillán · Ñuble</span>
+          {/* Píldora con indicador que se desliza al pasar el cursor. */}
+          <nav className="v2-pill" aria-label="Principal">
             {[
               ["/servicios", "Tratamientos"],
               ["/resultados", "Resultados"],
               ["/equipo", "Equipo"],
               ["/contacto", "Contacto"],
             ].map(([href, label]) => (
-              <Link
-                key={href}
-                href={href}
-                className="v2-label transition-opacity hover:opacity-60"
-              >
+              <Link key={href} href={href} className="v2-label">
                 {label}
               </Link>
             ))}
           </nav>
         </div>
 
-        <div className="v2-shell relative z-10">
-          <h1 className="v2-wordmark" aria-label="LARRÈRE">
+        <div className="v2-shell v2-scrim v2-scrim--marca relative z-10">
+          <h1 className="v2-wordmark" aria-label="LARRÈRE · Centro de salud y estética">
             {LETRAS.map((l, i) => (
               <span key={i} className="v2-mask" aria-hidden="true">
                 <span style={{ ["--i" as string]: i }}>{l}</span>
               </span>
             ))}
           </h1>
+          <p
+            className="v2-label v2-bajada mt-4"
+            aria-hidden="true"
+          >
+            Centro de salud y estética
+          </p>
         </div>
 
-        <div className="v2-shell relative z-10">
+        <div className="v2-shell v2-scrim v2-scrim--fila relative z-10">
           <div className="v2-rule" />
           <div className="mt-6 flex flex-col gap-7 md:flex-row md:items-end md:justify-between">
             <p className="v2-lead max-w-[26ch]">
               La piel se trata <span className="v2-serif">con criterio clínico</span>
             </p>
             <div className="flex flex-col items-start gap-5 md:items-end">
-              <p className="v2-label opacity-70 md:text-right">
-                Evaluación médica previa · Enfermería titulada
-              </p>
+              {/* El sello reemplaza a «evaluación médica previa · enfermería
+                  titulada»: eso ya se dice en el resto del sitio, y este es el
+                  único lugar donde algo tiene fecha de vencimiento. */}
+              <p className="v2-oferta">Evaluación gratuita por tiempo limitado</p>
               <WhatsAppCTA context={{ kind: "evaluation" }} size="lg" />
             </div>
           </div>
@@ -129,56 +124,51 @@ export default function V2Page() {
         ))}
       </div>
 
-      {/* ══════════ 3 · LA TESIS ══════════ */}
-      <section className="v2-grain relative py-[clamp(5rem,12vw,9rem)]">
+      {/* ══════════ 3 · LO QUE OTROS DERIVAN ══════════
+          Reemplaza a la tesis sobre calibración por fototipo: era un argumento
+          técnico que no le habla a quien busca. Este sí es concreto y
+          verificable — son las condiciones que un centro de estética rechaza.
+          Sin etiqueta arriba: el titular ya nombra la sección. */}
+      <section className="v2-overlap v2-grain relative py-[clamp(4rem,10vw,8rem)]">
         <div className="v2-shell relative z-[2]">
-          <p className="v2-label opacity-60">La tesis</p>
-          <h2 className="v2-display mt-8 max-w-[17ch]">
-            El mismo láser <span className="v2-serif">no sirve</span> para toda la
-            piel.
+          <h2 className="v2-display max-w-[18ch]">
+            Un centro de estética <span className="v2-serif">te dice que no</span>.
           </h2>
-          <div className="v2-rule mt-12" />
-          <div className="mt-8 grid gap-8 md:grid-cols-2 md:gap-16">
-            <p className="v2-body max-w-[46ch]">
-              Un fototipo II y un fototipo V absorben la energía de forma
-              distinta. Aplicar el mismo parámetro a los dos es la causa más
-              común de quemadura y de manchas post-tratamiento.
-            </p>
-            <p className="v2-body max-w-[46ch] opacity-70">
-              Por eso acá la consulta empieza determinando tu fototipo, y no
-              mostrándote un equipo. Es la diferencia entre un procedimiento
-              médico y una sesión de belleza.
-            </p>
-          </div>
-        </div>
-      </section>
 
-      {/* ══════════ 4 · ESCALA A PANTALLA COMPLETA ══════════
-          Seis columnas de color, altura completa. El único momento en que la
-          página se llena de color. */}
-      <section aria-labelledby="escala-t">
-        <h2 id="escala-t" className="sr-only">
-          Escala de fototipos de Fitzpatrick
-        </h2>
-        <div className="v2-scale">
-          {FOTOTIPOS.map((f, i) => (
-            <div
-              key={f.r}
-              style={{
-                background: f.v,
-                color: f.ink,
-                ["--c" as string]: i,
-              }}
-            >
-              <span className="v2-display text-[clamp(1.25rem,3.5vw,3.5rem)]">
-                {f.r}
-              </span>
-            </div>
-          ))}
-        </div>
-        <div className="v2-shell py-6">
-          <p className="v2-label opacity-60">
-            Seis fototipos · seis calibraciones distintas del equipo
+          <p className="v2-lead mt-9 max-w-[44ch] opacity-80">
+            No por mala voluntad: son condiciones que necesitan diagnóstico
+            médico antes de tocarlas.
+          </p>
+
+          <div className="v2-rule mt-12" />
+
+          <ul>
+            {[
+              ["Onicomicosis", "Derivan a dermatología"],
+              ["Rosácea y lesiones vasculares", "No tienen láser vascular"],
+              ["Vitíligo", "No lo abordan"],
+              ["Acrocordones", "Requiere procedimiento médico"],
+              ["Acné en tratamiento con medicación", "Evitan la piel medicada"],
+              ["Alergias sin diagnóstico", "No las estudian"],
+            ].map(([cond, otros], i) => (
+              <li key={cond}>
+                <div
+                  className={`flex flex-wrap items-baseline justify-between gap-x-8 gap-y-1 py-5 ${
+                    i % 2 === 0 ? "v2-from-l" : "v2-from-r"
+                  }`}
+                >
+                  <span className="text-[clamp(1.25rem,2.4vw,2rem)] font-bold leading-tight">
+                    {cond}
+                  </span>
+                  <span className="v2-label opacity-55">{otros}</span>
+                </div>
+                <div className="v2-rule" />
+              </li>
+            ))}
+          </ul>
+
+          <p className="v2-lead mt-10 max-w-[40ch]" style={{ color: "var(--sage)" }}>
+            Acá se tratan todas.
           </p>
         </div>
       </section>
@@ -186,9 +176,11 @@ export default function V2Page() {
       {/* ══════════ 5 · PISTA HORIZONTAL ══════════
           La sección se fija y los tratamientos corren de lado. En móvil se
           arrastra con el dedo. */}
-      <section className="v2-track-outer" aria-labelledby="pista-t">
-        <div className="v2-track-pin">
-          <div className="w-full">
+      <section className="v2-track-outer v2-plano" aria-labelledby="pista-t">
+        {/* `items-start` + padding: antes el pin centraba el bloque completo y
+            el título quedaba muy abajo respecto de las tarjetas. */}
+        <div className="v2-track-pin" style={{ alignItems: "flex-start" }}>
+          <div className="w-full pt-[clamp(4rem,9vh,7rem)]">
             <div className="v2-shell mb-8 flex flex-wrap items-baseline justify-between gap-4">
               <h2 id="pista-t" className="v2-display text-[clamp(2rem,4.5vw,3.5rem)]">
                 Lo que tratamos
@@ -247,7 +239,7 @@ export default function V2Page() {
       </section>
 
       {/* ══════════ 6 · FOCO DEL MES ══════════ */}
-      <section className="v2-grain relative py-[clamp(5rem,12vw,9rem)]">
+      <section className="v2-overlap v2-grain relative py-[clamp(5rem,12vw,9rem)]">
         <div className="v2-shell relative z-[2]">
           <div className="flex flex-wrap items-baseline justify-between gap-4">
             <p className="v2-label opacity-60">Agosto · Foco del mes</p>

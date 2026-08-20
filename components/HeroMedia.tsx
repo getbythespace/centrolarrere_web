@@ -45,11 +45,15 @@ const VEILS = {
     fuerte:
       "linear-gradient(180deg, rgba(13,51,32,0.78) 0%, rgba(13,51,32,0.62) 38%, rgba(13,51,32,0.92) 100%)",
   },
+  // El velo "neutro" es el de /v2 y usa el mismo taupe que la superficie
+  // (--void #2E2822). Antes era negro puro, que era justo lo que había que
+  // dejar atrás: el video quedaba apagado y el corte contra la sección de
+  // abajo se notaba.
   neutro: {
     medio:
-      "linear-gradient(180deg, rgba(15,13,12,0.62) 0%, rgba(15,13,12,0.44) 40%, rgba(15,13,12,0.80) 100%)",
+      "linear-gradient(180deg, rgba(46,40,34,0.58) 0%, rgba(46,40,34,0.40) 42%, rgba(46,40,34,0.78) 100%)",
     fuerte:
-      "linear-gradient(180deg, rgba(15,13,12,0.84) 0%, rgba(15,13,12,0.70) 38%, rgba(15,13,12,0.94) 100%)",
+      "linear-gradient(180deg, rgba(46,40,34,0.80) 0%, rgba(46,40,34,0.66) 38%, rgba(46,40,34,0.93) 100%)",
   },
 } as const;
 

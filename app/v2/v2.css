@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LARRÈRE v2 — «Cámara oscura»
+   LARRÈRE v2 — «Cámara oscura», paleta pastel
    --------------------------------------------------------------------------
    Corrección de rumbo. La versión anterior copió el vacío de Neue Montreal sin
    copiar lo que lo sostiene: allá el vacío funciona porque un rojo saturado
@@ -10,30 +10,32 @@
    #1C1C1C). No es casualidad: sobre negro, una sola imagen y un solo color
    bastan para que la página se sienta compuesta.
 
-   Lo que cambia respecto de la v2 anterior:
-   - Superficie casi-negra comprometida en vez de beige timido.
-   - Imagen y video a sangre desde el primer pantallazo.
-   - Los fototipos pasan de ser el fondo a ser el ÚNICO color de la página.
-   - Coreografía de scroll real: pista horizontal, momentos fijados, escala.
+   El negro puro se cambia por un taupe hondo: sigue siendo superficie oscura
+   comprometida —que es lo que hace que una imagen y un color basten— pero
+   cálida en vez de fría.
+
+   Todo medido contra la superficie #2E2822:
+   - Tinta #ECDFCD, de la paleta entregada: 11.09:1 (AAA).
+   - Acentos que sirven: #BAB78C (7.10), #C2A88F (6.44), #BE8C6B (4.96).
+   - Acentos que NO: #686961 (2.62) y #604A33 (1.75) quedan demasiado cerca del
+     fondo y desaparecen. Se descartan aunque vengan en la paleta.
+   - Verde de oferta #B9E08A: 9.77 (AAA).
    ========================================================================== */
 
 .v2 {
   /* --- Superficie --- */
-  --void: #0f0d0c;
-  --void-2: #171412;
-  --void-3: #211d1a;
+  --void: #2e2822;
+  --void-2: #38312a;
+  --void-3: #443c33;
 
   /* --- Tinta --- */
-  --lume: #f7f2ec; /* 17.8:1 sobre --void */
-  --lume-60: #a39c94;
+  --lume: #ecdfcd; /* 11.09:1 sobre --void */
 
-  /* --- Fototipos: el único color del sitio --- */
-  --t1: #f7e9df;
-  --t2: #f0d9c6;
-  --t3: #e3bfa3;
-  --t4: #c99a76;
-  --t5: #a2734f;
-  --t6: #6b4831;
+  /* --- Acentos verificados sobre la superficie --- */
+  --sage: #bab78c; /* 7.10:1 */
+  --tan: #c2a88f; /* 6.44:1 */
+  --clay: #be8c6b; /* 4.96:1 */
+  --verde: #b9e08a; /* 9.77:1 — sólo para la oferta con plazo */
 
   background: var(--void);
   color: var(--lume);
@@ -48,7 +50,7 @@
   inset: 0;
   pointer-events: none;
   z-index: 1;
-  opacity: 0.16;
+  opacity: 0.14;
   mix-blend-mode: screen;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
 }
@@ -105,10 +107,12 @@
   white-space: nowrap;
 }
 
+/* Subida de 13px a 17px: a tamaño anterior se perdía, y es la que nombra cada
+   sección y la ubicación. */
 .v2-label {
-  font-size: clamp(0.8125rem, 0.95vw, 0.9375rem);
-  font-weight: 500;
-  letter-spacing: 0.15em;
+  font-size: clamp(0.875rem, 1.05vw, 1.0625rem);
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
@@ -219,47 +223,6 @@
 }
 
 /* ==========================================================================
-   ESCALA DE FOTOTIPOS A PANTALLA COMPLETA
-   --------------------------------------------------------------------------
-   Los seis tonos como seis columnas de altura completa. Es el único momento en
-   que la página se llena de color, y por eso pesa.
-   ========================================================================== */
-.v2-scale {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  height: 100vh;
-}
-
-.v2-scale > div {
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  padding: clamp(1rem, 2vw, 2rem);
-  transition: flex 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Cada columna crece al pasar el puntero. En touch se quedan iguales. */
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .v2-scale > div {
-      animation: v2-col-rise linear both;
-      animation-timeline: view();
-      animation-range: entry 0% entry 70%;
-      animation-delay: calc(var(--c) * -0.06s);
-    }
-  }
-}
-
-@keyframes v2-col-rise {
-  from {
-    transform: translateY(9%);
-  }
-  to {
-    transform: none;
-  }
-}
-
-/* ==========================================================================
    CIFRA QUE CRECE AL ENTRAR
    ========================================================================== */
 @supports (animation-timeline: view()) {
@@ -287,7 +250,7 @@
 .v2-marquee {
   display: flex;
   overflow: hidden;
-  border-block: 1px solid rgba(247, 242, 236, 0.22);
+  border-block: 1px solid rgba(236, 223, 205, 0.2);
 }
 
 .v2-marquee__track {
@@ -391,3 +354,247 @@
     transform: none;
   }
 }
+
+/* ==========================================================================
+   NAVEGACIÓN EN PÍLDORA
+   --------------------------------------------------------------------------
+   Con indicador que se desliza de un enlace a otro al pasar el cursor, como en
+   la referencia. Se resuelve con `:has()`: la píldora detecta cuál de sus
+   cuatro hijos está en hover y mueve el indicador con una transición larga.
+   Cero JavaScript.
+   ========================================================================== */
+.v2-pill {
+  position: relative;
+  display: none;
+  align-items: center;
+  padding: 0.3rem;
+  border-radius: 999px;
+  border: 1px solid rgba(236, 223, 205, 0.22);
+  background: rgba(236, 223, 205, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+@media (min-width: 900px) {
+  .v2-pill {
+    display: inline-flex;
+  }
+}
+
+/* El indicador que viaja. Cuatro hijos, así que su ancho es 25% del interior. */
+.v2-pill::before {
+  content: "";
+  position: absolute;
+  top: 0.3rem;
+  bottom: 0.3rem;
+  left: 0.3rem;
+  width: calc((100% - 0.6rem) / 4);
+  border-radius: 999px;
+  background: var(--lume);
+  opacity: 0;
+  transform: translateX(0);
+  transition: transform 0.44s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.v2-pill > a {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 0;
+  text-align: center;
+  padding: 0.55rem 1.15rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  transition: color 0.28s ease;
+}
+
+.v2-pill:has(> a:nth-child(1):hover)::before { opacity: 1; transform: translateX(0%); }
+.v2-pill:has(> a:nth-child(2):hover)::before { opacity: 1; transform: translateX(100%); }
+.v2-pill:has(> a:nth-child(3):hover)::before { opacity: 1; transform: translateX(200%); }
+.v2-pill:has(> a:nth-child(4):hover)::before { opacity: 1; transform: translateX(300%); }
+
+.v2-pill > a:hover {
+  color: var(--void);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-pill::before {
+    transition: opacity 0.15s ease;
+  }
+}
+
+/* ==========================================================================
+   SECCIONES QUE SE SOBREPONEN AL SCROLLEAR
+   --------------------------------------------------------------------------
+   Cada sección se fija arriba y la siguiente la va tapando a medida que subes,
+   en paralelo a la dirección del scroll. Sale de `position: sticky` más un
+   fondo opaco: sin JavaScript y sin transformaciones que puedan dejar
+   contenido a medio camino.
+
+   La entrada alterna de lado para que las apariciones no sean todas iguales.
+   Esa parte sí es animación, así que parte de una posición desplazada y NUNCA
+   de opacidad cero: si la línea de tiempo no avanza, el bloque está ahí,
+   apenas corrido.
+   ========================================================================== */
+.v2-overlap {
+  position: relative;
+  background: var(--void);
+}
+
+/* Cada sección monta sobre la anterior: sube unos rem, se redondea arriba y
+   proyecta sombra hacia atrás. Eso da el traslape en la misma dirección del
+   scroll sin fijar nada.
+
+   La primera versión usaba `position: sticky` y estaba mal: una sección más
+   alta que la ventana nunca termina de fijarse, así que la siguiente se le
+   montaba encima mientras su texto seguía visible y los dos titulares se
+   leían uno sobre otro. Acá la altura da lo mismo. */
+.v2-overlap + .v2-overlap,
+.v2-overlap + .v2-plano,
+.v2-plano + .v2-overlap {
+  margin-top: -3rem;
+  border-top-left-radius: 2.5rem;
+  border-top-right-radius: 2.5rem;
+  box-shadow: 0 -1.5rem 3.5rem rgba(20, 16, 12, 0.55);
+}
+
+/* Las secciones que siguen a una que monta también necesitan fondo propio: si
+   son transparentes se ve a través de ellas la que quedó abajo. */
+.v2-plano {
+  position: relative;
+  background: var(--void);
+}
+
+.v2-overlap:first-of-type {
+  z-index: 1;
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 768px) {
+    .v2-from-l,
+    .v2-from-r {
+      animation: v2-in linear both;
+      animation-timeline: view();
+      animation-range: entry 8% entry 62%;
+    }
+    .v2-from-l { --dx: -4vw; }
+    .v2-from-r { --dx: 4vw; }
+  }
+}
+
+@keyframes v2-in {
+  from {
+    transform: translate(var(--dx, 0), 2.25rem);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* ==========================================================================
+   SELLO DE OFERTA CON PLAZO
+   --------------------------------------------------------------------------
+   Lo único verde del sitio. El punto pulsa para señalar que tiene fecha de
+   vencimiento; se detiene con prefers-reduced-motion.
+   ========================================================================== */
+.v2-oferta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--verde);
+  font-weight: 700;
+  font-size: clamp(0.9375rem, 1.3vw, 1.25rem);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.v2-oferta::before {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: var(--verde);
+  flex: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .v2-oferta::before {
+    animation: v2-pulse 2.4s ease-in-out infinite;
+  }
+}
+
+@keyframes v2-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* Estas dos heredan de .v2-label pero suben de cuerpo. Van acá y no como
+   utilidad `text-[...]` de Tailwind: .v2-label es CSS plano y las utilidades
+   viven en @layer, así que la capa pierde por especificidad de cascada y la
+   clase de Tailwind no tenía ningún efecto. */
+.v2-loc {
+  font-size: clamp(1rem, 1.45vw, 1.375rem);
+}
+
+.v2-bajada {
+  font-size: clamp(1rem, 1.7vw, 1.625rem);
+  opacity: 0.82;
+}
+
+/* ==========================================================================
+   FRANJAS DE CONTRASTE DEL HERO
+   --------------------------------------------------------------------------
+   El velo del video se bajó porque lavaba la imagen, y al bajarlo el texto
+   claro dejó de cumplir AA sobre los fotogramas brillantes (medido: el
+   wordmark caía a 1.8:1).
+
+   Oscurecer el velo entero devolvería el lavado. En vez de eso, cada fila de
+   texto arrastra su propia franja: sangra a todo el ancho y se desvanece
+   arriba y abajo, así que el video queda claro en los espacios ENTRE filas
+   —que es justo donde está la parte interesante del plano— y oscuro solo
+   bajo las letras.
+
+   Los alfas de acá abajo están calibrados contra el píxel más claro del
+   video, no elegidos a ojo.
+   ========================================================================== */
+.v2-scrim {
+  position: relative;
+  isolation: auto;
+}
+
+.v2-scrim::before {
+  content: "";
+  position: absolute;
+  top: calc(var(--pad, 2.5rem) * -1);
+  bottom: calc(var(--pad, 2.5rem) * -1);
+  left: -50vw;
+  right: -50vw;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(46, 40, 34, 0) 0%,
+    rgba(46, 40, 34, calc(var(--a, 0.6) * 0.04)) 4%,
+    rgba(46, 40, 34, calc(var(--a, 0.6) * 0.14)) 8%,
+    rgba(46, 40, 34, calc(var(--a, 0.6) * 0.3)) 12%,
+    rgba(46, 40, 34, calc(var(--a, 0.6) * 0.52)) 16%,
+    rgba(46, 40, 34, calc(var(--a, 0.6) * 0.74)) 20%,
+    rgba(46, 40, 34, calc(var(--a, 0.6) * 0.9)) 24%,
+    rgba(46, 40, 34, calc(var(--a, 0.6) * 0.98)) 28%,
+    rgba(46, 40, 34, var(--a, 0.6)) 34%,
+    rgba(46, 40, 34, var(--a, 0.6)) 66%,
+    rgba(46, 40, 34, calc(var(--a, 0.6) * 0.98)) 72%,
+    rgba(46, 40, 34, calc(var(--a, 0.6) * 0.9)) 76%,
+    rgba(46, 40, 34, calc(var(--a, 0.6) * 0.74)) 80%,
+    rgba(46, 40, 34, calc(var(--a, 0.6) * 0.52)) 84%,
+    rgba(46, 40, 34, calc(var(--a, 0.6) * 0.3)) 88%,
+    rgba(46, 40, 34, calc(var(--a, 0.6) * 0.14)) 92%,
+    rgba(46, 40, 34, calc(var(--a, 0.6) * 0.04)) 96%,
+    rgba(46, 40, 34, 0) 100%
+  );
+}
+
+/* La fila del wordmark: texto grande, le basta 3:1. */
+.v2-scrim--marca { --a: 0.66; --pad: 9rem; }
+
+/* Filas de texto chico: 4.5:1, así que piden más cuerpo. */
+.v2-scrim--fila { --a: 0.7; --pad: 6rem; }

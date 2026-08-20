@@ -7,6 +7,7 @@ import { clinic, clp } from "@/lib/clinic";
 import { treatments } from "@/lib/treatments";
 import { showcaseCases } from "@/lib/cases";
 import { mostrarResultados } from "@/lib/flags";
+import { campaign } from "@/lib/campaign";
 
 /**
  * v2 — «Cámara oscura».
@@ -24,6 +25,80 @@ import { mostrarResultados } from "@/lib/flags";
  *   único momento en que la página se llena, y por eso pesa.
  * - Cinta de tipo enorme, no de etiquetas chicas.
  */
+
+/**
+ * Las ventajas de atenderse acá. Cada una corresponde a algo que ya está
+ * publicado en el sitio o guardado en lib/clinic.ts — ninguna es nueva.
+ *
+ * Quedaron fuera «ubicación central» y «equipos modernos»: la dirección y el
+ * registro de los equipos siguen siendo placeholders, así que hoy no hay con
+ * qué respaldarlas.
+ */
+const VENTAJAS: Array<{ titulo: string; detalle: string; color: string }> = [
+  {
+    titulo: "Autorización sanitaria",
+    detalle: "Resolución SEREMI a la vista",
+    color: "var(--lume)",
+  },
+  {
+    titulo: "Enfermería titulada",
+    detalle: "En cada procedimiento",
+    color: "var(--sage)",
+  },
+  {
+    titulo: "Evaluación antes de tratar",
+    detalle: "Ningún tratamiento parte sin ella",
+    color: "var(--tan)",
+  },
+  {
+    titulo: "Más de 7 años en láser",
+    detalle: "A cargo de los tratamientos",
+    color: "var(--clay)",
+  },
+  {
+    titulo: "Seguimiento posterior",
+    detalle: "Control a cargo de enfermería",
+    color: "var(--sage)",
+  },
+  {
+    titulo: clinic.hours.display,
+    detalle: `${clinic.address.city} · ${clinic.address.region}`,
+    color: "var(--lume)",
+  },
+];
+
+/**
+ * Lo que la cinta anuncia. Todo dato sale de lib/campaign.ts o del catálogo:
+ * nada de precios escritos a mano acá.
+ *
+ * Los colores rotan sobre la paleta y todos están medidos contra --void:
+ * lume 11.09:1 · sage 7.10:1 · tan 6.44:1 · clay 4.96:1. El plazo o el precio
+ * va aparte en --verde (9.77:1) porque es lo que se lee primero.
+ */
+const packAcne = campaign.packs.find((p) => p.id === "pack-acne-higiene")!;
+
+const PROMOS: Array<{ texto: string; dato?: string; color: string }> = [
+  {
+    texto: `${campaign.banner.highlight} `,
+    dato: campaign.banner.text,
+    color: "var(--lume)",
+  },
+  {
+    texto: "Promo acné · pack completo ",
+    dato: clp(packAcne.packPrice),
+    color: "var(--tan)",
+  },
+  {
+    texto: "Onicomicosis · ",
+    dato: "sin límite de sesiones",
+    color: "var(--sage)",
+  },
+  {
+    texto: `${campaign.banner.detail} `,
+    dato: `${campaign.month.toLowerCase()} ${campaign.year}`,
+    color: "var(--clay)",
+  },
+];
 
 const ENLACES: Array<[string, string]> = [
   ["/servicios", "Tratamientos"],
@@ -119,67 +194,68 @@ export default function V2Page() {
         </div>
       </section>
 
-      {/* ══════════ 2 · CINTA DE TIPO ENORME ══════════ */}
-      <div className="v2-marquee py-5">
+      {/* ══════════ 2 · CINTA DE PROMOCIONES ══════════
+          Antes eran los nombres de las condiciones en tipo enorme: bonito y
+          mudo. Ahora lleva lo que tiene plazo, que es lo que hace que alguien
+          escriba hoy y no en dos semanas.
+
+          Los valores salen de lib/campaign.ts, no escritos acá: si cambia el
+          precio del pack o termina agosto, la cinta cambia con el resto del
+          sitio en vez de quedar mintiendo. */}
+      <div className="v2-marquee py-3.5">
         {[0, 1].map((k) => (
           <div key={k} className="v2-marquee__track" aria-hidden={k === 1 || undefined}>
-            {["Rosácea", "Onicomicosis", "Acné", "Alopecia", "Vitíligo", "Telangiectasias"].map(
-              (p) => (
-                <span key={p} className="v2-mega opacity-25">
-                  {p}
-                </span>
-              )
-            )}
+            {PROMOS.map((promo, i) => (
+              <span key={`${k}-${i}`} className="v2-promo" style={{ color: promo.color }}>
+                {promo.texto}
+                {promo.dato ? <b>{promo.dato}</b> : null}
+              </span>
+            ))}
           </div>
         ))}
       </div>
 
-      {/* ══════════ 3 · LO QUE OTROS DERIVAN ══════════
-          Reemplaza a la tesis sobre calibración por fototipo: era un argumento
-          técnico que no le habla a quien busca. Este sí es concreto y
-          verificable — son las condiciones que un centro de estética rechaza.
-          Sin etiqueta arriba: el titular ya nombra la sección. */}
+      {/* ══════════ 3 · POR QUÉ ACÁ ══════════
+          Misma estructura que tenía «lo que otros derivan» —fila con el término
+          a la izquierda y la aclaración a la derecha, entradas que alternan de
+          lado— pero ahora dice las ventajas en vez de hablar de la competencia.
+
+          Cada fila es un dato que ya está en el sitio o en lib/clinic.ts. No hay
+          ninguna afirmación nueva: «ubicación central» y «equipos modernos» se
+          quedaron fuera a propósito porque la dirección todavía es un
+          placeholder y el registro de los equipos también, así que no se pueden
+          respaldar.
+
+          El color rota sobre la paleta; los cuatro tonos están medidos contra
+          --void y ninguno baja de 4.96:1. */}
       <section className="v2-overlap v2-grain relative py-[clamp(4rem,10vw,8rem)]">
         <div className="v2-shell relative z-[2]">
-          <h2 className="v2-display max-w-[18ch]">
-            Un centro de estética <span className="v2-serif">te dice que no</span>.
+          <h2 className="v2-display max-w-[17ch]">
+            Por qué acá y <span className="v2-serif">no en otra parte</span>.
           </h2>
-
-          <p className="v2-lead mt-9 max-w-[44ch] opacity-80">
-            No por mala voluntad: son condiciones que necesitan diagnóstico
-            médico antes de tocarlas.
-          </p>
 
           <div className="v2-rule mt-12" />
 
           <ul>
-            {[
-              ["Onicomicosis", "Derivan a dermatología"],
-              ["Rosácea y lesiones vasculares", "No tienen láser vascular"],
-              ["Vitíligo", "No lo abordan"],
-              ["Acrocordones", "Requiere procedimiento médico"],
-              ["Acné en tratamiento con medicación", "Evitan la piel medicada"],
-              ["Alergias sin diagnóstico", "No las estudian"],
-            ].map(([cond, otros], i) => (
-              <li key={cond}>
+            {VENTAJAS.map(({ titulo, detalle, color }, i) => (
+              <li key={titulo}>
                 <div
                   className={`flex flex-wrap items-baseline justify-between gap-x-8 gap-y-1 py-5 ${
                     i % 2 === 0 ? "v2-from-l" : "v2-from-r"
                   }`}
                 >
-                  <span className="text-[clamp(1.25rem,2.4vw,2rem)] font-bold leading-tight">
-                    {cond}
+                  <span
+                    className="text-[clamp(1.25rem,2.4vw,2rem)] font-bold leading-tight"
+                    style={{ color }}
+                  >
+                    {titulo}
                   </span>
-                  <span className="v2-label opacity-55">{otros}</span>
+                  <span className="v2-label opacity-55">{detalle}</span>
                 </div>
                 <div className="v2-rule" />
               </li>
             ))}
           </ul>
-
-          <p className="v2-lead mt-10 max-w-[40ch]" style={{ color: "var(--sage)" }}>
-            Acá se tratan todas.
-          </p>
         </div>
       </section>
 

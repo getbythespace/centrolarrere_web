@@ -13,13 +13,13 @@
  * llamada «Resultados» con un caso ilustrativo promete algo que todavía no se
  * puede respaldar, y es justo lo que el SEREMI mira.
  *
- * Para prenderla cuando haya casos reales con consentimiento: poner
- * NEXT_PUBLIC_MOSTRAR_RESULTADOS=1 en el entorno, o borrar este interruptor.
+ * Está apagada también en local: así lo que se ve en localhost es lo que se
+ * despliega, sin sorpresas al publicar. Para revisar la página mientras se
+ * trabaja en ella: NEXT_PUBLIC_MOSTRAR_RESULTADOS=1 npx next dev
  *
  * Va con prefijo NEXT_PUBLIC_ porque el menú es un componente cliente y una
  * variable sin ese prefijo llega como undefined al bundle del navegador: el
  * enlace habría reaparecido en el menú aunque la ruta diera 404.
  */
 export const mostrarResultados =
-  process.env.NEXT_PUBLIC_MOSTRAR_RESULTADOS === "1" ||
-  process.env.NODE_ENV === "development";
+  process.env.NEXT_PUBLIC_MOSTRAR_RESULTADOS === "1";

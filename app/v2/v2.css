@@ -35,7 +35,8 @@
   --sage: #bab78c; /* 7.10:1 */
   --tan: #c2a88f; /* 6.44:1 */
   --clay: #be8c6b; /* 4.96:1 */
-  --verde: #b9e08a; /* 9.77:1 — sólo para la oferta con plazo */
+  --verde: #b9e08a; /* 9.77:1 — sólo para lo que tiene plazo: el sello del
+                        hero y el dato de cada promoción de la cinta */
 
   background: var(--void);
   color: var(--lume);
@@ -97,14 +98,36 @@
   letter-spacing: -0.04em;
 }
 
-/* Tipo enorme para la cinta: el titular ES el gráfico. */
-.v2-mega {
-  font-weight: 900;
-  font-size: clamp(4rem, 13vw, 13rem);
-  line-height: 0.85;
-  letter-spacing: -0.05em;
+/* La cinta ya no es tipo enorme decorativa con nombres de condiciones: ahora
+   lleva las promociones vigentes, así que tiene que poder leerse de corrido
+   mientras se mueve. A 13vw una frase con precio no cabía en pantalla. */
+.v2-promo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-weight: 800;
+  font-size: clamp(0.9375rem, 1.5vw, 1.375rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   white-space: nowrap;
+}
+
+/* El precio o el plazo, que es lo que hace que la frase sea una promoción y no
+   un eslogan. Va en otro color para que se lea primero. */
+.v2-promo b {
+  font-weight: 900;
+  color: var(--verde);
+}
+
+.v2-promo::before {
+  content: "";
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.5;
+  flex: none;
 }
 
 /* Subida de 13px a 17px: a tamaño anterior se perdía, y es la que nombra cada
@@ -262,7 +285,7 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .v2-marquee__track {
-    animation: v2-marquee 34s linear infinite;
+    animation: v2-marquee 42s linear infinite;
   }
   .v2-marquee:hover .v2-marquee__track {
     animation-play-state: paused;
@@ -364,14 +387,24 @@
    Cero JavaScript.
    ========================================================================== */
 .v2-pill {
-  position: relative;
+  /* Fija y centrada: acompaña todo el scroll.
+
+     El fondo es opaco, no un vidrio esmerilado. Con el velo traslúcido que
+     tenía primero, los titulares claros de las secciones se veían POR DENTRO
+     de la barra al pasar por debajo: quedaba un fantasma de letras cruzando el
+     menú. Sobre una superficie oscura no hay forma de tener las dos cosas. */
+  position: fixed;
+  top: 1.15rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;
   display: none;
   align-items: center;
   padding: 0.3rem;
   border-radius: 999px;
-  border: 1px solid rgba(236, 223, 205, 0.22);
-  background: rgba(236, 223, 205, 0.08);
-  backdrop-filter: blur(8px);
+  border: 1px solid rgba(236, 223, 205, 0.26);
+  background: var(--void-2);
+  box-shadow: 0 0.75rem 2rem rgba(16, 13, 10, 0.45);
 }
 
 @media (min-width: 900px) {
@@ -424,6 +457,12 @@
   .v2-pill::before {
     transition: opacity 0.15s ease;
   }
+}
+
+/* La barra fija se come los primeros ~4rem de la ventana. Sin esto, saltar a
+   un ancla deja el destino escondido debajo de ella. */
+[id] {
+  scroll-margin-top: 5rem;
 }
 
 /* ==========================================================================

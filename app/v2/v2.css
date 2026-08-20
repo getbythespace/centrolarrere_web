@@ -117,7 +117,7 @@
    un eslogan. Va en otro color para que se lea primero. */
 .v2-promo b {
   font-weight: 900;
-  color: var(--verde);
+  color: var(--acc-dato, var(--verde));
 }
 
 .v2-promo::before {
@@ -273,7 +273,7 @@
 .v2-marquee {
   display: flex;
   overflow: hidden;
-  border-block: 1px solid rgba(236, 223, 205, 0.2);
+  border-block: 1px solid var(--hair, rgba(236, 223, 205, 0.2));
 }
 
 .v2-marquee__track {
@@ -319,8 +319,8 @@
 
 @media (hover: hover) and (pointer: fine) {
   .v2-btn:hover {
-    background: var(--lume);
-    color: var(--void);
+    background: var(--ink, var(--lume));
+    color: var(--sup, var(--void));
     transform: translateY(-2px);
   }
 }
@@ -329,9 +329,9 @@
    elemento saturado posible acá y compite con el color de los fototipos, que
    es lo que la página quiere que mires. */
 .v2 a[href*="wa.me"] {
-  background: var(--lume);
-  color: var(--void);
-  border: 1.5px solid var(--lume);
+  background: var(--ink, var(--lume));
+  color: var(--sup, var(--void));
+  border: 1.5px solid var(--ink, var(--lume));
   min-height: 3.5rem;
   padding-inline: 2rem;
   font-size: 1.0625rem;
@@ -341,7 +341,7 @@
 @media (hover: hover) and (pointer: fine) {
   .v2 a[href*="wa.me"]:hover {
     background: transparent;
-    color: var(--lume);
+    color: var(--ink, var(--lume));
     transform: translateY(-2px);
   }
 }
@@ -480,7 +480,7 @@
    ========================================================================== */
 .v2-overlap {
   position: relative;
-  background: var(--void);
+  background: var(--sup, var(--void));
 }
 
 /* Cada sección monta sobre la anterior: sube unos rem, se redondea arriba y
@@ -497,14 +497,14 @@
   margin-top: -3rem;
   border-top-left-radius: 2.5rem;
   border-top-right-radius: 2.5rem;
-  box-shadow: 0 -1.5rem 3.5rem rgba(20, 16, 12, 0.55);
+  box-shadow: 0 -1.5rem 3.5rem rgba(20, 16, 12, 0.4);
 }
 
 /* Las secciones que siguen a una que monta también necesitan fondo propio: si
    son transparentes se ve a través de ellas la que quedó abajo. */
 .v2-plano {
   position: relative;
-  background: var(--void);
+  background: var(--sup, var(--void));
 }
 
 .v2-overlap:first-of-type {
@@ -543,7 +543,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.7rem;
-  color: var(--verde);
+  color: var(--acc-dato, var(--verde));
   font-weight: 700;
   font-size: clamp(0.9375rem, 1.3vw, 1.25rem);
   letter-spacing: 0.1em;
@@ -555,7 +555,7 @@
   width: 0.55rem;
   height: 0.55rem;
   border-radius: 999px;
-  background: var(--verde);
+  background: var(--acc-dato, var(--verde));
   flex: none;
 }
 
@@ -641,3 +641,114 @@
 
 /* Filas de texto chico: 4.5:1, así que piden más cuerpo. */
 .v2-scrim--fila { --a: 0.7; --pad: 6rem; }
+
+/* ==========================================================================
+   SUPERFICIES ALTERNADAS
+   --------------------------------------------------------------------------
+   La página va invirtiendo la paleta al bajar: fondo hondo con tinta crema,
+   después fondo claro con tinta café, y así. Cada superficie declara sus
+   propios tokens y todo lo de adentro los lee, así que cambiar una sección de
+   paleta es cambiarle una clase.
+
+   Por qué tokens y no `opacity`: el texto secundario estaba en opacity-55, que
+   sobre el fondo oscuro daba 4.46:1 —ya por debajo de AA— y sobre un fondo
+   beige se desplomaba a 2.69:1. La misma opacidad no puede servir para las dos.
+   Cada --dim de acá abajo es un color medido, con 15% de margen sobre 4.5.
+
+   Los acentos cambian por superficie porque no hay ninguno que funcione en
+   todas: el clay que da 5.0:1 sobre el taupe da 1.6:1 sobre el beige.
+   ========================================================================== */
+.v2-sup {
+  background: var(--sup);
+  color: var(--ink);
+}
+
+/* Taupe hondo, tinta crema. La de base. */
+.v2-sup--void {
+  --sup: #2e2822;
+  --ink: #ecdfcd;   /* 11.09:1 */
+  --dim: #a4998c;   /*  5.21:1 */
+  --hair: #5c544b;
+  --acc-1: #ecdfcd; /* 11.1 */
+  --acc-2: #bab78c; /*  7.1 */
+  --acc-3: #c2a88f; /*  6.4 */
+  --acc-4: #be8c6b; /*  5.0 */
+  --acc-dato: #b9e08a; /* 9.8:1 — el verde de lo que tiene plazo */
+  --grano: screen;
+}
+
+/* Beige pastel, tinta café. La inversa de la anterior. */
+.v2-sup--crema {
+  --sup: #ecdfcd;
+  --ink: #2f2519;   /* 11.43:1 */
+  --dim: #64594b;   /*  5.21:1 */
+  --hair: #bfb2a2;
+  --acc-1: #2f2519; /* 11.4 */
+  --acc-2: #2f4a32; /*  7.5 */
+  --acc-3: #57402c; /*  7.4 */
+  --acc-4: #2f4a32;
+  --acc-dato: #26401f; /* 8.7:1 — el verde de lo que tiene plazo */
+  --grano: multiply;
+}
+
+/* Verde pastel, tinta oliva oscura. */
+.v2-sup--verde {
+  --sup: #cfd9bc;
+  --ink: #2b3020;   /* 9.25:1 */
+  --dim: #4f5542;   /* 5.28:1 */
+  --hair: #a8b097;
+  --acc-1: #2f2519; /* 10.2 */
+  --acc-2: #2f4a32; /*  6.7 */
+  --acc-3: #57402c; /*  6.6 */
+  --acc-4: #2f4a32;
+  --acc-dato: #26401f; /* 7.8:1 — el verde de lo que tiene plazo */
+  --grano: multiply;
+}
+
+/* Marrón hondo, tinta crema cálida. */
+.v2-sup--marron {
+  --sup: #57402c;
+  --ink: #f2e7d8;   /* 7.91:1 */
+  --dim: #cbbdad;   /* 5.25:1 */
+  --hair: #7c6855;
+  --acc-1: #ecdfcd; /* 7.4 */
+  --acc-2: #b9e08a; /* 6.5 */
+  --acc-3: #bab78c; /* 4.7 */
+  --acc-4: #ecdfcd;
+  --acc-dato: #b9e08a; /* 6.5:1 — el verde de lo que tiene plazo */
+  --grano: screen;
+}
+
+/* Terroso medio. Sólo admite tinta oscura y un acento, así que se usa en la
+   cinta —texto corto, sin secundarios— y no como sección completa. */
+.v2-sup--tierra {
+  --sup: #c2a88f;
+  --ink: #2e2418;   /* 6.72:1 */
+  --dim: #413527;   /* 5.27:1 */
+  --hair: #9e8872;
+  --acc-1: #2f2519; /* 6.6 */
+  --acc-2: #2f2519;
+  --acc-3: #2f2519;
+  --acc-4: #2f2519;
+  --acc-dato: #26401f; /* 5.1:1 — el verde de lo que tiene plazo */
+  --grano: multiply;
+}
+
+/* Texto secundario. Reemplaza a las opacidades: sobre fondo claro una opacidad
+   que funcionaba en oscuro deja el texto en 2.7:1. */
+.v2-dim {
+  color: var(--dim);
+}
+
+/* El grano se mezcla en `screen` sobre fondo hondo y en `multiply` sobre fondo
+   claro. Con `screen` fijo, sobre beige el ruido lo blanqueaba y desaparecía. */
+.v2-grain::before {
+  mix-blend-mode: var(--grano, screen);
+}
+
+/* Filetes y bordes toman el token en vez de currentColor al 22%: sobre beige
+   ese 22% daba una línea casi invisible. */
+.v2-rule {
+  background: var(--hair);
+  opacity: 1;
+}

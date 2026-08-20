@@ -38,32 +38,32 @@ const VENTAJAS: Array<{ titulo: string; detalle: string; color: string }> = [
   {
     titulo: "Autorización sanitaria",
     detalle: "Resolución SEREMI a la vista",
-    color: "var(--lume)",
+    color: "var(--acc-1)",
   },
   {
     titulo: "Enfermería titulada",
     detalle: "En cada procedimiento",
-    color: "var(--sage)",
+    color: "var(--acc-2)",
   },
   {
     titulo: "Evaluación antes de tratar",
     detalle: "Ningún tratamiento parte sin ella",
-    color: "var(--tan)",
+    color: "var(--acc-3)",
   },
   {
     titulo: "Más de 7 años en láser",
     detalle: "A cargo de los tratamientos",
-    color: "var(--clay)",
+    color: "var(--acc-4)",
   },
   {
     titulo: "Seguimiento posterior",
     detalle: "Control a cargo de enfermería",
-    color: "var(--sage)",
+    color: "var(--acc-2)",
   },
   {
     titulo: clinic.hours.display,
     detalle: `${clinic.address.city} · ${clinic.address.region}`,
-    color: "var(--lume)",
+    color: "var(--acc-1)",
   },
 ];
 
@@ -81,22 +81,22 @@ const PROMOS: Array<{ texto: string; dato?: string; color: string }> = [
   {
     texto: `${campaign.banner.highlight} `,
     dato: campaign.banner.text,
-    color: "var(--lume)",
+    color: "var(--acc-1)",
   },
   {
     texto: "Promo acné · pack completo ",
     dato: clp(packAcne.packPrice),
-    color: "var(--tan)",
+    color: "var(--acc-3)",
   },
   {
     texto: "Onicomicosis · ",
     dato: "sin límite de sesiones",
-    color: "var(--sage)",
+    color: "var(--acc-2)",
   },
   {
     texto: `${campaign.banner.detail} `,
     dato: `${campaign.month.toLowerCase()} ${campaign.year}`,
-    color: "var(--clay)",
+    color: "var(--acc-4)",
   },
 ];
 
@@ -135,7 +135,7 @@ export default function V2Page() {
           Video a sangre desde el primer pixel. El wordmark encima, del ancho
           del viewport. Sin vacío decorativo: la imagen ocupa lo que antes
           estaba en blanco. */}
-      <section className="relative flex min-h-[100svh] flex-col justify-between overflow-hidden pb-8 pt-7">
+      <section className="v2-sup v2-sup--void relative flex min-h-[100svh] flex-col justify-between overflow-hidden pb-8 pt-7">
         <HeroMedia
           video="procedimiento"
           alt="Procedimiento con láser realizado en la clínica"
@@ -202,7 +202,7 @@ export default function V2Page() {
           Los valores salen de lib/campaign.ts, no escritos acá: si cambia el
           precio del pack o termina agosto, la cinta cambia con el resto del
           sitio en vez de quedar mintiendo. */}
-      <div className="v2-marquee py-3.5">
+      <div className="v2-sup v2-sup--tierra v2-marquee py-3.5">
         {[0, 1].map((k) => (
           <div key={k} className="v2-marquee__track" aria-hidden={k === 1 || undefined}>
             {PROMOS.map((promo, i) => (
@@ -228,7 +228,7 @@ export default function V2Page() {
 
           El color rota sobre la paleta; los cuatro tonos están medidos contra
           --void y ninguno baja de 4.96:1. */}
-      <section className="v2-overlap v2-grain relative py-[clamp(4rem,10vw,8rem)]">
+      <section className="v2-sup v2-sup--crema v2-overlap v2-grain relative py-[clamp(4rem,10vw,8rem)]">
         <div className="v2-shell relative z-[2]">
           <h2 className="v2-display max-w-[17ch]">
             Por qué acá y <span className="v2-serif">no en otra parte</span>.
@@ -250,7 +250,7 @@ export default function V2Page() {
                   >
                     {titulo}
                   </span>
-                  <span className="v2-label opacity-55">{detalle}</span>
+                  <span className="v2-label v2-dim">{detalle}</span>
                 </div>
                 <div className="v2-rule" />
               </li>
@@ -262,7 +262,7 @@ export default function V2Page() {
       {/* ══════════ 5 · PISTA HORIZONTAL ══════════
           La sección se fija y los tratamientos corren de lado. En móvil se
           arrastra con el dedo. */}
-      <section className="v2-track-outer v2-plano" aria-labelledby="pista-t">
+      <section className="v2-sup v2-sup--void v2-track-outer v2-plano" aria-labelledby="pista-t">
         {/* `items-start` + padding: antes el pin centraba el bloque completo y
             el título quedaba muy abajo respecto de las tarjetas. */}
         <div className="v2-track-pin" style={{ alignItems: "flex-start" }}>
@@ -271,7 +271,7 @@ export default function V2Page() {
               <h2 id="pista-t" className="v2-display text-[clamp(2rem,4.5vw,3.5rem)]">
                 Lo que tratamos
               </h2>
-              <p className="v2-label opacity-60">
+              <p className="v2-label v2-dim">
                 {treatments.length} tratamientos · desliza
               </p>
             </div>
@@ -284,10 +284,10 @@ export default function V2Page() {
                   style={{ borderColor: "rgba(247,242,236,0.2)" }}
                 >
                   <div className="flex items-baseline justify-between">
-                    <span className="v2-label opacity-50">
+                    <span className="v2-label v2-dim">
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    <span className="v2-label opacity-50">{t.category}</span>
+                    <span className="v2-label v2-dim">{t.category}</span>
                   </div>
 
                   {t.conditionImage && (
@@ -306,7 +306,7 @@ export default function V2Page() {
                   <h3 className="mt-5 text-[1.375rem] font-bold leading-tight">
                     {t.name}
                   </h3>
-                  <p className="v2-body mt-3 opacity-70">{t.summary}</p>
+                  <p className="v2-body mt-3 v2-dim">{t.summary}</p>
 
                   <p className="mt-6 text-[1.125rem] font-bold">
                     {t.price !== null ? clp(t.price) : "Según evaluación"}
@@ -325,11 +325,11 @@ export default function V2Page() {
       </section>
 
       {/* ══════════ 6 · FOCO DEL MES ══════════ */}
-      <section className="v2-overlap v2-grain relative py-[clamp(5rem,12vw,9rem)]">
+      <section className="v2-sup v2-sup--verde v2-overlap v2-grain relative py-[clamp(5rem,12vw,9rem)]">
         <div className="v2-shell relative z-[2]">
           <div className="flex flex-wrap items-baseline justify-between gap-4">
-            <p className="v2-label opacity-60">Agosto · Foco del mes</p>
-            <p className="v2-label opacity-60">01 / 01</p>
+            <p className="v2-label v2-dim">Agosto · Foco del mes</p>
+            <p className="v2-label v2-dim">01 / 01</p>
           </div>
 
           <h2 className="v2-display mt-8 max-w-[18ch]">
@@ -345,7 +345,7 @@ export default function V2Page() {
               <p className="v2-lead max-w-[30ch]">
                 La uña sana no se recupera: crece.
               </p>
-              <p className="v2-body mt-6 max-w-[46ch] opacity-70">
+              <p className="v2-body mt-6 max-w-[46ch] v2-dim">
                 Una uña del pie tarda entre nueve y doce meses en renovarse por
                 completo. El mes en que empiezas define en qué estado llegas al
                 verano — y agosto es el último en que todavía alcanza.
@@ -353,8 +353,8 @@ export default function V2Page() {
 
               <div className="v2-rule mt-10" />
               <div className="flex items-baseline justify-between gap-6 py-6">
-                <span className="v2-label opacity-60">Precio normal</span>
-                <span className="v2-body opacity-60 line-through">
+                <span className="v2-label v2-dim">Precio normal</span>
+                <span className="v2-body v2-dim line-through">
                   {clp(foco.listPrice!)}
                 </span>
               </div>
@@ -373,26 +373,26 @@ export default function V2Page() {
                   size="lg"
                 />
               </div>
-              <p className="v2-body mt-6 max-w-[48ch] text-[0.9375rem] opacity-55">
+              <p className="v2-body mt-6 max-w-[48ch] text-[0.9375rem] v2-dim">
                 Sin límite de sesiones hasta completar el ciclo. El tiempo de
                 renovación varía según la persona y su adherencia al tratamiento.
               </p>
             </div>
 
             <div className="lg:pt-2">
-              <BeforeAfter data={caso} ratio="4 / 3" onDark />
+              <BeforeAfter data={caso} ratio="4 / 3" />
             </div>
           </div>
         </div>
       </section>
 
       {/* ══════════ 7 · CIERRE ══════════ */}
-      <section className="relative overflow-hidden py-[clamp(6rem,14vw,11rem)]">
+      <section className="v2-sup v2-sup--marron relative overflow-hidden py-[clamp(6rem,14vw,11rem)]">
         <HeroMedia
           video="preparacion"
           alt="Enfermera de la clínica preparándose antes de un procedimiento"
           veil="fuerte"
-          tone="neutro"
+          tone="marron"
         />
         <div className="v2-shell relative z-10">
           <h2 className="v2-display max-w-[15ch]">
@@ -403,14 +403,14 @@ export default function V2Page() {
 
           <div className="mt-10 flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <p className="v2-label opacity-60">Evaluación</p>
+              <p className="v2-label v2-dim">Evaluación</p>
               <p className="v2-display mt-3 text-[clamp(2.5rem,5.5vw,4.5rem)]">
                 Gratis
-                <span className="v2-serif ml-4 text-[0.45em] opacity-60">
+                <span className="v2-serif ml-4 text-[0.45em] v2-dim">
                   durante agosto
                 </span>
               </p>
-              <p className="v2-body mt-3 opacity-60">
+              <p className="v2-body mt-3 v2-dim">
                 Precio normal {clinic.evaluation.priceDisplay}
               </p>
             </div>
@@ -425,10 +425,10 @@ export default function V2Page() {
 
           <div className="v2-rule mt-16" />
           <div className="mt-8 flex flex-wrap items-center justify-between gap-6">
-            <span className="v2-label opacity-60">
+            <span className="v2-label v2-dim">
               {clinic.phone.display} · {clinic.address.city}
             </span>
-            <span className="v2-label opacity-60">{clinic.hours.display}</span>
+            <span className="v2-label v2-dim">{clinic.hours.display}</span>
           </div>
         </div>
       </section>

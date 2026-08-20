@@ -32,7 +32,7 @@ interface Props {
   priority?: boolean;
   veil?: "medio" | "fuerte";
   /** Familia de velo: verde de marca (v1) o neutro oscuro (v2). */
-  tone?: "pino" | "neutro";
+  tone?: "pino" | "neutro" | "marron";
 }
 
 /* Dos familias de velo: el verde pino de la v1 y el neutro casi-negro de la
@@ -54,6 +54,14 @@ const VEILS = {
       "linear-gradient(180deg, rgba(46,40,34,0.58) 0%, rgba(46,40,34,0.40) 42%, rgba(46,40,34,0.78) 100%)",
     fuerte:
       "linear-gradient(180deg, rgba(46,40,34,0.80) 0%, rgba(46,40,34,0.66) 38%, rgba(46,40,34,0.93) 100%)",
+  },
+  // Para la sección de cierre, que corre sobre superficie marrón: con el velo
+  // taupe el video cortaba contra el fondo en vez de fundirse con él.
+  marron: {
+    medio:
+      "linear-gradient(180deg, rgba(87,64,44,0.58) 0%, rgba(87,64,44,0.40) 42%, rgba(87,64,44,0.78) 100%)",
+    fuerte:
+      "linear-gradient(180deg, rgba(87,64,44,0.82) 0%, rgba(87,64,44,0.68) 38%, rgba(87,64,44,0.94) 100%)",
   },
 } as const;
 

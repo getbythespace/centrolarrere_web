@@ -691,7 +691,10 @@
   --grano: multiply;
 }
 
-/* Verde pastel, tinta oliva oscura. */
+/* Verde pastel, tinta oliva oscura.
+   Sin usar hoy: el foco del mes se pasó a beige. Se deja definida y medida
+   porque es una de las paletas del sistema y las páginas que vienen la pueden
+   tomar sin volver a calcular nada. */
 .v2-sup--verde {
   --sup: #cfd9bc;
   --ink: #2b3020;   /* 9.25:1 */

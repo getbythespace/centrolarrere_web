@@ -325,7 +325,7 @@ export default function V2Page() {
       </section>
 
       {/* ══════════ 6 · FOCO DEL MES ══════════ */}
-      <section className="v2-sup v2-sup--verde v2-overlap v2-grain relative py-[clamp(5rem,12vw,9rem)]">
+      <section className="v2-sup v2-sup--crema v2-overlap v2-grain relative py-[clamp(5rem,12vw,9rem)]">
         <div className="v2-shell relative z-[2]">
           <div className="flex flex-wrap items-baseline justify-between gap-4">
             <p className="v2-label v2-dim">Agosto · Foco del mes</p>

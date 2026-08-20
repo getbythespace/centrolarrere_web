@@ -190,14 +190,29 @@
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
+  /* El snap alinea con el borde del contenido, no con el del contenedor: sin
+     esto la tarjeta se pega al filo de la pantalla y no queda a plomo con el
+     titular de arriba. */
+  scroll-padding-inline: clamp(1rem, 3.5vw, 2.5rem);
+  overscroll-behavior-x: contain;
+}
+
+/* La última tarjeta necesita aire detrás para poder apoyarse a la izquierda: en
+   un contenedor de scroll con flex, el padding final se ignora. */
+.v2-track::after {
+  content: "";
+  flex: 0 0 clamp(1rem, 3.5vw, 2.5rem);
 }
 
 .v2-track::-webkit-scrollbar {
   display: none;
 }
 
+/* `start` y no `center`. Con snap centrado la primera tarjeta se va al medio y
+   deja media pantalla vacía a la izquierda, y la última nunca llega a apoyarse
+   en el borde: en pantalla chica el carrusel se ve descuadrado. */
 .v2-track > * {
-  scroll-snap-align: center;
+  scroll-snap-align: start;
   flex: 0 0 auto;
 }
 
@@ -242,6 +257,14 @@
     position: static;
     height: auto;
     padding-block: clamp(3rem, 8vw, 5rem);
+  }
+
+  /* A 16rem fijas, en un teléfono entraban una tarjeta y media cortada por la
+     mitad: no se leía ninguna entera ni se entendía que había más. Con 78vw
+     manda una y la siguiente asoma lo justo para que se note que hay que
+     deslizar. */
+  .v2-track > li {
+    width: min(78vw, 22rem) !important;
   }
 }
 
@@ -417,6 +440,30 @@
   }
 }
 
+/* El indicador que viaja es un efecto de cursor y en un teléfono no hay
+   cursor: nunca se dispara. Además obligaba a que los tres enlaces midieran
+   exactamente lo mismo, y «TRATAMIENTOS» no baja de su ancho mínimo —quedaban
+   136/109/109 y el indicador apuntaba a cualquier parte—. Donde no hay hover
+   se apaga, y en su lugar el enlace se marca al tocarlo. */
+@media (hover: none) {
+  .v2-pill::before {
+    display: none;
+  }
+
+  .v2-pill > a:active {
+    background: var(--lume);
+    color: var(--void);
+    border-radius: 999px;
+  }
+}
+
+/* La barra de abajo tapa el final de la página si no se le deja sitio. */
+@media (max-width: 899px) {
+  .v2 {
+    padding-bottom: 5rem;
+  }
+}
+
 /* El indicador que viaja. Su ancho sale de --n, el número de enlaces, que pone
    el markup: cablearlo a cuatro significaba que ocultar un enlace —como
    /resultados mientras no esté publicada— dejaba el indicador descuadrado. */
@@ -456,6 +503,35 @@
 .v2-pill > a:hover {
   color: var(--void);
 }
+
+/* ── El menú en pantalla chica ──────────────────────────────────────────────
+   Antes desaparecía bajo 900px y no había NADA con qué navegar: ni menú, ni
+   botón de hamburguesa. En una página que recibe casi todo su tráfico desde
+   anuncios en el teléfono, eso dejaba a la mayoría sin forma de llegar a
+   tratamientos o contacto.
+
+   Pasa abajo en vez de quedarse arriba porque arriba a la izquierda ya está el
+   botón de volver, y a 360px los dos no caben en la misma línea. Abajo además
+   queda al alcance del pulgar. */
+@media (max-width: 899px) {
+  .v2-pill {
+    display: inline-flex;
+    top: auto;
+    bottom: max(0.75rem, env(safe-area-inset-bottom));
+    width: calc(100% - 1.5rem);
+    max-width: 26rem;
+    justify-content: space-between;
+  }
+
+  .v2-pill > a {
+    /* 0.95rem arriba y abajo deja el objetivo táctil sobre 44px. Con el 0.7rem
+       de antes quedaba en 35px, bajo el mínimo cómodo para el pulgar. */
+    padding: 0.95rem 0.5rem;
+    font-size: clamp(0.6875rem, 2.9vw, 0.8125rem);
+    letter-spacing: 0.05em;
+  }
+}
+
 
 @media (prefers-reduced-motion: reduce) {
   .v2-pill::before {

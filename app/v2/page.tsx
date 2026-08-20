@@ -262,13 +262,6 @@ export default function V2Page() {
             </div>
             <div className="max-w-[46ch]">
               <p className="v2-label">Autorización sanitaria vigente</p>
-              <p className="v2-body v2-dim mt-1.5 text-[0.875rem] leading-relaxed">
-                La clínica opera bajo autorización de la SEREMI de Salud.
-                [PENDIENTE: nº de resolución y foto del documento de Ñuble.]{" "}
-                <Link href="/v2/equipo#credenciales" className="v2-enlace">
-                  Ver credenciales
-                </Link>
-              </p>
             </div>
           </div>
 

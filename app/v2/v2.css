@@ -326,9 +326,13 @@
 }
 
 /* El CTA de WhatsApp toma la luz de la página. El verde de marca es el único
-   elemento saturado posible acá y compite con el color de los fototipos, que
-   es lo que la página quiere que mires. */
-.v2 a[href*="wa.me"] {
+   elemento saturado posible acá y competiría con el resto.
+
+   El :not() importa: el selector por href atrapaba TAMBIÉN los enlaces de
+   WhatsApp escritos en texto corrido —como el teléfono en la página de
+   contacto— y les daba fondo de botón. Con el color del acento encima, el
+   número quedaba tinta sobre tinta: invisible, medido en 1.00:1. */
+.v2 a[href*="wa.me"]:not(.v2-enlace) {
   background: var(--ink, var(--lume));
   color: var(--sup, var(--void));
   border: 1.5px solid var(--ink, var(--lume));
@@ -339,7 +343,7 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .v2 a[href*="wa.me"]:hover {
+  .v2 a[href*="wa.me"]:not(.v2-enlace):hover {
     background: transparent;
     color: var(--ink, var(--lume));
     transform: translateY(-2px);
@@ -481,6 +485,14 @@
 .v2-overlap {
   position: relative;
   background: var(--sup, var(--void));
+  /* Las filas de adentro entran desplazadas ±4vw. Mientras no llegan a
+     pantalla siguen en esa posición inicial, y eso empujaba la página de lado:
+     aparecía barra horizontal en desktop.
+
+     `clip` y no `hidden`: hidden convierte la sección en contenedor de scroll y
+     rompe cualquier `position: sticky` que tenga dentro. Fue exactamente el
+     bug que hubo antes con `overflow-x: hidden` en el html. */
+  overflow-x: clip;
 }
 
 /* Cada sección monta sobre la anterior: sube unos rem, se redondea arriba y
@@ -754,4 +766,45 @@
 .v2-rule {
   background: var(--hair);
   opacity: 1;
+}
+
+/* Enlaces dentro del contenido: subrayado que crece desde la izquierda al
+   pasar el cursor. No usa `text-decoration` porque el filete tiene que quedar
+   separado de la línea base para que a 2rem no toque las descendentes. */
+.v2-enlace {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.v2-enlace::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.18em;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .v2-enlace:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+/* Sin hover —táctil— el filete va puesto: si no, el enlace no se distingue del
+   texto que lo rodea, que es la única señal que tiene de que es tocable. */
+@media (hover: none) {
+  .v2-enlace::after {
+    transform: scaleX(1);
+    opacity: 0.4;
+  }
+}
+
+.v2-enlace:focus-visible::after {
+  transform: scaleX(1);
 }

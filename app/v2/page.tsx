@@ -6,8 +6,9 @@ import HeroMedia from "@/components/HeroMedia";
 import { clinic, clp } from "@/lib/clinic";
 import { treatments } from "@/lib/treatments";
 import { showcaseCases } from "@/lib/cases";
-import { mostrarResultados } from "@/lib/flags";
 import { campaign } from "@/lib/campaign";
+import V2Nav from "@/components/v2/V2Nav";
+import V2Cierre from "@/components/v2/V2Cierre";
 
 /**
  * v2 — «Cámara oscura».
@@ -100,14 +101,6 @@ const PROMOS: Array<{ texto: string; dato?: string; color: string }> = [
   },
 ];
 
-const ENLACES: Array<[string, string]> = [
-  ["/servicios", "Tratamientos"],
-  ...(mostrarResultados
-    ? ([["/resultados", "Resultados"]] as Array<[string, string]>)
-    : []),
-  ["/equipo", "Equipo"],
-  ["/contacto", "Contacto"],
-];
 
 const LETRAS = ["L", "A", "R", "R", "È", "R", "E"];
 
@@ -146,19 +139,7 @@ export default function V2Page() {
 
         <div className="v2-shell v2-scrim v2-scrim--fila relative z-10 flex items-center justify-between">
           <span className="v2-label v2-loc">Chillán · Ñuble</span>
-          {/* Píldora con indicador que se desliza al pasar el cursor. --n le
-              dice al CSS cuántos enlaces hay para que el indicador mida bien. */}
-          <nav
-            className="v2-pill"
-            aria-label="Principal"
-            style={{ ["--n" as string]: ENLACES.length }}
-          >
-            {ENLACES.map(([href, label]) => (
-              <Link key={href} href={href} className="v2-label">
-                {label}
-              </Link>
-            ))}
-          </nav>
+          <V2Nav />
         </div>
 
         <div className="v2-shell v2-scrim v2-scrim--marca relative z-10">
@@ -386,52 +367,7 @@ export default function V2Page() {
         </div>
       </section>
 
-      {/* ══════════ 7 · CIERRE ══════════ */}
-      <section className="v2-sup v2-sup--marron relative overflow-hidden py-[clamp(6rem,14vw,11rem)]">
-        <HeroMedia
-          video="preparacion"
-          alt="Enfermera de la clínica preparándose antes de un procedimiento"
-          veil="fuerte"
-          tone="marron"
-        />
-        <div className="v2-shell relative z-10">
-          <h2 className="v2-display max-w-[15ch]">
-            Partamos por <span className="v2-serif">la evaluación</span>
-          </h2>
-
-          <div className="v2-rule mt-12" />
-
-          <div className="mt-10 flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
-            <div>
-              <p className="v2-label v2-dim">Evaluación</p>
-              <p className="v2-display mt-3 text-[clamp(2.5rem,5.5vw,4.5rem)]">
-                Gratis
-                <span className="v2-serif ml-4 text-[0.45em] v2-dim">
-                  durante agosto
-                </span>
-              </p>
-              <p className="v2-body mt-3 v2-dim">
-                Precio normal {clinic.evaluation.priceDisplay}
-              </p>
-            </div>
-
-            <div className="flex flex-col gap-4 sm:flex-row">
-              <WhatsAppCTA context={{ kind: "evaluation" }} size="lg" />
-              <Link href="/agendar" className="v2-btn">
-                Agendar online
-              </Link>
-            </div>
-          </div>
-
-          <div className="v2-rule mt-16" />
-          <div className="mt-8 flex flex-wrap items-center justify-between gap-6">
-            <span className="v2-label v2-dim">
-              {clinic.phone.display} · {clinic.address.city}
-            </span>
-            <span className="v2-label v2-dim">{clinic.hours.display}</span>
-          </div>
-        </div>
-      </section>
+      <V2Cierre />
     </main>
   );
 }

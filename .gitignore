@@ -56,3 +56,19 @@ logs
 
 # directorios de compilación de un segundo `next dev` (ver distDir en next.config.mjs)
 /.next-*
+
+# Imágenes que quedaron sin uso en el sitio. Siguen en el disco por si alguna
+# vuelve a servir, pero fuera del repo: eran 8,4 MB que se arrastraban en cada
+# clon y cada despliegue sin que ninguna página las pidiera.
+# Recuperables del historial: git show <commit>:public/casos/manosantes.png
+/public/casos/manosantes.png
+/public/casos/manospost.png
+/public/casos/ominomicosisdespues.png
+/public/clinica/edificio.png
+/public/clinica/textura-piedra.jpg
+/public/hero/piel-hombro.jpg
+/public/tratamientos/piel-pigmentacion.jpg
+/public/tratamientos/textura-crema.jpg
+
+# Originales sin comprimir de los que salen los activos de public/
+/pictures/

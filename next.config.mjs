@@ -1,5 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Exportación estática: `next build` deja HTML suelto en out/ en vez de un
+  // servidor. Es lo que necesita un Static Site de App Platform —que además es
+  // gratis— y por eso el despliegue devolvía 404: `next build` normal produce
+  // .next/, que no es una carpeta de HTML.
+  output: 'export',
+
   // Dos `next dev` sobre el mismo proyecto se pisan: comparten .next y por lo
   // tanto los manifiestos de rutas y las hojas compiladas. En la práctica una
   // ruta que funcionaba empieza a responder 404 sola, o el servidor sirve un
@@ -14,38 +20,23 @@ const nextConfig = {
         hostname: '**.supabase.co',
       },
     ],
-    // AVIF primero, WebP de respaldo. Cuando lleguen las fotos reales de los
-    // casos, next/image las sirve en el formato liviano sin trabajo extra.
+    // AVIF primero, WebP de respaldo.
     formats: ['image/avif', 'image/webp'],
+
+    // Sin servidor no hay optimización al vuelo, así que las imágenes se sirven
+    // tal cual están en public/. No se pierde casi nada: ya están todas
+    // comprimidas a AVIF a mano —las del box bajaron de 10 MB a 463 KB— así que
+    // lo único que se deja de tener son las variantes por ancho de pantalla.
+    unoptimized: true,
   },
 
-  async redirects() {
-    return [
-      {
-        // /certificados era una página delgada y con credenciales inventadas.
-        // Su contenido real vive ahora en /equipo#credenciales. Redirect
-        // permanente (308) para no perder lo que Google ya tenga indexado —
-        // mejor que un 404 y mejor que dejar la página vacía.
-        source: '/certificados',
-        destination: '/equipo#credenciales',
-        permanent: true,
-      },
-    ];
-  },
+  // Los redirects y las cabeceras de seguridad NO funcionan con `output:
+  // export`: los aplica el servidor de Next, que acá no existe. Se movieron a
+  // .do/app.yaml, donde los aplica el borde de App Platform.
+  //
+  // Se sacaron de acá a propósito en vez de dejarlos: si se quedan, parecen
+  // activos y no hacen nada, que es peor que no tenerlos.
 
-  // Cabeceras de seguridad básicas. No cuestan nada y suben Best Practices.
-  async headers() {
-    return [
-      {
-        source: '/:path*',
-        headers: [
-          { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
-          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
-        ],
-      },
-    ];
-  },
 };
 
 export default nextConfig;

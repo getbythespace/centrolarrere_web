@@ -26,7 +26,7 @@ const MESES = [
 ] as const;
 
 /** El mes corriente en Chile, que es donde está la clínica. */
-function mesActual() {
+export function mesActual() {
   const ahora = new Date(
     new Date().toLocaleString("en-US", { timeZone: "America/Santiago" })
   );
@@ -51,10 +51,32 @@ export function finDeMes(): Date {
  * verano tratado» sólo es cierto si todavía queda tiempo. De diciembre a
  * febrero ya no alcanza y el foco pasa a hablar del ciclo, no del verano.
  */
-function alcanzaParaElVerano() {
-  const i = mesActual().indice;
-  return i >= 2 && i <= 10;
+function alcanzaParaElVerano(indice = mesActual().indice) {
+  return indice >= 2 && indice <= 10;
 }
+
+/**
+ * Las frases que nombran el mes, como funciones del mes.
+ *
+ * Están acá y no escritas en las páginas porque el sitio es estático: el
+ * componente MesActual las vuelve a evaluar en el navegador para que octubre no
+ * siga diciendo septiembre.
+ */
+const INDICE_DE = (mes: string) => MESES.indexOf(mes as (typeof MESES)[number]);
+
+export const frases = {
+  banner: (mes: string) => `durante ${mes}`,
+  focoEyebrow: (mes: string) =>
+    `${mes[0].toUpperCase() + mes.slice(1)} · Foco del mes`,
+  focoTitulo: (mes: string) =>
+    alcanzaParaElVerano(INDICE_DE(mes))
+      ? `Empieza en ${mes}, llega al verano tratado`
+      : "El tratamiento va al ritmo en que crece la uña",
+  focoCuerpo: (mes: string) =>
+    alcanzaParaElVerano(INDICE_DE(mes))
+      ? `La uña sana no se recupera: crece. Una uña del pie tarda entre nueve y doce meses en renovarse por completo, así que el mes en que se empieza define en qué estado llegas al verano. En ${mes} todavía alcanza.`
+      : "La uña sana no se recupera: crece. Una uña del pie tarda entre nueve y doce meses en renovarse por completo, así que el tratamiento se mide en ciclos y no en sesiones sueltas.",
+};
 
 export const campaign = {
   active: true,

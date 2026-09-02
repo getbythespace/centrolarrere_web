@@ -7,14 +7,8 @@ import V2Cierre from "@/components/v2/V2Cierre";
 import { clinic, clp } from "@/lib/clinic";
 import { treatments, type Category } from "@/lib/treatments";
 import { campaign } from "@/lib/campaign";
+import MesActual from "@/components/v2/MesActual";
 import V2Footer from "@/components/v2/V2Footer";
-
-/**
- * El mes de la campaña se calcula en cada render. Sin esto la página quedaría
- * congelada con el mes en que se compiló y en octubre seguiría diciendo
- * septiembre. 12 horas es de sobra para un cambio mensual.
- */
-export const revalidate = 43200;
 
 export const metadata: Metadata = {
   title: "Tratamientos",
@@ -88,7 +82,7 @@ export default function V2ServiciosPage() {
               <p className="v2-display mt-3 text-[clamp(2rem,4.5vw,3.5rem)]">
                 Gratis
                 <span className="v2-serif ml-4 text-[0.45em] v2-dim">
-                  {campaign.banner.text}
+                  <MesActual inicial={campaign.banner.text} frase="banner" />
                 </span>
               </p>
               <p className="v2-body v2-dim mt-3 max-w-[44ch]">

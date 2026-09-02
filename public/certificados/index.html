@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es-CL">
+  <head>
+    <meta charset="utf-8" />
+    <!--
+      /certificados era una página del sitio anterior. Su contenido vive ahora
+      en /equipo#credenciales.
+
+      El redirect estaba en next.config.mjs, donde lo aplicaba el servidor de
+      Next. Con exportación estática ese servidor no existe, así que se resuelve
+      con un archivo: funciona en cualquier hosting, sin configuración.
+
+      El canonical es lo que le dice a Google que la buena es /equipo, para que
+      no queden las dos compitiendo.
+    -->
+    <title>Credenciales · LARRÈRE</title>
+    <link rel="canonical" href="https://larrere.cl/equipo" />
+    <meta name="robots" content="noindex, follow" />
+    <meta http-equiv="refresh" content="0; url=/equipo#credenciales" />
+    <script>
+      window.location.replace("/equipo#credenciales");
+    </script>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: #2e2822;
+        color: #ecdfcd;
+        font-family: system-ui, sans-serif;
+        text-align: center;
+        padding: 2rem;
+      }
+      a { color: inherit; }
+    </style>
+  </head>
+  <body>
+    <p>
+      Esta página se movió.
+      <a href="/equipo#credenciales">Ver credenciales del equipo</a>.
+    </p>
+  </body>
+</html>

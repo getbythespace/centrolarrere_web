@@ -8,13 +8,6 @@ import V2Cierre from "@/components/v2/V2Cierre";
 import { clinic } from "@/lib/clinic";
 import V2Footer from "@/components/v2/V2Footer";
 
-/**
- * El mes de la campaña se calcula en cada render. Sin esto la página quedaría
- * congelada con el mes en que se compiló y en octubre seguiría diciendo
- * septiembre. 12 horas es de sobra para un cambio mensual.
- */
-export const revalidate = 43200;
-
 export const metadata: Metadata = {
   title: "Contacto",
   description:

@@ -1,6 +1,12 @@
 import { MetadataRoute } from 'next'
 
 /**
+ * Con `output: export` no hay servidor que lo genere al vuelo, así que se
+ * declara estático: se produce una vez al compilar.
+ */
+export const dynamic = "force-static";
+
+/**
  * Las cinco páginas del sitio. Quedan fuera a propósito:
  *  - /certificados, que redirige a /equipo#credenciales — un sitemap no debe
  *    listar URLs que redirigen.

@@ -8,12 +8,6 @@ import { clinic } from "@/lib/clinic";
 import { campaign } from "@/lib/campaign";
 import V2Footer from "@/components/v2/V2Footer";
 
-/**
- * El mes de la campaña se calcula en cada render. Sin esto la página quedaría
- * congelada con el mes en que se compiló.
- */
-export const revalidate = 43200;
-
 export const metadata: Metadata = {
   title: "Agendar",
   description:

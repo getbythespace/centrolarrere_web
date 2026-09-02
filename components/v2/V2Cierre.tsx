@@ -3,6 +3,7 @@ import HeroMedia from "@/components/HeroMedia";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
 import { clinic } from "@/lib/clinic";
 import { campaign } from "@/lib/campaign";
+import MesActual from "@/components/v2/MesActual";
 
 /**
  * Cierre común a todas las páginas de la v2: la evaluación del mes, el camino
@@ -43,7 +44,10 @@ export default function V2Cierre({ titulo }: { titulo?: React.ReactNode }) {
                 <p className="v2-display mt-3 text-[clamp(2.5rem,5.5vw,4.5rem)]">
                   Gratis
                   <span className="v2-serif v2-dim ml-4 text-[0.45em]">
-                    {campaign.banner.text}
+                    <MesActual
+                      inicial={campaign.banner.text}
+                      frase="banner"
+                    />
                   </span>
                 </p>
                 <p className="v2-body v2-dim mt-3">

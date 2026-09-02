@@ -1,15 +1,18 @@
 # Especificación de despliegue para DigitalOcean App Platform.
 #
-# Se puede importar en la consola: Create → App → y arriba a la derecha,
-# "Import from App Spec". Evita ir eligiendo opciones a mano y equivocarse en la
-# que importa.
+# Se importa en la consola: Create → App → "Import from App Spec". Evita ir
+# eligiendo opciones a mano y equivocarse en la que importa.
 #
-# Tiene que ser un SERVICE, no un static site: cinco páginas usan `revalidate`
-# —es lo que hace que la campaña cambie de mes sola— y eso necesita un servidor
-# Node corriendo. Un sitio estático congela el mes en el momento de compilar.
+# Va como static_site y no como service: el proyecto usa `output: 'export'`, o
+# sea que `npm run build` deja HTML suelto en out/ en vez de levantar un
+# servidor. Los static sites de App Platform además no cuestan.
+#
+# Si el despliegue devuelve 404 en todas las rutas, el problema es casi siempre
+# el output_dir: `next build` sin `output: export` produce .next/, que no es una
+# carpeta de HTML y no se puede servir tal cual.
 name: larrere
 
-services:
+static_sites:
   - name: web
     github:
       repo: getbythespace/centrolarrere_web
@@ -17,29 +20,34 @@ services:
       # Cada push a main vuelve a desplegar.
       deploy_on_push: true
 
-    # El buildpack de Node. No hace falta Dockerfile.
     environment_slug: node-js
     build_command: npm run build
-    run_command: npm start
+    # Acá está la carpeta que produce `output: 'export'`.
+    output_dir: out
 
-    instance_count: 1
+    # Sirve out/404.html cuando la ruta no existe, en vez de la página de error
+    # genérica de DigitalOcean.
+    catchall_document: 404.html
 
     envs:
       # Sin esto los enlaces canónicos y la vista previa al compartir apuntan a
       # localhost. Es el error más fácil de dejar pasar en un despliegue.
+      #
+      # Va en BUILD_TIME porque el sitio es estático: Next la incrusta en el HTML
+      # al compilar y en producción ya no hay dónde leerla.
       - key: NEXT_PUBLIC_SITE_URL
         value: https://larrere.cl
-        scope: RUN_AND_BUILD_TIME
+        scope: BUILD_TIME
 
       - key: TZ
         value: America/Santiago
-        scope: RUN_AND_BUILD_TIME
+        scope: BUILD_TIME
 
-      # Cuando tengas el número del Pixel de Meta, va acá. Tiene que estar en
-      # BUILD_TIME además de RUN: Next lo incrusta al compilar.
+      # Cuando tengas el número del Pixel de Meta, va acá y se vuelve a
+      # desplegar. También en BUILD_TIME, por lo mismo de arriba.
       # - key: NEXT_PUBLIC_META_PIXEL_ID
       #   value: "..."
-      #   scope: RUN_AND_BUILD_TIME
+      #   scope: BUILD_TIME
 
 domains:
   - domain: larrere.cl

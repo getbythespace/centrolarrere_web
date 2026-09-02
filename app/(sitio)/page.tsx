@@ -7,16 +7,10 @@ import { clinic, clp } from "@/lib/clinic";
 import { treatments } from "@/lib/treatments";
 import { showcaseCases } from "@/lib/cases";
 import { campaign, packConPrecio } from "@/lib/campaign";
+import MesActual from "@/components/v2/MesActual";
 import V2Nav from "@/components/v2/V2Nav";
 import V2Cierre from "@/components/v2/V2Cierre";
 import V2Footer from "@/components/v2/V2Footer";
-
-/**
- * El mes de la campaña se calcula en cada render. Sin esto la página quedaría
- * congelada con el mes en que se compiló. 12 horas es de sobra para un cambio
- * mensual.
- */
-export const revalidate = 43200;
 
 /**
  * v2 — «Cámara oscura».
@@ -368,7 +362,12 @@ export default function V2Page() {
         <section className="v2-sup v2-sup--crema v2-overlap v2-grain relative py-[clamp(5rem,12vw,9rem)]">
           <div className="v2-shell relative z-[2]">
             <div className="flex flex-wrap items-baseline justify-between gap-4">
-              <p className="v2-label v2-dim">{campaign.month} · Foco del mes</p>
+              <p className="v2-label v2-dim">
+                <MesActual
+                  inicial={`${campaign.month} · Foco del mes`}
+                  frase="focoEyebrow"
+                />
+              </p>
               <p className="v2-label v2-dim">01 / 01</p>
             </div>
 

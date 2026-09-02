@@ -1,0 +1,48 @@
+# Especificación de despliegue para DigitalOcean App Platform.
+#
+# Se puede importar en la consola: Create → App → y arriba a la derecha,
+# "Import from App Spec". Evita ir eligiendo opciones a mano y equivocarse en la
+# que importa.
+#
+# Tiene que ser un SERVICE, no un static site: cinco páginas usan `revalidate`
+# —es lo que hace que la campaña cambie de mes sola— y eso necesita un servidor
+# Node corriendo. Un sitio estático congela el mes en el momento de compilar.
+name: larrere
+
+services:
+  - name: web
+    github:
+      repo: getbythespace/centrolarrere_web
+      branch: main
+      # Cada push a main vuelve a desplegar.
+      deploy_on_push: true
+
+    # El buildpack de Node. No hace falta Dockerfile.
+    environment_slug: node-js
+    build_command: npm run build
+    run_command: npm start
+
+    instance_count: 1
+
+    envs:
+      # Sin esto los enlaces canónicos y la vista previa al compartir apuntan a
+      # localhost. Es el error más fácil de dejar pasar en un despliegue.
+      - key: NEXT_PUBLIC_SITE_URL
+        value: https://larrere.cl
+        scope: RUN_AND_BUILD_TIME
+
+      - key: TZ
+        value: America/Santiago
+        scope: RUN_AND_BUILD_TIME
+
+      # Cuando tengas el número del Pixel de Meta, va acá. Tiene que estar en
+      # BUILD_TIME además de RUN: Next lo incrusta al compilar.
+      # - key: NEXT_PUBLIC_META_PIXEL_ID
+      #   value: "..."
+      #   scope: RUN_AND_BUILD_TIME
+
+domains:
+  - domain: larrere.cl
+    type: PRIMARY
+  - domain: www.larrere.cl
+    type: ALIAS

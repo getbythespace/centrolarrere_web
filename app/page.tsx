@@ -141,7 +141,7 @@ export default function HomePage() {
                 <dt className="mono text-label uppercase text-ink">Autorización sanitaria</dt>
                 <dd className="mt-3 flex items-center gap-3">
                   <Image
-                    src="/clinica/SEREMISALUDMET.png"
+                    src="/clinica/seremi-nuble.webp"
                     alt="SEREMI de Salud · Ministerio de Salud"
                     width={52}
                     height={48}

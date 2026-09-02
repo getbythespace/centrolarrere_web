@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import HeroMedia from "@/components/HeroMedia";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
 import V2Nav from "@/components/v2/V2Nav";
@@ -48,8 +49,8 @@ const datos: Array<{ k: string; v: string; href?: string; nota?: string }> = [
   },
   {
     k: "Dirección",
-    v: clinic.address.street,
-    nota: `${clinic.address.city} · ${clinic.address.region}`,
+    v: `${clinic.address.street}, ${clinic.address.unit}`,
+    nota: `${clinic.address.building} · ${clinic.address.city}`,
   },
   {
     k: "Horario",
@@ -134,6 +135,36 @@ export default function V2ContactoPage() {
             </ul>
           </div>
         </section>
+
+        {/* ══════════ LA FACHADA ══════════
+            Va acá y no en la portada: sirve a quien ya decidió venir y está
+            buscando la puerta. El edificio se llama Centro Urbano 18-S y eso es
+            lo que se ve desde la vereda — más útil que el número de la calle. */}
+        <section className="v2-sup v2-sup--marron v2-overlap py-[clamp(4rem,10vw,8rem)]">
+          <div className="v2-shell">
+            <div className="grid items-center gap-10 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
+              <div className="relative aspect-[4/3] overflow-hidden">
+                <Image
+                  src="/clinica/fachada.avif"
+                  alt={`Fachada del edificio ${clinic.address.building}, en ${clinic.address.street}, Chillán`}
+                  fill
+                  className="object-cover"
+                  sizes="(min-width: 1024px) 55vw, 92vw"
+                />
+              </div>
+              <div>
+                <h2 className="v2-display max-w-[14ch]">
+                  Así se ve <span className="v2-serif">desde afuera</span>.
+                </h2>
+                <p className="v2-lead v2-dim mt-7 max-w-[38ch]">
+                  {clinic.address.building}, {clinic.address.street}. La consulta
+                  está en la {clinic.address.unit.toLowerCase()}.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
 
         {/* ══════════ QUÉ CONTAR AL ESCRIBIR ══════════
           Baja la fricción del primer mensaje: quien llega desde un anuncio no

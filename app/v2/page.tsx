@@ -266,19 +266,21 @@ export default function V2Page() {
               Chico y al pie de las ventajas, no como sección propia: acompaña a
               «Autorización sanitaria», que es la primera fila de la lista.
 
-              OJO: el archivo que hay hoy dice «SEREMI Región Metropolitana» y la
-              clínica está en Ñuble. El texto de al lado no afirma nada sobre la
-              región por eso mismo. Cuando llegue la foto de la resolución de
-              Ñuble con su número, se cambia el src y la bajada pasa a decir el
-              número, que es el dato que de verdad se puede verificar. */}
+              El emblema es el de la SEREMI de Ñuble, que es la que corresponde.
+              Antes había uno de Región Metropolitana, que decía otra región en
+              letras grandes junto a una clínica de Chillán.
+
+              Sigue pendiente la foto de la resolución con su número: el emblema
+              dice bajo qué autoridad opera la clínica, el número es lo que
+              alguien puede ir a verificar. */}
             <div className="mt-12 flex flex-wrap items-center gap-6">
               <div
                 className="relative h-[4.5rem] w-[4.5rem] flex-none border"
                 style={{ borderColor: "var(--hair)" }}
               >
                 <Image
-                  src="/clinica/SEREMISALUDMET.png"
-                  alt="Ministerio de Salud de Chile · SEREMI de Salud"
+                  src="/clinica/seremi-nuble.webp"
+                  alt="SEREMI de Salud Región de Ñuble · Ministerio de Salud"
                   fill
                   className="object-contain p-1.5"
                   sizes="4.5rem"

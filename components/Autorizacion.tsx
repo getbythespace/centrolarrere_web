@@ -20,10 +20,13 @@ import { clinic } from "@/lib/clinic";
  * número legible, en `public/clinica/resolucion-seremi.jpg`.
  *
  * Mientras tanto se muestra el logotipo institucional que la clínica facilitó.
- * Queda anotado que corresponde a la SEREMI de Región Metropolitana y la
- * clínica opera en Ñuble: el logo sirve de referencia visual, pero el respaldo
- * verificable es la resolución con su número, que es lo que va acá cuando
- * llegue.
+ * El emblema es el de la SEREMI de Ñuble, que es la autoridad sanitaria que
+ * corresponde. Antes había uno de Región Metropolitana, que nombraba otra
+ * región en letras grandes junto a una clínica de Chillán.
+ *
+ * El emblema dice bajo qué autoridad opera la clínica; el respaldo que alguien
+ * puede ir a verificar es la resolución con su número, y eso es lo que va acá
+ * cuando llegue la foto del documento.
  */
 const TIENE_DOCUMENTO = false;
 
@@ -101,8 +104,8 @@ export default function Autorizacion() {
                  segundo. */
               <div className="flex aspect-[4/5] w-full flex-col items-center justify-center gap-6 border border-sand/30 bg-paper p-8 text-center">
                 <Image
-                  src="/clinica/SEREMISALUDMET.png"
-                  alt="SEREMI de Salud · Ministerio de Salud de Chile"
+                  src="/clinica/seremi-nuble.webp"
+                  alt="SEREMI de Salud Región de Ñuble · Ministerio de Salud"
                   width={220}
                   height={204}
                   sizes="(min-width: 1024px) 220px, 40vw"

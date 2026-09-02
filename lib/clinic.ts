@@ -31,6 +31,9 @@ export const clinic = {
     /** Oficina dentro del edificio. Va aparte de la calle porque schema.org lo
      *  pide así y porque el mapa necesita la calle sola. */
     unit: "Oficina 905",
+    /** El nombre del edificio. Quien llega por primera vez busca esto en la
+     *  fachada, no el número de la calle. */
+    building: "Centro Urbano 18-S",
     city: "Chillán",
     region: "Región de Ñuble",
     country: "CL",

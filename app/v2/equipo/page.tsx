@@ -247,8 +247,8 @@ export default function V2EquipoPage() {
                   style={{ borderColor: "var(--hair)" }}
                 >
                   <Image
-                    src="/clinica/SEREMISALUDMET.png"
-                    alt="SEREMI de Salud · Ministerio de Salud de Chile"
+                    src="/clinica/seremi-nuble.webp"
+                    alt="SEREMI de Salud Región de Ñuble · Ministerio de Salud"
                     fill
                     className="object-contain p-6"
                     sizes="(min-width: 1024px) 20rem, 90vw"

@@ -76,6 +76,16 @@ export const metadata: Metadata = {
     locale: "es_CL",
     siteName: clinic.name,
     url: siteUrl,
+    // La miniatura que se ve al pegar el enlace en WhatsApp, que es por donde
+    // convierte todo el tráfico. Sin esto la vista previa salía sólo texto.
+    images: [
+      {
+        url: "/compartir/og.jpg",
+        width: 1200,
+        height: 630,
+        alt: "LARRÈRE · Centro de salud y estética, Chillán",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",

@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "verificar": "node scripts/verificar.mjs",
+    "contraste": "node scripts/contraste.mjs"
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.0.2",
@@ -31,6 +33,7 @@
     "eslint": "^8",
     "eslint-config-next": "15.0.0",
     "postcss": "^8",
+    "puppeteer-core": "^25.9.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }

@@ -935,3 +935,237 @@
     font-size: 0.8125rem;
   }
 }
+
+/* ==========================================================================
+   CONSULTA POR WHATSAPP
+   --------------------------------------------------------------------------
+   Reemplaza al calendario embebido y al sistema de reservas con transferencia.
+   Todo son botones: no se escribe nada, no hay pasos, y el botón final funciona
+   aunque no se toque ninguna opción.
+   ========================================================================== */
+.v2-consulta {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.75rem, 3.5vw, 2.5rem);
+}
+
+.v2-fs {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.v2-fs > legend {
+  padding: 0;
+  margin-bottom: 0.15rem;
+}
+
+.v2-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.v2-chip {
+  font: inherit;
+  font-size: clamp(0.9375rem, 1.6vw, 1.0625rem);
+  font-weight: 600;
+  color: var(--ink);
+  background: transparent;
+  border: 1.5px solid var(--hair);
+  border-radius: 999px;
+  /* 44px de alto mínimo: se toca con el pulgar. */
+  min-height: 2.85rem;
+  padding: 0.6rem 1.15rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease,
+    border-color 0.2s ease, transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .v2-chip:hover {
+    border-color: var(--ink);
+    transform: translateY(-1px);
+  }
+}
+
+.v2-chip[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--sup);
+  border-color: var(--ink);
+}
+
+.v2-chip:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.v2-consulta__pie {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--hair);
+}
+
+@media (min-width: 860px) {
+  .v2-consulta__pie {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2.5rem;
+  }
+}
+
+/* La vista previa: se lee lo que se va a mandar antes de mandarlo. Nadie
+   debería enviar a ciegas algo sobre su salud. */
+.v2-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  max-width: 46ch;
+  padding-top: 1.25rem;
+}
+
+.v2-preview__txt {
+  font-size: clamp(1rem, 1.8vw, 1.1875rem);
+  line-height: 1.5;
+}
+
+.v2-consulta__cta {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  min-height: 3.5rem;
+  padding-inline: 2rem;
+  font-weight: 600;
+  font-size: 1.0625rem;
+  background: var(--ink);
+  color: var(--sup);
+  border: 1.5px solid var(--ink);
+  text-decoration: none;
+  transition: background-color 0.25s ease, color 0.25s ease,
+    transform 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .v2-consulta__cta:hover {
+    background: transparent;
+    color: var(--ink);
+    transform: translateY(-2px);
+  }
+}
+
+.v2-consulta__nota {
+  font-size: 0.875rem;
+  max-width: 52ch;
+}
+
+/* WhatsApp dentro de la barra de abajo, sólo en pantalla chica. La v1 tenía una
+   barra fija aparte para esto; apilar dos barras en un teléfono se come media
+   pantalla, así que va en la misma. */
+.v2-pill__wa {
+  display: none;
+}
+
+@media (max-width: 899px) {
+  .v2-pill__wa {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 3rem;
+    align-self: stretch;
+    margin-left: 0.35rem;
+    border-radius: 999px;
+    background: var(--verde);
+    color: #14311a;
+    text-decoration: none;
+  }
+
+  .v2-pill__wa:active {
+    filter: brightness(0.92);
+  }
+
+  .v2-pill__wa:focus-visible {
+    outline: 2px solid var(--lume);
+    outline-offset: 2px;
+  }
+}
+
+/* ==========================================================================
+   PIE
+   ========================================================================== */
+.v2-pie {
+  padding-block: clamp(3rem, 7vw, 5rem) clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid var(--hair);
+}
+
+.v2-pie__grid {
+  display: grid;
+  gap: clamp(2rem, 5vw, 3.5rem);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .v2-pie__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1000px) {
+  .v2-pie__grid { grid-template-columns: 1.2fr 1fr 1fr 1fr; }
+}
+
+.v2-pie__marca {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+/* El logo viene en verde sobre fondo claro. Sobre las superficies hondas se
+   invierte a la tinta de la página en vez de dejar un recuadro claro flotando. */
+.v2-pie__logo {
+  width: 7rem;
+  height: auto;
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
+}
+
+.v2-pie__tagline { max-width: 24ch; font-size: 0.9375rem; }
+
+.v2-pie__col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.v2-pie__col ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  font-size: 0.9375rem;
+}
+
+.v2-pie__sub { margin-top: 0.6rem; }
+
+.v2-pie__filete { margin-top: clamp(2.5rem, 5vw, 3.5rem); }
+
+.v2-pie__legal {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-top: 1.4rem;
+}
+
+.v2-pie__aviso {
+  max-width: 60ch;
+  font-size: 0.875rem;
+}

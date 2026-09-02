@@ -6,9 +6,17 @@ import HeroMedia from "@/components/HeroMedia";
 import { clinic, clp } from "@/lib/clinic";
 import { treatments } from "@/lib/treatments";
 import { showcaseCases } from "@/lib/cases";
-import { campaign } from "@/lib/campaign";
+import { campaign, packConPrecio } from "@/lib/campaign";
 import V2Nav from "@/components/v2/V2Nav";
 import V2Cierre from "@/components/v2/V2Cierre";
+import V2Footer from "@/components/v2/V2Footer";
+
+/**
+ * El mes de la campaña se calcula en cada render. Sin esto la página quedaría
+ * congelada con el mes en que se compiló. 12 horas es de sobra para un cambio
+ * mensual.
+ */
+export const revalidate = 43200;
 
 /**
  * v2 — «Cámara oscura».
@@ -76,7 +84,7 @@ const VENTAJAS: Array<{ titulo: string; detalle: string; color: string }> = [
  * lume 11.09:1 · sage 7.10:1 · tan 6.44:1 · clay 4.96:1. El plazo o el precio
  * va aparte en --verde (9.77:1) porque es lo que se lee primero.
  */
-const packAcne = campaign.packs.find((p) => p.id === "pack-acne-higiene")!;
+const packAcne = packConPrecio();
 
 const PROMOS: Array<{ texto: string; dato?: string; color: string }> = [
   {
@@ -84,11 +92,16 @@ const PROMOS: Array<{ texto: string; dato?: string; color: string }> = [
     dato: campaign.banner.text,
     color: "var(--acc-1)",
   },
-  {
-    texto: "Promo acné · pack completo ",
-    dato: clp(packAcne.packPrice),
-    color: "var(--acc-3)",
-  },
+  // Sólo entra si el foco con precio cerrado sigue en la campaña del mes.
+  ...(packAcne
+    ? [
+        {
+          texto: "Promo acné · pack completo ",
+          dato: clp(packAcne.packPrice),
+          color: "var(--acc-3)",
+        },
+      ]
+    : []),
   {
     texto: "Onicomicosis · ",
     dato: "sin límite de sesiones",
@@ -100,7 +113,6 @@ const PROMOS: Array<{ texto: string; dato?: string; color: string }> = [
     color: "var(--acc-4)",
   },
 ];
-
 
 const LETRAS = ["L", "A", "R", "R", "È", "R", "E"];
 
@@ -119,63 +131,67 @@ export default function V2Page() {
   const foco = treatments.find((t) => t.id === "onicomicosis-plantar")!;
   const caso = showcaseCases[0];
   const pista = PISTA.map((id) => treatments.find((t) => t.id === id)).filter(
-    (t): t is NonNullable<typeof t> => Boolean(t)
+    (t): t is NonNullable<typeof t> => Boolean(t),
   );
 
   return (
-    <main>
-      {/* ══════════ 1 · HERO ══════════
+    <>
+      <main id="contenido">
+        {/* ══════════ 1 · HERO ══════════
           Video a sangre desde el primer pixel. El wordmark encima, del ancho
           del viewport. Sin vacío decorativo: la imagen ocupa lo que antes
           estaba en blanco. */}
-      <section className="v2-sup v2-sup--void relative flex min-h-[100svh] flex-col justify-between overflow-hidden pb-8 pt-7">
-        <HeroMedia
-          video="procedimiento"
-          alt="Procedimiento con láser realizado en la clínica"
-          veil="medio"
-          tone="neutro"
-          priority
-        />
+        <section className="v2-sup v2-sup--void relative flex min-h-[100svh] flex-col justify-between overflow-hidden pb-8 pt-7">
+          <HeroMedia
+            video="procedimiento"
+            alt="Procedimiento con láser realizado en la clínica"
+            veil="medio"
+            tone="neutro"
+            priority
+          />
 
-        <div className="v2-shell v2-scrim v2-scrim--fila relative z-10 flex items-center justify-between">
-          <span className="v2-label v2-loc">Chillán · Ñuble</span>
-          <V2Nav />
-        </div>
+          <div className="v2-shell v2-scrim v2-scrim--fila relative z-10 flex items-center justify-between">
+            <span className="v2-label v2-loc">Chillán · Ñuble</span>
+            <V2Nav />
+          </div>
 
-        <div className="v2-shell v2-scrim v2-scrim--marca relative z-10">
-          <h1 className="v2-wordmark" aria-label="LARRÈRE · Centro de salud y estética">
-            {LETRAS.map((l, i) => (
-              <span key={i} className="v2-mask" aria-hidden="true">
-                <span style={{ ["--i" as string]: i }}>{l}</span>
-              </span>
-            ))}
-          </h1>
-          <p
-            className="v2-label v2-bajada mt-4"
-            aria-hidden="true"
-          >
-            Centro de salud y estética
-          </p>
-        </div>
-
-        <div className="v2-shell v2-scrim v2-scrim--fila relative z-10">
-          <div className="v2-rule" />
-          <div className="mt-6 flex flex-col gap-7 md:flex-row md:items-end md:justify-between">
-            <p className="v2-lead max-w-[26ch]">
-              La piel se trata <span className="v2-serif">con criterio clínico</span>
+          <div className="v2-shell v2-scrim v2-scrim--marca relative z-10">
+            <h1
+              className="v2-wordmark"
+              aria-label="LARRÈRE · Centro de salud y estética"
+            >
+              {LETRAS.map((l, i) => (
+                <span key={i} className="v2-mask" aria-hidden="true">
+                  <span style={{ ["--i" as string]: i }}>{l}</span>
+                </span>
+              ))}
+            </h1>
+            <p className="v2-label v2-bajada mt-4" aria-hidden="true">
+              Centro de salud y estética
             </p>
-            <div className="flex flex-col items-start gap-5 md:items-end">
-              {/* El sello reemplaza a «evaluación médica previa · enfermería
+          </div>
+
+          <div className="v2-shell v2-scrim v2-scrim--fila relative z-10">
+            <div className="v2-rule" />
+            <div className="mt-6 flex flex-col gap-7 md:flex-row md:items-end md:justify-between">
+              <p className="v2-lead max-w-[26ch]">
+                La piel se trata{" "}
+                <span className="v2-serif">con criterio clínico</span>
+              </p>
+              <div className="flex flex-col items-start gap-5 md:items-end">
+                {/* El sello reemplaza a «evaluación médica previa · enfermería
                   titulada»: eso ya se dice en el resto del sitio, y este es el
                   único lugar donde algo tiene fecha de vencimiento. */}
-              <p className="v2-oferta">Evaluación gratuita por tiempo limitado</p>
-              <WhatsAppCTA context={{ kind: "evaluation" }} size="lg" />
+                <p className="v2-oferta">
+                  Evaluación gratuita por tiempo limitado
+                </p>
+                <WhatsAppCTA context={{ kind: "evaluation" }} size="lg" />
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ══════════ 2 · CINTA DE PROMOCIONES ══════════
+        {/* ══════════ 2 · CINTA DE PROMOCIONES ══════════
           Antes eran los nombres de las condiciones en tipo enorme: bonito y
           mudo. Ahora lleva lo que tiene plazo, que es lo que hace que alguien
           escriba hoy y no en dos semanas.
@@ -183,20 +199,28 @@ export default function V2Page() {
           Los valores salen de lib/campaign.ts, no escritos acá: si cambia el
           precio del pack o termina agosto, la cinta cambia con el resto del
           sitio en vez de quedar mintiendo. */}
-      <div className="v2-sup v2-sup--tierra v2-marquee py-3.5">
-        {[0, 1].map((k) => (
-          <div key={k} className="v2-marquee__track" aria-hidden={k === 1 || undefined}>
-            {PROMOS.map((promo, i) => (
-              <span key={`${k}-${i}`} className="v2-promo" style={{ color: promo.color }}>
-                {promo.texto}
-                {promo.dato ? <b>{promo.dato}</b> : null}
-              </span>
-            ))}
-          </div>
-        ))}
-      </div>
+        <div className="v2-sup v2-sup--tierra v2-marquee py-3.5">
+          {[0, 1].map((k) => (
+            <div
+              key={k}
+              className="v2-marquee__track"
+              aria-hidden={k === 1 || undefined}
+            >
+              {PROMOS.map((promo, i) => (
+                <span
+                  key={`${k}-${i}`}
+                  className="v2-promo"
+                  style={{ color: promo.color }}
+                >
+                  {promo.texto}
+                  {promo.dato ? <b>{promo.dato}</b> : null}
+                </span>
+              ))}
+            </div>
+          ))}
+        </div>
 
-      {/* ══════════ 3 · POR QUÉ ACÁ ══════════
+        {/* ══════════ 3 · POR QUÉ ACÁ ══════════
           Misma estructura que tenía «lo que otros derivan» —fila con el término
           a la izquierda y la aclaración a la derecha, entradas que alternan de
           lado— pero ahora dice las ventajas en vez de hablar de la competencia.
@@ -209,36 +233,36 @@ export default function V2Page() {
 
           El color rota sobre la paleta; los cuatro tonos están medidos contra
           --void y ninguno baja de 4.96:1. */}
-      <section className="v2-sup v2-sup--crema v2-overlap v2-grain relative py-[clamp(4rem,10vw,8rem)]">
-        <div className="v2-shell relative z-[2]">
-          <h2 className="v2-display max-w-[17ch]">
-            Por qué acá y <span className="v2-serif">no en otra parte</span>.
-          </h2>
+        <section className="v2-sup v2-sup--crema v2-overlap v2-grain relative py-[clamp(4rem,10vw,8rem)]">
+          <div className="v2-shell relative z-[2]">
+            <h2 className="v2-display max-w-[17ch]">
+              Por qué acá y <span className="v2-serif">no en otra parte</span>.
+            </h2>
 
-          <div className="v2-rule mt-12" />
+            <div className="v2-rule mt-12" />
 
-          <ul>
-            {VENTAJAS.map(({ titulo, detalle, color }, i) => (
-              <li key={titulo}>
-                <div
-                  className={`flex flex-wrap items-baseline justify-between gap-x-8 gap-y-1 py-5 ${
-                    i % 2 === 0 ? "v2-from-l" : "v2-from-r"
-                  }`}
-                >
-                  <span
-                    className="text-[clamp(1.25rem,2.4vw,2rem)] font-bold leading-tight"
-                    style={{ color }}
+            <ul>
+              {VENTAJAS.map(({ titulo, detalle, color }, i) => (
+                <li key={titulo}>
+                  <div
+                    className={`flex flex-wrap items-baseline justify-between gap-x-8 gap-y-1 py-5 ${
+                      i % 2 === 0 ? "v2-from-l" : "v2-from-r"
+                    }`}
                   >
-                    {titulo}
-                  </span>
-                  <span className="v2-label v2-dim">{detalle}</span>
-                </div>
-                <div className="v2-rule" />
-              </li>
-            ))}
-          </ul>
+                    <span
+                      className="text-[clamp(1.25rem,2.4vw,2rem)] font-bold leading-tight"
+                      style={{ color }}
+                    >
+                      {titulo}
+                    </span>
+                    <span className="v2-label v2-dim">{detalle}</span>
+                  </div>
+                  <div className="v2-rule" />
+                </li>
+              ))}
+            </ul>
 
-          {/* ══ Sello del SEREMI ══
+            {/* ══ Sello del SEREMI ══
               Chico y al pie de las ventajas, no como sección propia: acompaña a
               «Autorización sanitaria», que es la primera fila de la lista.
 
@@ -247,155 +271,164 @@ export default function V2Page() {
               región por eso mismo. Cuando llegue la foto de la resolución de
               Ñuble con su número, se cambia el src y la bajada pasa a decir el
               número, que es el dato que de verdad se puede verificar. */}
-          <div className="mt-12 flex flex-wrap items-center gap-6">
-            <div
-              className="relative h-[4.5rem] w-[4.5rem] flex-none border"
-              style={{ borderColor: "var(--hair)" }}
-            >
-              <Image
-                src="/clinica/SEREMISALUDMET.png"
-                alt="Ministerio de Salud de Chile · SEREMI de Salud"
-                fill
-                className="object-contain p-1.5"
-                sizes="4.5rem"
-              />
-            </div>
-            <div className="max-w-[46ch]">
-              <p className="v2-label">Autorización sanitaria vigente</p>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      {/* ══════════ 5 · PISTA HORIZONTAL ══════════
-          La sección se fija y los tratamientos corren de lado. En móvil se
-          arrastra con el dedo. */}
-      <section className="v2-sup v2-sup--void v2-track-outer v2-plano" aria-labelledby="pista-t">
-        {/* `items-start` + padding: antes el pin centraba el bloque completo y
-            el título quedaba muy abajo respecto de las tarjetas. */}
-        <div className="v2-track-pin" style={{ alignItems: "flex-start" }}>
-          <div className="w-full pt-[clamp(4rem,9vh,7rem)]">
-            <div className="v2-shell mb-8 flex flex-wrap items-baseline justify-between gap-4">
-              <h2 id="pista-t" className="v2-display text-[clamp(2rem,4.5vw,3.5rem)]">
-                Lo que tratamos
-              </h2>
-              <p className="v2-label v2-dim">
-                {treatments.length} tratamientos · desliza
-              </p>
-            </div>
-
-            <ul className="v2-track">
-              {pista.map((t, i) => (
-                <li
-                  key={t.id}
-                  className="w-[clamp(16rem,26vw,23rem)] border border-lume/20 p-6"
-                  style={{ borderColor: "rgba(247,242,236,0.2)" }}
-                >
-                  <div className="flex items-baseline justify-between">
-                    <span className="v2-label v2-dim">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span className="v2-label v2-dim">{t.category}</span>
-                  </div>
-
-                  {t.conditionImage && (
-                    <div className="relative mt-5 aspect-[4/3] w-full overflow-hidden">
-                      <Image
-                        src={t.conditionImage.src}
-                        alt={t.conditionImage.alt}
-                        fill
-                        sizes="(min-width: 768px) 26vw, 80vw"
-                        className="object-cover"
-                        quality={68}
-                      />
-                    </div>
-                  )}
-
-                  <h3 className="mt-5 text-[1.375rem] font-bold leading-tight">
-                    {t.name}
-                  </h3>
-                  <p className="v2-body mt-3 v2-dim">{t.summary}</p>
-
-                  <p className="mt-6 text-[1.125rem] font-bold">
-                    {t.price !== null ? clp(t.price) : "Según evaluación"}
-                  </p>
-                </li>
-              ))}
-
-              <li className="flex w-[clamp(14rem,20vw,18rem)] items-center">
-                <Link href="/servicios" className="v2-btn w-full">
-                  Ver todos
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* ══════════ 6 · FOCO DEL MES ══════════ */}
-      <section className="v2-sup v2-sup--crema v2-overlap v2-grain relative py-[clamp(5rem,12vw,9rem)]">
-        <div className="v2-shell relative z-[2]">
-          <div className="flex flex-wrap items-baseline justify-between gap-4">
-            <p className="v2-label v2-dim">Agosto · Foco del mes</p>
-            <p className="v2-label v2-dim">01 / 01</p>
-          </div>
-
-          <h2 className="v2-display mt-8 max-w-[18ch]">
-            Empieza ahora,
-            <br />
-            llega al verano <span className="v2-serif">tratado</span>
-          </h2>
-
-          <div className="v2-rule mt-12" />
-
-          <div className="mt-10 grid gap-12 lg:grid-cols-[1fr_1fr] lg:gap-20">
-            <div>
-              <p className="v2-lead max-w-[30ch]">
-                La uña sana no se recupera: crece.
-              </p>
-              <p className="v2-body mt-6 max-w-[46ch] v2-dim">
-                Una uña del pie tarda entre nueve y doce meses en renovarse por
-                completo. El mes en que empiezas define en qué estado llegas al
-                verano — y agosto es el último en que todavía alcanza.
-              </p>
-
-              <div className="v2-rule mt-10" />
-              <div className="flex items-baseline justify-between gap-6 py-6">
-                <span className="v2-label v2-dim">Precio normal</span>
-                <span className="v2-body v2-dim line-through">
-                  {clp(foco.listPrice!)}
-                </span>
-              </div>
-              <div className="v2-rule" />
-              <div className="flex flex-wrap items-baseline justify-between gap-4 py-7">
-                <span className="v2-label">Lanzamiento</span>
-                <span className="v2-zoom v2-display text-[clamp(2.5rem,6vw,5rem)]">
-                  {clp(foco.price!)}
-                </span>
-              </div>
-              <div className="v2-rule" />
-
-              <div className="mt-9">
-                <WhatsAppCTA
-                  context={{ kind: "treatment", treatment: foco.name }}
-                  size="lg"
+            <div className="mt-12 flex flex-wrap items-center gap-6">
+              <div
+                className="relative h-[4.5rem] w-[4.5rem] flex-none border"
+                style={{ borderColor: "var(--hair)" }}
+              >
+                <Image
+                  src="/clinica/SEREMISALUDMET.png"
+                  alt="Ministerio de Salud de Chile · SEREMI de Salud"
+                  fill
+                  className="object-contain p-1.5"
+                  sizes="4.5rem"
                 />
               </div>
-              <p className="v2-body mt-6 max-w-[48ch] text-[0.9375rem] v2-dim">
-                Sin límite de sesiones hasta completar el ciclo. El tiempo de
-                renovación varía según la persona y su adherencia al tratamiento.
-              </p>
-            </div>
-
-            <div className="lg:pt-2">
-              <BeforeAfter data={caso} ratio="4 / 3" />
+              <div className="max-w-[46ch]">
+                <p className="v2-label">Autorización sanitaria vigente</p>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <V2Cierre />
-    </main>
+        {/* ══════════ 5 · PISTA HORIZONTAL ══════════
+          La sección se fija y los tratamientos corren de lado. En móvil se
+          arrastra con el dedo. */}
+        <section
+          className="v2-sup v2-sup--void v2-track-outer v2-plano"
+          aria-labelledby="pista-t"
+        >
+          {/* `items-start` + padding: antes el pin centraba el bloque completo y
+            el título quedaba muy abajo respecto de las tarjetas. */}
+          <div className="v2-track-pin" style={{ alignItems: "flex-start" }}>
+            <div className="w-full pt-[clamp(4rem,9vh,7rem)]">
+              <div className="v2-shell mb-8 flex flex-wrap items-baseline justify-between gap-4">
+                <h2
+                  id="pista-t"
+                  className="v2-display text-[clamp(2rem,4.5vw,3.5rem)]"
+                >
+                  Lo que tratamos
+                </h2>
+                <p className="v2-label v2-dim">
+                  {treatments.length} tratamientos · desliza
+                </p>
+              </div>
+
+              <ul className="v2-track">
+                {pista.map((t, i) => (
+                  <li
+                    key={t.id}
+                    className="w-[clamp(16rem,26vw,23rem)] border border-lume/20 p-6"
+                    style={{ borderColor: "rgba(247,242,236,0.2)" }}
+                  >
+                    <div className="flex items-baseline justify-between">
+                      <span className="v2-label v2-dim">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span className="v2-label v2-dim">{t.category}</span>
+                    </div>
+
+                    {t.conditionImage && (
+                      <div className="relative mt-5 aspect-[4/3] w-full overflow-hidden">
+                        <Image
+                          src={t.conditionImage.src}
+                          alt={t.conditionImage.alt}
+                          fill
+                          sizes="(min-width: 768px) 26vw, 80vw"
+                          className="object-cover"
+                          quality={68}
+                        />
+                      </div>
+                    )}
+
+                    <h3 className="mt-5 text-[1.375rem] font-bold leading-tight">
+                      {t.name}
+                    </h3>
+                    <p className="v2-body mt-3 v2-dim">{t.summary}</p>
+
+                    <p className="mt-6 text-[1.125rem] font-bold">
+                      {t.price !== null ? clp(t.price) : "Según evaluación"}
+                    </p>
+                  </li>
+                ))}
+
+                <li className="flex w-[clamp(14rem,20vw,18rem)] items-center">
+                  <Link href="/servicios" className="v2-btn w-full">
+                    Ver todos
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* ══════════ 6 · FOCO DEL MES ══════════ */}
+        <section className="v2-sup v2-sup--crema v2-overlap v2-grain relative py-[clamp(5rem,12vw,9rem)]">
+          <div className="v2-shell relative z-[2]">
+            <div className="flex flex-wrap items-baseline justify-between gap-4">
+              <p className="v2-label v2-dim">{campaign.month} · Foco del mes</p>
+              <p className="v2-label v2-dim">01 / 01</p>
+            </div>
+
+            <h2 className="v2-display mt-8 max-w-[18ch]">
+              Empieza ahora,
+              <br />
+              llega al verano <span className="v2-serif">tratado</span>
+            </h2>
+
+            <div className="v2-rule mt-12" />
+
+            <div className="mt-10 grid gap-12 lg:grid-cols-[1fr_1fr] lg:gap-20">
+              <div>
+                <p className="v2-lead max-w-[30ch]">
+                  La uña sana no se recupera: crece.
+                </p>
+                {/* El texto sale de lib/campaign.ts, que lo ajusta según el
+                    mes: de diciembre a febrero ya no alcanza para llegar al
+                    verano y la frase cambia sola. */}
+                <p className="v2-body mt-6 max-w-[46ch] v2-dim">
+                  {campaign.packs[0].body}
+                </p>
+
+                <div className="v2-rule mt-10" />
+                <div className="flex items-baseline justify-between gap-6 py-6">
+                  <span className="v2-label v2-dim">Precio normal</span>
+                  <span className="v2-body v2-dim line-through">
+                    {clp(foco.listPrice!)}
+                  </span>
+                </div>
+                <div className="v2-rule" />
+                <div className="flex flex-wrap items-baseline justify-between gap-4 py-7">
+                  <span className="v2-label">Lanzamiento</span>
+                  <span className="v2-zoom v2-display text-[clamp(2.5rem,6vw,5rem)]">
+                    {clp(foco.price!)}
+                  </span>
+                </div>
+                <div className="v2-rule" />
+
+                <div className="mt-9">
+                  <WhatsAppCTA
+                    context={{ kind: "treatment", treatment: foco.name }}
+                    size="lg"
+                  />
+                </div>
+                <p className="v2-body mt-6 max-w-[48ch] text-[0.9375rem] v2-dim">
+                  Sin límite de sesiones hasta completar el ciclo. El tiempo de
+                  renovación varía según la persona y su adherencia al
+                  tratamiento.
+                </p>
+              </div>
+
+              <div className="lg:pt-2">
+                <BeforeAfter data={caso} ratio="4 / 3" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <V2Cierre />
+      </main>
+      <V2Footer />
+    </>
   );
 }

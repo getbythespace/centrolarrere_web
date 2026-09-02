@@ -43,7 +43,8 @@ export default function LocalBusinessSchema() {
     medicalSpecialty: "Dermatology",
     address: {
       "@type": "PostalAddress",
-      streetAddress: clinic.address.street,
+      // Calle y oficina juntas: es como Google espera la dirección completa.
+      streetAddress: `${clinic.address.street}, ${clinic.address.unit}`,
       addressLocality: clinic.address.city,
       addressRegion: clinic.address.region,
       addressCountry: clinic.address.country,

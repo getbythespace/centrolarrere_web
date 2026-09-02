@@ -6,6 +6,13 @@ import WhatsAppCTA from "@/components/WhatsAppCTA";
 import HeroMedia from "@/components/HeroMedia";
 import { clinic } from "@/lib/clinic";
 
+/**
+ * El mes de la campaña se calcula en cada render. Sin esto la página quedaría
+ * congelada con el mes en que se compiló y en octubre seguiría diciendo
+ * septiembre. 12 horas es de sobra para un cambio mensual.
+ */
+export const revalidate = 43200;
+
 export const metadata: Metadata = {
   title: "Equipo",
   description:

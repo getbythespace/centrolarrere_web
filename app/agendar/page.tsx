@@ -7,6 +7,14 @@ import WhatsAppCTA from "@/components/WhatsAppCTA";
 import PhoneLink from "@/components/PhoneLink";
 import DeferredCalendar from "@/components/DeferredCalendar";
 import { clinic } from "@/lib/clinic";
+import { campaign } from "@/lib/campaign";
+
+/**
+ * El mes de la campaña se calcula en cada render. Sin esto la página quedaría
+ * congelada con el mes en que se compiló y en octubre seguiría diciendo
+ * septiembre. 12 horas es de sobra para un cambio mensual.
+ */
+export const revalidate = 43200;
 
 export const metadata: Metadata = {
   title: "Agendar",
@@ -47,14 +55,33 @@ export default function AgendarPage() {
                 <p className="text-[0.875rem] uppercase tracking-wider text-sand">
                   Evaluación médica
                 </p>
-                <p className="mt-2 flex items-baseline gap-2">
-                  <span className="text-[1.75rem] font-semibold leading-none text-paper">
-                    {clinic.evaluation.priceDisplay}
-                  </span>
-                  <span className="text-[0.875rem] text-sand">
-                    {clinic.evaluation.note}
-                  </span>
-                </p>
+                {/* Mientras la campaña esté activa, acá manda «Gratis». Antes
+                    mostraba el precio completo mientras el resto del sitio
+                    ofrecía la evaluación gratis: el visitante llegaba al punto
+                    de reservar y se encontraba con lo contrario de lo que
+                    acababa de leer. */}
+                {campaign.active ? (
+                  <p className="mt-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                    <span className="text-[1.75rem] font-semibold leading-none text-paper">
+                      Gratis
+                    </span>
+                    <span className="text-[1.0625rem] text-sand line-through">
+                      {clinic.evaluation.priceDisplay}
+                    </span>
+                    <span className="text-[0.875rem] text-sand">
+                      por tiempo limitado · {clinic.evaluation.note}
+                    </span>
+                  </p>
+                ) : (
+                  <p className="mt-2 flex items-baseline gap-2">
+                    <span className="text-[1.75rem] font-semibold leading-none text-paper">
+                      {clinic.evaluation.priceDisplay}
+                    </span>
+                    <span className="text-[0.875rem] text-sand">
+                      {clinic.evaluation.note}
+                    </span>
+                  </p>
+                )}
                 <p className="mt-3 text-[0.875rem] text-sand">
                   {clinic.hours.display} · {clinic.hours.medical}
                 </p>

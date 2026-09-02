@@ -27,13 +27,16 @@ export const clinic = {
   email: "larreresaludyestetica@gmail.com",
 
   address: {
-    /** REEMPLAZAR con la dirección real de la clínica en Chillán. */
-    street: "[REEMPLAZAR con dirección real]",
+    street: "Dieciocho de Septiembre 246",
+    /** Oficina dentro del edificio. Va aparte de la calle porque schema.org lo
+     *  pide así y porque el mapa necesita la calle sola. */
+    unit: "Oficina 905",
     city: "Chillán",
     region: "Región de Ñuble",
     country: "CL",
-    /** REEMPLAZAR: coordenadas reales. Las de abajo son el centro de Chillán,
-     *  no la puerta de la clínica. No las publiques como exactas. */
+    /** PENDIENTE: coordenadas exactas de la puerta. Las de abajo son el centro
+     *  de Chillán. Se sacan abriendo la dirección en Google Maps y copiando el
+     *  par de números de la URL. */
     geo: { lat: "-36.6066", lng: "-72.1034" },
   },
 
@@ -54,10 +57,9 @@ export const clinic = {
   },
 
   social: {
-    /** REEMPLAZAR con los handles reales; si no existen, dejar en null para
-     *  que no entren al schema.org como perfiles falsos. */
-    instagram: null as string | null,
-    facebook: null as string | null,
+    instagram: "https://www.instagram.com/centrolarrere/" as string | null,
+    facebook:
+      "https://www.facebook.com/profile.php?id=61593659706762" as string | null,
   },
 } as const;
 

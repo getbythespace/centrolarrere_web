@@ -17,6 +17,13 @@ import { treatments } from "@/lib/treatments";
 import { mostrarResultados } from "@/lib/flags";
 
 /**
+ * El mes de la campaña se calcula en cada render. Sin esto la página quedaría
+ * congelada con el mes en que se compiló. 12 horas es de sobra para un cambio
+ * mensual.
+ */
+export const revalidate = 43200;
+
+/**
  * La home está compuesta como una ficha clínica: campos con etiqueta mono,
  * filetes de 1px, radio cero y un salto de escala fuerte entre la etiqueta y el
  * titular. La escala de fototipos abre la página, porque es la que justifica la

@@ -43,7 +43,9 @@ export const showcaseCases: BeforeAfterCase[] = [
     alt: "uña del pie afectada por onicomicosis y su aspecto una vez renovada",
     kind: "referencial",
     beforeSrc: "/casos/ominomicosis.webp",
-    afterSrc: "/casos/ominomicosisdespues.png",
+    // AVIF: el PNG original pesaba 1,7 MB y era el 60% de lo que cargaba
+    // la home. Mismo detalle, 43 KB.
+    afterSrc: "/casos/ominomicosisdespues.avif",
   },
 ];
 

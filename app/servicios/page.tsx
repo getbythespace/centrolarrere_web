@@ -8,6 +8,13 @@ import WhatsAppCTA from "@/components/WhatsAppCTA";
 import { clinic } from "@/lib/clinic";
 import { treatments } from "@/lib/treatments";
 
+/**
+ * El mes de la campaña se calcula en cada render. Sin esto la página quedaría
+ * congelada con el mes en que se compiló y en octubre seguiría diciendo
+ * septiembre. 12 horas es de sobra para un cambio mensual.
+ */
+export const revalidate = 43200;
+
 export const metadata: Metadata = {
   title: "Tratamientos",
   description:

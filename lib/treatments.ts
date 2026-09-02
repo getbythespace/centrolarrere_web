@@ -63,6 +63,9 @@ export const treatments: Treatment[] = [
       "La energía láser atraviesa la lámina de la uña y actúa sobre el hongo sin dañar el tejido sano. La uña sana crece desde la matriz, así que el resultado se ve a medida que la uña se renueva: por eso el tratamiento no se cobra por sesión sino completo.",
     category: "Uñas",
     needsEvaluation: true,
+    /** Sólo lo realiza el médico. La autoridad sanitaria no permite
+     *  que una cosmetóloga haga procedimientos con láser. */
+    doctorOnly: true,
     price: 499990,
     listPrice: 750000,
     sessionsNote: "Sin límite de sesiones",
@@ -81,6 +84,9 @@ export const treatments: Treatment[] = [
       "Mismo protocolo láser que el tratamiento plantar, aplicado a las uñas de las manos. Incluye todas las sesiones necesarias hasta completar el ciclo de renovación de la uña.",
     category: "Uñas",
     needsEvaluation: true,
+    /** Sólo lo realiza el médico. La autoridad sanitaria no permite
+     *  que una cosmetóloga haga procedimientos con láser. */
+    doctorOnly: true,
     price: 559990,
     listPrice: 650000,
     sessionsNote: "Sin límite de sesiones",
@@ -124,6 +130,9 @@ export const treatments: Treatment[] = [
       "Tratamiento dirigido a disminuir el enrojecimiento facial persistente y a controlar los brotes de rosácea. El láser actúa de forma selectiva sobre el componente vascular.",
     category: "Láser",
     needsEvaluation: true,
+    /** Sólo lo realiza el médico. La autoridad sanitaria no permite
+     *  que una cosmetóloga haga procedimientos con láser. */
+    doctorOnly: true,
     price: 150000,
     listPrice: 200000,
     sessions: 4,
@@ -141,6 +150,9 @@ export const treatments: Treatment[] = [
       "Mismo protocolo que el programa de 4 sesiones, extendido para cuadros más persistentes. El número de sesiones se define en la evaluación médica.",
     category: "Láser",
     needsEvaluation: true,
+    /** Sólo lo realiza el médico. La autoridad sanitaria no permite
+     *  que una cosmetóloga haga procedimientos con láser. */
+    doctorOnly: true,
     price: 225000,
     listPrice: 300000,
     sessions: 6,
@@ -154,6 +166,9 @@ export const treatments: Treatment[] = [
       "Tratamiento láser para los vasos sanguíneos finos que se ven en la superficie de la piel. El láser cierra el capilar de forma selectiva sin afectar el tejido de alrededor.",
     category: "Láser",
     needsEvaluation: true,
+    /** Sólo lo realiza el médico. La autoridad sanitaria no permite
+     *  que una cosmetóloga haga procedimientos con láser. */
+    doctorOnly: true,
     price: null,
     listPrice: null,
     conditionImage: {
@@ -184,6 +199,9 @@ export const treatments: Treatment[] = [
       "Extracción de acrocordones —pequeñas lesiones cutáneas benignas y pediculadas— en procedimiento realizado en consulta. El valor cubre más de 20 lesiones.",
     category: "Médico",
     needsEvaluation: true,
+    /** Sólo lo realiza el médico. La autoridad sanitaria no permite
+     *  que una cosmetóloga haga procedimientos con láser. */
+    doctorOnly: true,
     price: 120000,
     listPrice: 150000,
     sessions: 1,
@@ -201,6 +219,9 @@ export const treatments: Treatment[] = [
       "Micropigmentación orientada a disminuir el contraste visible entre la piel despigmentada y la piel circundante. El número de sesiones depende de la extensión.",
     category: "Médico",
     needsEvaluation: true,
+    /** Sólo lo realiza el médico. La autoridad sanitaria no permite
+     *  que una cosmetóloga haga procedimientos con láser. */
+    doctorOnly: true,
     price: 149990,
     listPrice: 200000,
     sessions: 4,
@@ -218,6 +239,9 @@ export const treatments: Treatment[] = [
       "Mismo procedimiento que el programa de 4 sesiones, para zonas de mayor extensión. La cobertura se define en la evaluación.",
     category: "Médico",
     needsEvaluation: true,
+    /** Sólo lo realiza el médico. La autoridad sanitaria no permite
+     *  que una cosmetóloga haga procedimientos con láser. */
+    doctorOnly: true,
     price: 399990,
     listPrice: 500000,
     sessions: 6,

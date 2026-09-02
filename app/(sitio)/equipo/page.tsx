@@ -15,6 +15,17 @@ export const metadata: Metadata = {
 };
 
 /**
+ * NINGUNA persona que no sea el médico aparece asociada a láser.
+ *
+ * La autoridad sanitaria prohíbe a las cosmetólogas realizar procedimientos con
+ * láser, y la página decía que la fundadora tenía «más de 7 años de experiencia
+ * en tratamientos láser». Eso no era un detalle de redacción: era atribuirle
+ * públicamente un procedimiento que no le corresponde hacer.
+ *
+ * El láser —onicomicosis, rosácea y vascular— lo realiza sólo el médico, y así
+ * queda dicho tanto acá como en el catálogo, donde esos tratamientos van
+ * marcados con su horario de atención.
+ *
  * Nadie lleva título ni institución acá.
  *
  * Los tenía como huecos rotulados —«[REEMPLAZAR con título e institución
@@ -28,13 +39,13 @@ export const metadata: Metadata = {
 const equipo = [
   {
     name: "Evelin Alarcón",
-    role: "Cosmetóloga y fundadora",
-    body: "A cargo de los tratamientos estéticos y del seguimiento de la piel. Más de 7 años de experiencia en tratamientos láser.",
+    role: "Fundadora",
+    body: "Evalúa la afección de cada persona y personaliza el tratamiento según lo que necesita. Indica la línea de dermoestética que corresponde —una crema con ácido, por ejemplo, según el caso— y hace el seguimiento, siempre en conjunto con el resto del equipo. Años de experiencia en el área clínica.",
   },
   {
     name: "Belén Muñoz",
-    role: "Enfermera",
-    body: "Realiza los procedimientos invasivos menores y el control post-tratamiento.",
+    role: "Enfermera · Pigmentación",
+    body: "Camuflaje capilar para calvicie y cicatrices por accidentes. Pigmentación y definición de cejas y labios, incluido labio leporino. Reconstrucción de areola en 3D para personas que vencieron el cáncer.",
   },
   {
     name: "Dr. Jhon Pablo Mero",

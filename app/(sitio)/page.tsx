@@ -54,8 +54,12 @@ const VENTAJAS: Array<{ titulo: string; detalle: string; color: string }> = [
     color: "var(--acc-3)",
   },
   {
-    titulo: "Más de 7 años en láser",
-    detalle: "A cargo de los tratamientos",
+    // Antes: «Más de 7 años en láser · A cargo de los tratamientos», que se
+    // leía como que el láser lo hacía la fundadora. La autoridad sanitaria se
+    // lo prohíbe a las cosmetólogas. Dicho al derecho, además, funciona mejor:
+    // que el láser lo haga un médico es un argumento a favor, no una limitación.
+    titulo: "El láser lo hace el médico",
+    detalle: "Ningún procedimiento fuera de su ámbito",
     color: "var(--acc-4)",
   },
   {

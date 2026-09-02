@@ -1,40 +1,49 @@
 # Especificación de despliegue para DigitalOcean App Platform.
 #
-# Se importa en la consola: Create → App → "Import from App Spec". Evita ir
-# eligiendo opciones a mano y equivocarse en la que importa.
+# Se pega completa en la consola: App → Settings → App Spec → Edit.
 #
-# Va como static_site y no como service: el proyecto usa `output: 'export'`, o
-# sea que `npm run build` deja HTML suelto en out/ en vez de levantar un
-# servidor. Los static sites de App Platform además no cuestan.
+# Va como static_site porque el proyecto usa `output: 'export'`: `npm run build`
+# deja HTML suelto en out/ en vez de levantar un servidor. Los static sites de
+# App Platform además no cuestan.
 #
-# Si el despliegue devuelve 404 en todas las rutas, el problema es casi siempre
-# el output_dir: `next build` sin `output: export` produce .next/, que no es una
-# carpeta de HTML y no se puede servir tal cual.
-name: larrere
+# LO QUE FALTABA Y CAUSABA EL 404 EN TODAS LAS RUTAS: `output_dir`. Sin eso
+# DigitalOcean no sabe dónde quedó el HTML y sirve una carpeta vacía. Es lo
+# primero que hay que revisar si vuelve a pasar.
+name: larrerewebfinal
+region: atl
+
+alerts:
+  - rule: DEPLOYMENT_FAILED
+  - rule: DOMAIN_FAILED
+
+features:
+  - buildpack-stack=ubuntu-22
 
 static_sites:
-  - name: web
+  - name: centrolarrere-web
+    environment_slug: node-js
+    source_dir: /
     github:
       repo: getbythespace/centrolarrere_web
       branch: main
       # Cada push a main vuelve a desplegar.
       deploy_on_push: true
 
-    environment_slug: node-js
     build_command: npm run build
-    # Acá está la carpeta que produce `output: 'export'`.
+
+    # La carpeta que produce `output: 'export'`. Sin esta línea el despliegue
+    # devuelve 404 en todo.
     output_dir: out
 
-    # Sirve out/404.html cuando la ruta no existe, en vez de la página de error
-    # genérica de DigitalOcean.
+    # Sirve el 404 del propio sitio en vez de la página genérica de DigitalOcean.
     catchall_document: 404.html
 
     envs:
-      # Sin esto los enlaces canónicos y la vista previa al compartir apuntan a
-      # localhost. Es el error más fácil de dejar pasar en un despliegue.
+      # Sin esto los enlaces canónicos y la vista previa al compartir por
+      # WhatsApp salen apuntando a localhost.
       #
-      # Va en BUILD_TIME porque el sitio es estático: Next la incrusta en el HTML
-      # al compilar y en producción ya no hay dónde leerla.
+      # BUILD_TIME y no RUN: el sitio es estático, Next incrusta el valor en el
+      # HTML al compilar y en producción ya no hay dónde leerlo.
       - key: NEXT_PUBLIC_SITE_URL
         value: https://larrere.cl
         scope: BUILD_TIME
@@ -43,14 +52,24 @@ static_sites:
         value: America/Santiago
         scope: BUILD_TIME
 
-      # Cuando tengas el número del Pixel de Meta, va acá y se vuelve a
-      # desplegar. También en BUILD_TIME, por lo mismo de arriba.
+      # Cuando tengas el número del Pixel de Meta, se descomenta y se vuelve a
+      # desplegar. También BUILD_TIME, por lo mismo de arriba.
       # - key: NEXT_PUBLIC_META_PIXEL_ID
       #   value: "..."
       #   scope: BUILD_TIME
 
+ingress:
+  rules:
+    - component:
+        name: centrolarrere-web
+      match:
+        path:
+          prefix: /
+
 domains:
   - domain: larrere.cl
     type: PRIMARY
+    zone: larrere.cl
   - domain: www.larrere.cl
     type: ALIAS
+    zone: larrere.cl

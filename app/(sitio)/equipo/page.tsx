@@ -40,7 +40,12 @@ const equipo = [
   {
     name: "Evelin Alarcón",
     role: "Fundadora",
-    body: "Evalúa la afección de cada persona y personaliza el tratamiento según lo que necesita. Indica la línea de dermoestética que corresponde —una crema con ácido, por ejemplo, según el caso— y hace el seguimiento, siempre en conjunto con el resto del equipo. Años de experiencia en el área clínica.",
+    body: "Evalúa la afección de cada persona y personaliza el tratamiento según lo que necesita. Indica la línea de dermoestética que corresponde —una crema con ácido, por ejemplo, según el caso— y hace el seguimiento, siempre en conjunto con el resto del equipo. A cargo también de la higiene facial y corporal. Años de experiencia en el área clínica.",
+    // La certificación en toxina botulínica va como formación, no como
+    // servicio: la clínica no lo ofrece en su catálogo. Decir «encargada de ese
+    // procedimiento» habría anunciado algo que no se presta, y habría repetido
+    // el problema del láser que esta misma página acaba de corregir.
+    formacion: "Certificada en toxina botulínica",
   },
   {
     name: "Belén Muñoz",
@@ -137,6 +142,9 @@ export default function V2EquipoPage() {
                       {/* La columna derecha queda para el horario del médico.
                           Antes traía el título y la institución; salieron
                           porque eran huecos rotulados. */}
+                      {p.formacion ? (
+                        <p className="v2-label v2-dim mb-3">{p.formacion}</p>
+                      ) : null}
                       {p.badge ? (
                         <p
                           className="v2-label mt-3"

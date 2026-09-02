@@ -336,6 +336,32 @@ export const treatments: Treatment[] = [
 
   // ---------- ESTÉTICO ----------
   {
+    // Los dos que siguen son especialidades de Belén Muñoz que la clínica presta
+    // y que no estaban en el catálogo: no aparecían en ninguna parte del sitio.
+    // Van sin precio porque no estaban en la planilla; la ficha muestra «según
+    // evaluación» y empuja a WhatsApp, igual que los otros tres sin cifra.
+    id: "areola-3d",
+    name: "Reconstrucción de areola 3D",
+    summary: "Micropigmentación de areola tras una mastectomía.",
+    description:
+      "Micropigmentación que reconstruye la apariencia de la areola con técnica tridimensional, para personas que pasaron por una mastectomía. Se realiza una vez que el alta médica lo permite.",
+    category: "Estético",
+    needsEvaluation: true,
+    price: null,
+    listPrice: null,
+  },
+  {
+    id: "pigmentacion-cejas-labios",
+    name: "Pigmentación de cejas y labios",
+    summary: "Definición del contorno, incluidos casos de labio leporino.",
+    description:
+      "Micropigmentación para definir y equilibrar el contorno de cejas y labios. Incluye el trabajo sobre labio leporino, donde la técnica busca uniformar el borde y el color.",
+    category: "Estético",
+    needsEvaluation: true,
+    price: null,
+    listPrice: null,
+  },
+  {
     id: "rejuvenecimiento-manos",
     name: "Rejuvenecimiento de manos",
     summary: "Manchas y textura en el dorso de la mano.",

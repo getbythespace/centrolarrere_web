@@ -355,7 +355,7 @@
    WhatsApp escritos en texto corrido —como el teléfono en la página de
    contacto— y les daba fondo de botón. Con el color del acento encima, el
    número quedaba tinta sobre tinta: invisible, medido en 1.00:1. */
-.v2 a[href*="wa.me"]:not(.v2-enlace) {
+.v2 a[href*="wa.me"]:not(.v2-enlace):not(.v2-pill__wa) {
   background: var(--ink, var(--lume));
   color: var(--sup, var(--void));
   border: 1.5px solid var(--ink, var(--lume));
@@ -366,7 +366,7 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .v2 a[href*="wa.me"]:not(.v2-enlace):hover {
+  .v2 a[href*="wa.me"]:not(.v2-enlace):not(.v2-pill__wa):hover {
     background: transparent;
     color: var(--ink, var(--lume));
     transform: translateY(-2px);
@@ -1069,12 +1069,15 @@
 /* WhatsApp dentro de la barra de abajo, sólo en pantalla chica. La v1 tenía una
    barra fija aparte para esto; apilar dos barras en un teléfono se come media
    pantalla, así que va en la misma. */
-.v2-pill__wa {
+/* El `a` va en el selector a propósito: `.v2-pill > a` tiene más especificidad
+   que una clase sola, así que sin esto la regla base le imponía flex:1 y el
+   botón crecía hasta 98px comiéndose el espacio de los enlaces. */
+.v2-pill > a.v2-pill__wa {
   display: none;
 }
 
 @media (max-width: 899px) {
-  .v2-pill__wa {
+  .v2-pill > a.v2-pill__wa {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -1088,11 +1091,11 @@
     text-decoration: none;
   }
 
-  .v2-pill__wa:active {
+  .v2-pill > a.v2-pill__wa:active {
     filter: brightness(0.92);
   }
 
-  .v2-pill__wa:focus-visible {
+  .v2-pill > a.v2-pill__wa:focus-visible {
     outline: 2px solid var(--lume);
     outline-offset: 2px;
   }
@@ -1168,4 +1171,14 @@
 .v2-pie__aviso {
   max-width: 60ch;
   font-size: 0.875rem;
+}
+
+/* La barra fija de abajo se come los últimos ~5rem de la ventana. El hero se
+   reparte con `justify-between` dentro de 100svh, así que su última fila caía
+   justo debajo de la barra: en el teléfono el botón de WhatsApp quedaba pisado.
+   El padding del <body> no alcanza porque el reparto es interno al hero. */
+@media (max-width: 899px) {
+  .v2-hero-clearance {
+    padding-bottom: 6rem;
+  }
 }

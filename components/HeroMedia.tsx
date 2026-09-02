@@ -138,12 +138,37 @@ export default function HeroMedia({
 
       {video && showVideo && (
         <video
+          /* El atributo `muted` se pone acá, en el callback del ref, y no como
+             prop de React.
+     
+             React aplica `muted` como PROPIEDAD del elemento, no como atributo
+             del HTML. Los navegadores móviles deciden si permiten la
+             reproducción automática mirando el atributo en el instante en que
+             el elemento entra al documento: si no está, la bloquean y muestran
+             el botón de play encima del fondo. En escritorio no se nota porque
+             la propiedad alcanza a aplicarse antes de esa decisión.
+     
+             El callback corre justo cuando el nodo se crea, antes de que el
+             navegador evalúe nada. */
+          ref={(el) => {
+            if (!el) return;
+            el.setAttribute("muted", "");
+            el.muted = true;
+            el.defaultMuted = true;
+            // Algunos navegadores igual no arrancan solos. Se les pide, y si
+            // aun así se niegan se deja el póster: nunca un botón de play
+            // encima de un fondo decorativo.
+            const intento = el.play();
+            if (intento) intento.catch(() => {});
+          }}
           className="absolute inset-0 h-full w-full object-cover object-center"
           poster={poster}
           autoPlay
           muted
           loop
           playsInline
+          disablePictureInPicture
+          controls={false}
           /* "metadata" y no "auto": con auto el navegador se descarga el video
              entero de inmediato, compitiendo con el resto de la página. En un
              teléfono con datos móviles eso se ve como tirones. */

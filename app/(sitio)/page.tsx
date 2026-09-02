@@ -135,7 +135,7 @@ export default function V2Page() {
           Video a sangre desde el primer pixel. El wordmark encima, del ancho
           del viewport. Sin vacío decorativo: la imagen ocupa lo que antes
           estaba en blanco. */}
-        <section className="v2-sup v2-sup--void relative flex min-h-[100svh] flex-col justify-between overflow-hidden pb-8 pt-7">
+        <section className="v2-sup v2-sup--void v2-hero-clearance relative flex min-h-[100svh] flex-col justify-between overflow-hidden pb-8 pt-7">
           <HeroMedia
             video="procedimiento"
             alt="Procedimiento con láser realizado en la clínica"
@@ -144,9 +144,18 @@ export default function V2Page() {
             priority
           />
 
+          {/* El menú va como hijo directo de la sección, FUERA de la fila.
+
+              Estaba dentro de ese contenedor, que tiene z-index 10 y por lo
+              tanto crea su propio contexto de apilamiento: el z-60 del menú
+              sólo competía ahí adentro. La fila de abajo del hero tiene el
+              mismo z-10 y va después en el HTML, así que ganaba, y en el
+              teléfono el botón de WhatsApp tapaba el menú casi entero. Afuera
+              compite contra toda la página, como corresponde a algo fijo. */}
+          <V2Nav />
+
           <div className="v2-shell v2-scrim v2-scrim--fila relative z-10 flex items-center justify-between">
             <span className="v2-label v2-loc">Chillán · Ñuble</span>
-            <V2Nav />
           </div>
 
           <div className="v2-shell v2-scrim v2-scrim--marca relative z-10">

@@ -40,22 +40,24 @@ const equipo = [
   {
     name: "Evelin Alarcón",
     role: "Fundadora",
-    body: "Evalúa la afección de cada persona y personaliza el tratamiento según lo que necesita. Indica la línea de dermoestética que corresponde —una crema con ácido, por ejemplo, según el caso— y hace el seguimiento, siempre en conjunto con el resto del equipo. A cargo también de la higiene facial y corporal. Años de experiencia en el área clínica.",
-    // La certificación en toxina botulínica va como formación, no como
-    // servicio: la clínica no lo ofrece en su catálogo. Decir «encargada de ese
-    // procedimiento» habría anunciado algo que no se presta, y habría repetido
-    // el problema del láser que esta misma página acaba de corregir.
+    body: "Evalúa la piel, define el tratamiento y hace el seguimiento.",
+    especialidades: [
+      "Camuflaje capilar",
+      "Pigmentación de cejas y labios",
+      "Reconstrucción de areola 3D",
+    ],
+    // Va como formación y no como servicio: la clínica no ofrece bótox.
     formacion: "Certificada en toxina botulínica",
   },
   {
     name: "Belén Muñoz",
-    role: "Enfermera · Pigmentación",
-    body: "Camuflaje capilar para calvicie y cicatrices por accidentes. Pigmentación y definición de cejas y labios, incluido labio leporino. Reconstrucción de areola en 3D para personas que vencieron el cáncer.",
+    role: "Enfermera",
+    body: "Procedimientos invasivos menores y control posterior.",
   },
   {
     name: "Dr. Jhon Pablo Mero",
     role: "Médico cirujano",
-    body: "Realiza las evaluaciones médicas y los procedimientos de mayor complejidad: láser CO₂ fraccionado y láser vascular.",
+    body: "Evaluación médica y todos los tratamientos con láser.",
     badge: clinic.hours.medical,
   },
 ];
@@ -136,6 +138,11 @@ export default function V2EquipoPage() {
                       </p>
                       <p className="v2-label v2-dim mt-2">{p.role}</p>
                       <p className="v2-body mt-4">{p.body}</p>
+                      {p.especialidades ? (
+                        <p className="v2-label v2-dim mt-3">
+                          {p.especialidades.join(" · ")}
+                        </p>
+                      ) : null}
                     </div>
 
                     <div className="md:text-right">

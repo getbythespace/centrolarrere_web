@@ -15,39 +15,42 @@ export const metadata: Metadata = {
 };
 
 /**
- * Mismos datos que la página de equipo de v1, sin agregar ni quitar nada.
+ * Nadie lleva título ni institución acá.
  *
- * Los campos marcados REEMPLAZAR se mantienen visibles a propósito: atribuir un
- * título o una institución falsa a una persona real es de las cosas que no se
- * inventan, así que el hueco se muestra hasta que llegue el dato verdadero.
+ * Los tenía como huecos rotulados —«[REEMPLAZAR con título e institución
+ * reales]»— para que se notara lo que faltaba. Eso servía mientras el sitio no
+ * estaba publicado; ahora se ven en producción y quedan feos. Los pendientes
+ * viven en la lista de tareas, no en la página.
+ *
+ * Lo que sigue en pie: no se le atribuye a nadie un título que no esté
+ * confirmado. Cuando lleguen los datos reales se agrega el campo de vuelta.
  */
 const equipo = [
   {
-    name: "Cosmetólogas especialistas",
-    role: "Fundadoras",
+    name: "Evelin Alarcón",
+    role: "Cosmetóloga y fundadora",
     body: "A cargo de los tratamientos estéticos y del seguimiento de la piel. Más de 7 años de experiencia en tratamientos láser.",
-    credential: "[REEMPLAZAR con título e institución reales]",
   },
   {
     name: "Belén Muñoz",
     role: "Enfermera",
     body: "Realiza los procedimientos invasivos menores y el control post-tratamiento.",
-    credential: "[REEMPLAZAR con título, institución y año reales]",
   },
   {
     name: "Dr. Jhon Pablo Mero",
     role: "Médico cirujano",
     body: "Realiza las evaluaciones médicas y los procedimientos de mayor complejidad: láser CO₂ fraccionado y láser vascular.",
-    credential:
-      "[REEMPLAZAR con título, institución y nº de registro (RNPI) reales]",
     badge: clinic.hours.medical,
   },
 ];
 
 const estandares: Array<[string, string]> = [
-  ["Evaluación previa", "Ningún tratamiento parte sin diagnóstico médico"],
+  [
+    "Seguimiento constante",
+    "El tratamiento no es sólo para ti, es un proceso conjunto",
+  ],
   ["Higiene y bioseguridad", "Esterilización y material desechable"],
-  ["Seguimiento", "Control posterior a cargo de enfermería"],
+  ["Control posterior", "A cargo de enfermera"],
   ["Derivación", "Si el caso requiere otra especialidad, se deriva"],
 ];
 
@@ -55,10 +58,6 @@ const ACENTO = ["var(--acc-1)", "var(--acc-2)", "var(--acc-3)", "var(--acc-4)"];
 
 /** Fotos propias del box. Ver public/clinica/box/LEEME.md. */
 const BOX: Array<{ src: string; alt: string }> = [
-  {
-    src: "procedimiento-gafas",
-    alt: "Profesional con gafas de protección durante un procedimiento",
-  },
   { src: "laser-en-uso", alt: "Aplicación del láser en la clínica" },
   { src: "cabezal-laser", alt: "Detalle del cabezal del láser" },
   { src: "equipo-panel", alt: "Panel de control del equipo" },
@@ -66,7 +65,6 @@ const BOX: Array<{ src: string; alt: string }> = [
     src: "preparacion-box",
     alt: "Preparación del box antes de un procedimiento",
   },
-  { src: "productos", alt: "Productos usados en los tratamientos" },
 ];
 
 export default function V2EquipoPage() {
@@ -109,22 +107,10 @@ export default function V2EquipoPage() {
               {equipo.map((p, i) => (
                 <li key={p.name}>
                   <div
-                    className={`grid gap-x-10 gap-y-5 py-8 md:grid-cols-[auto_1fr_18rem] md:items-start ${
+                    className={`grid gap-x-10 gap-y-5 py-8 md:grid-cols-[1fr_18rem] md:items-start ${
                       i % 2 === 0 ? "v2-from-l" : "v2-from-r"
                     }`}
                   >
-                    {/* Retrato pendiente. Marco rotulado en vez de una foto de
-                      banco: poner un rostro de stock donde va una persona real
-                      del equipo es exactamente lo que no se hace. */}
-                    <div
-                      className="flex h-[7.5rem] w-[7.5rem] items-center justify-center border p-3 text-center"
-                      style={{ borderColor: "var(--hair)" }}
-                    >
-                      <span className="v2-label v2-dim text-[0.6875rem] leading-snug">
-                        [Retrato real pendiente]
-                      </span>
-                    </div>
-
                     <div className="max-w-[46ch]">
                       <p
                         className="text-[clamp(1.375rem,2.6vw,2rem)] font-bold leading-tight"
@@ -137,7 +123,9 @@ export default function V2EquipoPage() {
                     </div>
 
                     <div className="md:text-right">
-                      <p className="v2-label v2-dim">{p.credential}</p>
+                      {/* La columna derecha queda para el horario del médico.
+                          Antes traía el título y la institución; salieron
+                          porque eran huecos rotulados. */}
                       {p.badge ? (
                         <p
                           className="v2-label mt-3"
@@ -206,31 +194,11 @@ export default function V2EquipoPage() {
                   evaluación médica previa y respaldo de enfermería titulada.
                 </p>
 
-                <div className="v2-rule mt-10" />
-                <ul>
-                  {[
-                    [
-                      "Resolución SEREMI de Salud",
-                      "[REEMPLAZAR con nº y fecha]",
-                    ],
-                    [
-                      "Equipos láser",
-                      "[REEMPLAZAR con registro de los equipos]",
-                    ],
-                    [
-                      "Dirección técnica",
-                      "[REEMPLAZAR con nombre y nº de registro]",
-                    ],
-                  ].map(([k, v]) => (
-                    <li key={k}>
-                      <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-1 py-4">
-                        <span className="text-[1.0625rem] font-bold">{k}</span>
-                        <span className="v2-label v2-dim">{v}</span>
-                      </div>
-                      <div className="v2-rule" />
-                    </li>
-                  ))}
-                </ul>
+                {/* Acá iba una tabla con el número de resolución, el registro
+                    de los equipos y la dirección técnica, con huecos rotulados
+                    a la espera de los datos. Se quitó: en producción esos
+                    corchetes se ven, y una tabla vacía resta más de lo que
+                    suma. Vuelve entera cuando lleguen los tres datos. */}
               </div>
 
               <div>
@@ -246,10 +214,6 @@ export default function V2EquipoPage() {
                     sizes="(min-width: 1024px) 20rem, 90vw"
                   />
                 </div>
-                <p className="v2-label v2-dim mt-4">
-                  [Pendiente: foto de la resolución de Ñuble con su número
-                  legible]
-                </p>
               </div>
             </div>
 

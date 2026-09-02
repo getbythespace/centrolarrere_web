@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 /**
@@ -11,6 +11,11 @@ import Image from "next/image";
  * separa una landing cinematográfica de una ficha impresa.
  *
  * EL PUNTO CRÍTICO ES CUÁNDO ENTRA EL VIDEO.
+ *
+ * Los MP4 van en perfil Main y nivel 3.1, el que de verdad corresponde a
+ * 720x1280. Estaban declarados en High/5.0 —nivel de 4K— y varios
+ * decodificadores de teléfonos rechazan la aceleración por hardware cuando el
+ * nivel excede tanto lo necesario: pasan a software y eso se ve como tirones.
  *
  * Con el `<video autoPlay>` en el HTML inicial, el navegador descarga el
  * archivo en paralelo con todo lo demás: el LCP de la home subió a 4,1s y la
@@ -74,6 +79,7 @@ export default function HeroMedia({
   tone = "pino",
 }: Props) {
   const [showVideo, setShowVideo] = useState(false);
+  const caja = useRef<HTMLDivElement>(null);
   const poster = video ? `/clinica/${video}-poster.jpg` : posterSrc!;
 
   useEffect(() => {
@@ -82,6 +88,24 @@ export default function HeroMedia({
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
     if (reduce || conn?.saveData) return;
+
+    // Los que NO son el hero esperan a estar cerca de la pantalla. La portada
+    // tiene dos videos y el de abajo se descargaba igual sin que nadie lo
+    // hubiera visto: 190 KB de datos móviles gastados en algo fuera de cuadro.
+    if (!priority && caja.current && "IntersectionObserver" in window) {
+      const obs = new IntersectionObserver(
+        (entradas) => {
+          if (entradas.some((e) => e.isIntersecting)) {
+            obs.disconnect();
+            setShowVideo(true);
+          }
+        },
+        // Un poco antes de entrar, para que el poster no se quede solo.
+        { rootMargin: "400px" }
+      );
+      obs.observe(caja.current);
+      return () => obs.disconnect();
+    }
 
     // En el primer hueco libre después de pintar. `requestIdleCallback` no
     // existe en Safari, de ahí el respaldo por timeout.
@@ -98,7 +122,10 @@ export default function HeroMedia({
   }, [video]);
 
   return (
-    <div className={`absolute inset-0 overflow-hidden ${tone === "neutro" ? "bg-[#0F0D0C]" : "bg-pine"}`}>
+    <div
+      ref={caja}
+      className={`absolute inset-0 overflow-hidden ${tone === "neutro" ? "bg-[#0F0D0C]" : "bg-pine"}`}
+    >
       <Image
         src={poster}
         alt={alt}
@@ -117,11 +144,28 @@ export default function HeroMedia({
           muted
           loop
           playsInline
-          preload="auto"
+          /* "metadata" y no "auto": con auto el navegador se descarga el video
+             entero de inmediato, compitiendo con el resto de la página. En un
+             teléfono con datos móviles eso se ve como tirones. */
+          preload="metadata"
           aria-hidden="true"
           tabIndex={-1}
         >
-          <source src={`/clinica/${video}.webm`} type="video/webm" />
+          {/* La versión chica va PRIMERO: el navegador toma el primer <source>
+              cuyo `media` calce, así que en un teléfono se queda con los 480px
+              —la mitad de píxeles, un tercio del trabajo de decodificar— y no
+              llega a mirar el de escritorio.
+
+              Ya no se ofrece WebM. En Android VP9 suele decodificarse por
+              software, bastante más pesado que H.264 por hardware, y como el
+              WebM iba primero era justo lo que elegían los teléfonos. Los
+              archivos pesan 200-400 KB: lo que se ahorraba en bytes no
+              compensaba el costo en CPU. */}
+          <source
+            src={`/clinica/${video}-movil.mp4`}
+            type="video/mp4"
+            media="(max-width: 767px)"
+          />
           <source src={`/clinica/${video}.mp4`} type="video/mp4" />
         </video>
       )}

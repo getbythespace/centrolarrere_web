@@ -40,12 +40,12 @@ import V2Footer from "@/components/v2/V2Footer";
 const VENTAJAS: Array<{ titulo: string; detalle: string; color: string }> = [
   {
     titulo: "Autorización sanitaria",
-    detalle: "Resolución SEREMI a la vista",
+    detalle: "Resolución SEREMI certificada",
     color: "var(--acc-1)",
   },
   {
-    titulo: "Enfermería titulada",
-    detalle: "En cada procedimiento",
+    titulo: "Enfermera especializada",
+    detalle: "Para procedimientos profesionales",
     color: "var(--acc-2)",
   },
   {
@@ -60,7 +60,7 @@ const VENTAJAS: Array<{ titulo: string; detalle: string; color: string }> = [
   },
   {
     titulo: "Seguimiento posterior",
-    detalle: "Control a cargo de enfermería",
+    detalle: "Un proceso acompañado",
     color: "var(--acc-2)",
   },
   {

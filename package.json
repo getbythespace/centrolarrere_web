@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "verificar": "node scripts/verificar.mjs",
-    "contraste": "node scripts/contraste.mjs"
+    "contraste": "node scripts/contraste.mjs",
+    "estatico": "node scripts/estatico.mjs",
+    "video": "node scripts/video.mjs"
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.0.2",

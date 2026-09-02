@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { clinic } from "@/lib/clinic";
 
 export default function PrivacidadPage() {
   return (
@@ -76,14 +77,17 @@ export default function PrivacidadPage() {
               <p>
                 Para cualquier consulta sobre esta política de privacidad, contáctanos en:
                 <br />
-                <a href="mailto:privacidad@larrere.cl" className="text-primary hover:underline">
-                  privacidad@larrere.cl
+                <a
+                href={`mailto:${clinic.email}`}
+                className="text-primary hover:underline"
+              >
+                {clinic.email}
                 </a>
               </p>
             </section>
 
             <p className="text-sm text-muted-foreground mt-8">
-              Última actualización: Octubre 2025
+              Última actualización: Septiembre 2026
             </p>
           </div>
         </div>

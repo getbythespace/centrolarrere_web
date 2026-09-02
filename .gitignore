@@ -72,3 +72,7 @@ logs
 
 # Originales sin comprimir de los que salen los activos de public/
 /pictures/
+
+# Los WebM del hero: ya no se sirven. En Android VP9 se decodifica por
+# software y pesa más en CPU que H.264 por hardware.
+/public/clinica/*.webm

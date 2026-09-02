@@ -1,12 +1,12 @@
-import type { Metadata } from "next";
 import { Archivo, Instrument_Serif } from "next/font/google";
 import "./v2.css";
 
 /**
- * Layout propio para la v2.
+ * Envoltorio del sitio.
  *
- * Vive en su propia ruta con sus propias fuentes y su propio CSS para poder
- * comparar las dos estéticas lado a lado sin que una contamine a la otra.
+ * Va en un grupo de rutas —los paréntesis no entran en la URL— para que las
+ * páginas legales queden fuera: usan la hoja anterior y meterlas dentro de
+ * `.v2` les cambiaría el fondo y la tinta.
  *
  * Dos familias, como las referencias premiadas —House of Honey usa una grotesca
  * gorda contra una serif de alto contraste, y Neue Montreal usa una sola en
@@ -30,14 +30,7 @@ const serif = Instrument_Serif({
   variable: "--font-v2-serif",
 });
 
-export const metadata: Metadata = {
-  title: "LARRÈRE — Escala viva",
-  description:
-    "Propuesta visual alternativa. Clínica de estética con enfoque clínico en Chillán.",
-  robots: { index: false, follow: false },
-};
-
-export default function V2Layout({ children }: { children: React.ReactNode }) {
+export default function SitioLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className={`v2 ${display.variable} ${serif.variable}`}>{children}</div>
   );

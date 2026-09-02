@@ -1,13 +1,13 @@
 import { MetadataRoute } from 'next'
-import { mostrarResultados } from '@/lib/flags'
 
 /**
- * Cambios respecto al sitemap anterior:
- *  - /resultados solo se lista si está publicada: hoy tiene un unico caso y es
- *    referencial, así que está apagada en lib/flags.ts.
- *  - Se quita /certificados: ahora redirige a /equipo#credenciales, y un
- *    sitemap no debe listar URLs que redirigen.
- *  - Se quita /testimonios: está en noindex hasta que tenga reseñas reales.
+ * Las cinco páginas del sitio. Quedan fuera a propósito:
+ *  - /certificados, que redirige a /equipo#credenciales — un sitemap no debe
+ *    listar URLs que redirigen.
+ *  - /privacidad y /terminos, que se listan con prioridad baja al final: son
+ *    obligatorias pero no son por donde se quiere que entre nadie.
+ *  - /resultados y /testimonios, que se archivaron: no había material real que
+ *    publicar en ninguna de las dos.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://larrere.cl'
@@ -16,9 +16,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const routes: Array<[string, number, MetadataRoute.Sitemap[number]['changeFrequency']]> = [
     ['', 1, 'weekly'],
     ['/servicios', 0.9, 'weekly'],
-    ...(mostrarResultados
-      ? ([['/resultados', 0.9, 'weekly']] as typeof routes)
-      : []),
     ['/agendar', 0.8, 'daily'],
     ['/contacto', 0.8, 'monthly'],
     ['/equipo', 0.7, 'monthly'],

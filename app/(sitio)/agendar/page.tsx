@@ -18,7 +18,6 @@ export const metadata: Metadata = {
   title: "Agendar",
   description:
     "Coordina tu evaluación por WhatsApp. Atención de lunes a sábado en Chillán, con evaluación médica previa a todo tratamiento.",
-  robots: { index: false, follow: false },
 };
 
 /**

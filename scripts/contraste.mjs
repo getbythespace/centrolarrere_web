@@ -10,8 +10,8 @@
  * mínimo— y sobre beige se desploma a 2.69:1. Ninguna de las dos cosas se ve
  * mal a simple vista.
  *
- *   npm run contraste                      → todas las páginas de la v2
- *   npm run contraste -- http://.../v2     → una sola
+ *   npm run contraste                    → las cinco páginas del sitio
+ *   npm run contraste -- http://.../equipo  → una sola
  */
 import puppeteer from "puppeteer-core";
 
@@ -22,11 +22,11 @@ const CHROME =
 const RUTAS = process.argv[2]
   ? [process.argv[2]]
   : [
-      "http://localhost:3001/v2",
-      "http://localhost:3001/v2/servicios",
-      "http://localhost:3001/v2/equipo",
-      "http://localhost:3001/v2/contacto",
-      "http://localhost:3001/v2/agendar",
+      "http://localhost:3000",
+      "http://localhost:3000/servicios",
+      "http://localhost:3000/equipo",
+      "http://localhost:3000/contacto",
+      "http://localhost:3000/agendar",
     ];
 
 const navegador = await puppeteer.launch({
@@ -38,7 +38,7 @@ const navegador = await puppeteer.launch({
 let totalFallos = 0;
 
 for (const url of RUTAS) {
-  console.log(`\n═══ ${url.replace("http://localhost:3001", "")} ═══`);
+  console.log(`\n═══ ${url.replace("http://localhost:3000", "")} ═══`);
 
   for (const [w, h, tag] of [
     [1440, 900, "desktop"],

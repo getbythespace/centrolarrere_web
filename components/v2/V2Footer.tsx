@@ -69,10 +69,10 @@ export default function V2Footer() {
             <p className="v2-label v2-dim">Sitio</p>
             <ul>
               {[
-                ["/v2/servicios", "Tratamientos"],
-                ["/v2/equipo", "Equipo"],
-                ["/v2/agendar", "Agendar"],
-                ["/v2/contacto", "Contacto"],
+                ["/servicios", "Tratamientos"],
+                ["/equipo", "Equipo"],
+                ["/agendar", "Agendar"],
+                ["/contacto", "Contacto"],
               ].map(([href, label]) => (
                 <li key={href}>
                   <Link href={href} className="v2-enlace">

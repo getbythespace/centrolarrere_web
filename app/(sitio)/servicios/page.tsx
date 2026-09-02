@@ -20,7 +20,6 @@ export const metadata: Metadata = {
   title: "Tratamientos",
   description:
     "Láser para rosácea y lesiones vasculares, tratamiento de acné, PRP facial y capilar, onicomicosis y más. Todos con evaluación médica previa en Chillán.",
-  robots: { index: false, follow: false },
 };
 
 /**

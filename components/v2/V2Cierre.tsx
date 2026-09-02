@@ -62,7 +62,7 @@ export default function V2Cierre({ titulo }: { titulo?: React.ReactNode }) {
 
           <div className="flex flex-col gap-4 sm:flex-row">
             <WhatsAppCTA context={{ kind: "evaluation" }} size="lg" />
-            <Link href="/v2/agendar" className="v2-btn">
+            <Link href="/agendar" className="v2-btn">
               Coordinar por WhatsApp
             </Link>
           </div>

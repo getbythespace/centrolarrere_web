@@ -12,7 +12,7 @@ import Link from "next/link";
  */
 export default function V2Volver() {
   return (
-    <Link href="/v2" className="v2-volver v2-label">
+    <Link href="/" className="v2-volver v2-label">
       <span aria-hidden="true">←</span>
       <span>LARRÈRE</span>
       <span className="sr-only">Volver al inicio</span>

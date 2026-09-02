@@ -19,7 +19,6 @@ export const metadata: Metadata = {
   title: "Contacto",
   description:
     "WhatsApp, teléfono, dirección y horario de LARRÈRE en Chillán. Atención de lunes a sábado, 11:00 a 19:00.",
-  robots: { index: false, follow: false },
 };
 
 const ACENTO = ["var(--acc-1)", "var(--acc-2)", "var(--acc-3)", "var(--acc-4)"];

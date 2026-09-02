@@ -1,13 +1,14 @@
 import puppeteer from 'puppeteer-core';
-const B='http://localhost:3001', V1='http://localhost:3000';
+const B='http://localhost:3000';
+const V1=B; // la v1 ya no existe: quedó en la rama archivo/v1-estetica-anterior
 const b=await puppeteer.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:'new',args:['--no-sandbox','--hide-scrollbars']});
 let pass=0,fail=0;
 const ck=(n,ok,d='')=>{console.log(`  ${ok?'PASS':'FAIL'}  ${n}${d?' — '+d:''}`);ok?pass++:fail++;};
-const RUTAS=['/v2','/v2/servicios','/v2/equipo','/v2/contacto','/v2/agendar'];
+const RUTAS=['/','/servicios','/equipo','/contacto','/agendar'];
 
 console.log('[1] Campaña: el mes se calcula solo');
 const p=await b.newPage(); await p.setViewport({width:1440,height:900});
-await p.goto(B+'/v2',{waitUntil:'networkidle2'}); await new Promise(r=>setTimeout(r,1200));
+await p.goto(B+'/',{waitUntil:'networkidle2'}); await new Promise(r=>setTimeout(r,1200));
 const t=await p.evaluate(()=>document.body.innerText);
 const M=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
 const mes=M[new Date(new Date().toLocaleString('en-US',{timeZone:'America/Santiago'})).getMonth()];
@@ -17,7 +18,7 @@ await p.close();
 
 console.log('\n[2] Agendar: precio tachado + gratis');
 const q=await b.newPage(); await q.setViewport({width:1440,height:900});
-await q.goto(V1+'/agendar',{waitUntil:'networkidle2'}); await new Promise(r=>setTimeout(r,900));
+await q.goto(B+'/agendar',{waitUntil:'networkidle2'}); await new Promise(r=>setTimeout(r,900));
 const ag=await q.evaluate(()=>{
   const tachado=[...document.querySelectorAll('*')].find(e=>getComputedStyle(e).textDecorationLine.includes('line-through')&&/40\.000/.test(e.textContent));
   return {gratis:/Gratis/.test(document.body.innerText), tachado:!!tachado,
@@ -28,7 +29,7 @@ ck('el precio normal va tachado', ag.tachado);
 await q.close();
 
 console.log('\n[3] Imagen al compartir');
-for (const [base,ruta,nombre] of [[V1,'/','v1'],[B,'/v2','v2']]) {
+for (const [base,ruta,nombre] of [[B,'/','portada'],[B,'/contacto','contacto']]) {
   const r=await b.newPage(); await r.goto(base+ruta,{waitUntil:'domcontentloaded'});
   const og=await r.evaluate(()=>document.querySelector('meta[property="og:image"]')?.content||null);
   ck(`og:image en ${nombre}`, Boolean(og), og||'ninguna');
@@ -56,7 +57,7 @@ for (const ruta of RUTAS) {
 
 console.log('\n[5] WhatsApp siempre a mano en móvil');
 const m=await b.newPage(); await m.setViewport({width:390,height:844,isMobile:true,hasTouch:true});
-await m.goto(B+'/v2',{waitUntil:'networkidle2'}); await new Promise(r=>setTimeout(r,1000));
+await m.goto(B+'/',{waitUntil:'networkidle2'}); await new Promise(r=>setTimeout(r,1000));
 const wa=await m.evaluate(()=>{
   const e=document.querySelector('.v2-pill__wa'); if(!e) return null;
   const r=e.getBoundingClientRect(), cs=getComputedStyle(e);
@@ -69,7 +70,7 @@ await m.close();
 
 console.log('\n[6] Cuestionario sin fricción');
 const c=await b.newPage(); await c.setViewport({width:1440,height:900});
-await c.goto(B+'/v2/agendar',{waitUntil:'networkidle2'});
+await c.goto(B+'/agendar',{waitUntil:'networkidle2'});
 await c.waitForSelector('.v2-chip',{timeout:20000}); await new Promise(r=>setTimeout(r,600));
 const base=await c.evaluate(()=>document.querySelector('.v2-preview__txt').textContent);
 ck('funciona sin tocar nada', /Hola/.test(base), base);

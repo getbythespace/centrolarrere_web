@@ -19,7 +19,6 @@ export const metadata: Metadata = {
   title: "Equipo",
   description:
     "Cosmetólogas, enfermería titulada y atención médica. Quién realiza cada tratamiento en LARRÈRE, Chillán.",
-  robots: { index: false, follow: false },
 };
 
 /**
